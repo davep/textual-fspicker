@@ -31,7 +31,14 @@ class DirectoryEntry( Option ):
 class DirectoryNavigation( OptionList ):
     """A directory navigation widget."""
 
-    location: var[ Path ] = var[ Path ]( Path( "." ).resolve(), init=False )
+    @dataclass
+    class Changed( Message ):
+        """Message sent when the current directory has changed."""
+
+        control: DirectoryNavigation
+        """The directory navigation control that changed."""
+
+    location: var[ Path ] = var[ Path ]( Path( "." ).resolve(), init=False, always_update=True )
     """The current location for the directory."""
 
     def __init__( self, location: Path | None = None ) -> None:
@@ -46,6 +53,7 @@ class DirectoryNavigation( OptionList ):
 
     def on_mount( self ) -> None:
         """Populate the widget once the DOM is ready."""
+        self.location = self.location
         self._load()
 
     def _settle_highlight( self ) -> None:
@@ -92,14 +100,8 @@ class DirectoryNavigation( OptionList ):
 
     def _watch_location( self ) -> None:
         """Reload the content if the location changes."""
+        self.post_message( self.Changed( self ) )
         self._load()
-
-    @dataclass
-    class Changed( Message ):
-        """Message sent when the current directory has changed."""
-
-        location: Path
-        """The new location."""
 
     def _on_option_list_option_selected( self, event: OptionList.OptionSelected ) -> None:
         """Handle an entry in the list being selected.
@@ -110,6 +112,5 @@ class DirectoryNavigation( OptionList ):
         event.stop()
         assert isinstance( event.option, DirectoryEntry )
         self.location = event.option.location
-        self.post_message( self.Changed( self.location ) )
 
 ### directory_navigation.py ends here
