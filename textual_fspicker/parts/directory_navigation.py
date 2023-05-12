@@ -41,6 +41,9 @@ class DirectoryNavigation( OptionList ):
     _location: var[ Path ] = var[ Path ]( Path( "." ).resolve(), init=False )
     """The current location for the directory."""
 
+    show_hidden: var[ bool ] = var( False )
+    """Should hidden file be shown?"""
+
     def __init__( self, location: Path | str | None = None ) -> None:
         """Initialise the directory navigation widget.
 
@@ -80,6 +83,34 @@ class DirectoryNavigation( OptionList ):
         # TODO: Worry about portability.
         return self._location == Path( self._location.root )
 
+    @staticmethod
+    def is_hidden( path: Path ) -> bool:
+        """Does the given path appear to be hidden?
+
+        Args:
+            path: The path to test.
+
+        Returns:
+            `True` if the path appears to be hidden, `False` if not.
+
+        Note:
+            For the moment this simply checks for the 'dot hack'. Eventually
+            I'll extend this to detect hidden files in the most appropriate
+            way for the current operating system.
+        """
+        return path.name.startswith( "." )
+
+    def hide( self, path: Path ) -> bool:
+        """Should we hide the given path?
+
+        Args:
+            path: The path to test.
+
+        Returns:
+            `True` if the path should be hidden, `False` if not.
+        """
+        return self.is_hidden( path ) and not self.show_hidden
+
     @work(exclusive=True)
     def _load( self ) -> None:
         """Load the current directory data."""
@@ -96,7 +127,7 @@ class DirectoryNavigation( OptionList ):
         # streaming them into the list via the app thread.
         worker = get_current_worker()
         for entry in self._location.iterdir():
-            if entry.is_dir():
+            if entry.is_dir() and not self.hide( entry ):
                 # TODO: While this is a more pure way of doing things...
                 # stream our way in one entry at a time, it can make it look
                 # like there's a bit of flicker while loading. So perhaps,
@@ -114,6 +145,16 @@ class DirectoryNavigation( OptionList ):
     def _watch__location( self ) -> None:
         """Reload the content if the location changes."""
         self.post_message( self.Changed( self ) )
+        self._load()
+
+    def _watch_show_hidden( self ) -> None:
+        """Reload the content if the show-hidden flag has changed."""
+        # TODO: This is a kind of expensive way to do things really.
+        # Longer-term what I'd like to do is keep a parallel cache of all
+        # entries found in the current directory so that the current view
+        # can be rebuilt without the need to go back to the filesystem. In
+        # this case I'd just rebuilt the OptionList from that parallel
+        # cache, which would include *everything* found all the time.
         self._load()
 
     def _on_option_list_option_selected( self, event: OptionList.OptionSelected ) -> None:
