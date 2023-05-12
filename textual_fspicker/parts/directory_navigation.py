@@ -157,6 +157,10 @@ class DirectoryNavigation( OptionList ):
         # cache, which would include *everything* found all the time.
         self._load()
 
+    def toggle_hidden( self ) -> None:
+        """Toggle the display of hidden filesystem entries."""
+        self.show_hidden = not self.show_hidden
+
     def _on_option_list_option_selected( self, event: OptionList.OptionSelected ) -> None:
         """Handle an entry in the list being selected.
 

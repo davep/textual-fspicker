@@ -23,7 +23,7 @@ class TestApp( App[ None ] ):
         self.query_one( DirectoryNavigation ).border_title = str( event.control.location )
 
     def action_toggle_hidden( self ) -> None:
-        self.query_one( DirectoryNavigation ).show_hidden = not self.query_one( DirectoryNavigation ).show_hidden
+        self.query_one( DirectoryNavigation ).toggle_hidden()
 
 if __name__ == "__main__":
     TestApp().run()
