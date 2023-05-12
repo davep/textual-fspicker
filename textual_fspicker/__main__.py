@@ -11,10 +11,10 @@ class TestApp( App[ None ] ):
     """
 
     def compose( self ) -> ComposeResult:
-        yield DirectoryNavigation()
+        yield DirectoryNavigation( "~" )
 
     def on_directory_navigation_changed( self, event: DirectoryNavigation.Changed ) -> None:
-        self.query_one( DirectoryNavigation ).border_title = str( event.location )
+        self.query_one( DirectoryNavigation ).border_title = str( event.control.location )
 
 if __name__ == "__main__":
     TestApp().run()
