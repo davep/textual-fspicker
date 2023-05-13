@@ -56,24 +56,32 @@ class DirectoryEntry( Option ):
         return datetime.fromtimestamp( int( mtime ) ).isoformat().replace( "T", " " )
 
     def _dir( self, prompt: Table, location: Path ) -> RenderableType:
+        prompt.add_column( no_wrap=True, width=1 )
         prompt.add_column( no_wrap=True, justify="left", width=3 )
         prompt.add_column( no_wrap=True, justify="left", ratio=1 )
         prompt.add_column( no_wrap=True, justify="right", width=20 )
+        prompt.add_column( no_wrap=True, width=1 )
         prompt.add_row(
+            "",
             self.FOLDER_ICON,
             location.name,
-            self._mtime( location )
+            self._mtime( location ),
+            ""
         )
         return prompt
 
     def _file( self, prompt: Table, location: Path ) -> RenderableType:
+        prompt.add_column( no_wrap=True, width=1 )
         prompt.add_column( no_wrap=True, justify="left", width=3 )
         prompt.add_column( no_wrap=True, justify="left", ratio=1 )
         prompt.add_column( no_wrap=True, justify="right", width=20 )
+        prompt.add_column( no_wrap=True, width=1 )
         prompt.add_row(
+            "",
             self.FILE_ICON,
             location.name,
-            self._mtime( location )
+            self._mtime( location ),
+            ""
         )
         return prompt
 
@@ -95,13 +103,6 @@ class DirectoryNavigation( OptionList ):
     Provides a single-pane widget that lets the user navigate their way
     through a filesystenm, changing in and out of directories, and selecting
     a file.
-    """
-
-    DEFAULT_CSS = """
-    DirectoryNavigation {
-        padding-left: 1;
-        padding-right: 1;
-    }
     """
 
     @dataclass
