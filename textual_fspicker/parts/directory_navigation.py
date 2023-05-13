@@ -42,7 +42,7 @@ class DirectoryNavigation( OptionList ):
     """The current location for the directory."""
 
     show_hidden: var[ bool ] = var( False )
-    """Should hidden file be shown?"""
+    """Should hidden entries be shown?"""
 
     def __init__( self, location: Path | str | None = None ) -> None:
         """Initialise the directory navigation widget.
