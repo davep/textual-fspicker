@@ -38,6 +38,14 @@ class DirectoryEntry( Option ):
 
     @staticmethod
     def _mtime( location: Path ) -> str:
+        """Get a formatted modification time for the given location.
+
+        Args:
+            location: The location to get the modification time for.
+
+        Returns:
+            The formatted modification time, to the nearest second.
+        """
         return datetime.fromtimestamp( int( location.stat().st_mtime ) ).isoformat().replace( "T", " " )
 
     def _as_renderable( self, location: Path ) -> RenderableType:
