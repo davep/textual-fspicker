@@ -66,7 +66,6 @@ class DirectoryEntry( Option ):
         )
         return prompt
 
-
 ##############################################################################
 class DirectoryNavigation( OptionList ):
     """A directory navigation widget."""
