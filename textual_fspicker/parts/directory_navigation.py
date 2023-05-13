@@ -57,15 +57,9 @@ class DirectoryEntry( Option ):
         Returns:
             The entry as a Rich renderable.
         """
-        # TODO: I can't quite get the layout I'm after here, finding the
-        # Rich table experience slightly confusing. Need to find the best
-        # way to do this. The thing I'd like to do here is say the first
-        # column is a specific size, possibly the last, then have the middle
-        # one take up the rest of the space but always be aligned left. It's
-        # not panning out that way though.
         prompt = Table.grid( expand=True )
-        prompt.add_column( no_wrap=True, justify="left", width=2 )
-        prompt.add_column( no_wrap=True, justify="left", width=50 )
+        prompt.add_column( no_wrap=True, justify="left", width=3 )
+        prompt.add_column( no_wrap=True, justify="left", ratio=1 )
         prompt.add_column( no_wrap=True, justify="right", width=20 )
         prompt.add_row(
             self.FOLDER_ICON,
