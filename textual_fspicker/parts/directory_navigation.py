@@ -31,8 +31,11 @@ class DirectoryEntry( Option ):
     FOLDER_ICON: Final[ RenderableType ] = Text.from_markup( ":file_folder:" )
     """The icon to use for a folder."""
 
+    FILE_ICON: Final[ RenderableType ] = Text.from_markup( ":page_facing_up:" )
+    """The icon to use for a file."""
+
     def __init__( self, location: Path ) -> None:
-        self.location: Path = location.resolve()
+        self.location: Path = location.absolute()
         """The location of this directory entry."""
         super().__init__( self._as_renderable( location ) )
 
@@ -46,18 +49,13 @@ class DirectoryEntry( Option ):
         Returns:
             The formatted modification time, to the nearest second.
         """
-        return datetime.fromtimestamp( int( location.stat().st_mtime ) ).isoformat().replace( "T", " " )
+        try:
+            mtime = location.stat().st_mtime
+        except FileNotFoundError:
+            mtime = 0
+        return datetime.fromtimestamp( int( mtime ) ).isoformat().replace( "T", " " )
 
-    def _as_renderable( self, location: Path ) -> RenderableType:
-        """Create the renderable for this entry.
-
-        Args:
-            location: The location to turn into a renderable.
-
-        Returns:
-            The entry as a Rich renderable.
-        """
-        prompt = Table.grid( expand=True )
+    def _dir( self, prompt: Table, location: Path ) -> RenderableType:
         prompt.add_column( no_wrap=True, justify="left", width=3 )
         prompt.add_column( no_wrap=True, justify="left", ratio=1 )
         prompt.add_column( no_wrap=True, justify="right", width=20 )
@@ -68,9 +66,36 @@ class DirectoryEntry( Option ):
         )
         return prompt
 
+    def _file( self, prompt: Table, location: Path ) -> RenderableType:
+        prompt.add_column( no_wrap=True, justify="left", width=3 )
+        prompt.add_column( no_wrap=True, justify="left", ratio=1 )
+        prompt.add_column( no_wrap=True, justify="right", width=20 )
+        prompt.add_row(
+            self.FILE_ICON,
+            location.name,
+            self._mtime( location )
+        )
+        return prompt
+
+    def _as_renderable( self, location: Path ) -> RenderableType:
+        """Create the renderable for this entry.
+
+        Args:
+            location: The location to turn into a renderable.
+
+        Returns:
+            The entry as a Rich renderable.
+        """
+        return ( { True: self._dir, False: self._file }[ location.is_dir() ] )( Table.grid( expand=True ), location )
+
 ##############################################################################
 class DirectoryNavigation( OptionList ):
-    """A directory navigation widget."""
+    """A directory navigation widget.
+
+    Provides a single-pane widget that lets the user navigate their way
+    through a filesystenm, changing in and out of directories, and selecting
+    a file.
+    """
 
     DEFAULT_CSS = """
     DirectoryNavigation {
@@ -80,13 +105,23 @@ class DirectoryNavigation( OptionList ):
     """
 
     @dataclass
-    class Changed( Message ):
-        """Message sent when the current directory has changed."""
+    class _BaseMessage( Message ):
+        """Base class for directory navigation messages."""
 
         control: DirectoryNavigation
-        """The directory navigation control that changed."""
+        """The directory navigation control sending the message."""
 
-    _location: var[ Path ] = var[ Path ]( Path( "." ).resolve(), init=False )
+    class Changed( _BaseMessage ):
+        """Message sent when the current directory has changed."""
+
+    @dataclass
+    class Selected( _BaseMessage ):
+        """Message sent when an entry in the filesystem is selected."""
+
+        path: Path = Path()
+        """The path to the entry that was selected."""
+
+    _location: var[ Path ] = var[ Path ]( Path( "." ).absolute(), init=False )
     """The current location for the directory."""
 
     show_hidden: var[ bool ] = var( False )
@@ -103,7 +138,7 @@ class DirectoryNavigation( OptionList ):
         """
         super().__init__()
         self._mounted                       = False
-        self.location                       = Path( "~" if location is None else location ).expanduser().resolve()
+        self.location                       = Path( "~" if location is None else location ).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
 
     @property
@@ -113,7 +148,7 @@ class DirectoryNavigation( OptionList ):
 
     @location.setter
     def location( self, new_location: Path | str ) -> None:
-        new_location = Path( new_location ).expanduser().resolve()
+        new_location = Path( new_location ).expanduser().absolute()
         if self._mounted:
             self._location = new_location
         else:
@@ -166,7 +201,7 @@ class DirectoryNavigation( OptionList ):
     def _sort( self, entries: Iterable[ DirectoryEntry ] ) -> Iterable[ DirectoryEntry ]:
         """Sort the entries as per the value of `sort_display`."""
         if self.sort_display:
-            return sorted( entries, key=lambda entry: entry.location.name )
+            return sorted( entries, key=lambda entry: ( not entry.location.is_dir(), entry.location.name ) )
         return entries
 
     def _repopulate_display( self ) -> None:
@@ -194,8 +229,7 @@ class DirectoryNavigation( OptionList ):
         # streaming them into the list via the app thread.
         worker = get_current_worker()
         for entry in self._location.iterdir():
-            if entry.is_dir():
-                self._entries.append( DirectoryEntry( self._location / entry.name ) )
+            self._entries.append( DirectoryEntry( self._location / entry.name ) )
             if worker.is_cancelled:
                 return
 
@@ -228,6 +262,9 @@ class DirectoryNavigation( OptionList ):
         """
         event.stop()
         assert isinstance( event.option, DirectoryEntry )
-        self._location = event.option.location
+        if event.option.location.is_dir():
+            self._location = event.option.location.resolve()
+        else:
+            self.post_message( self.Selected( self, event.option.location ) )
 
 ### directory_navigation.py ends here
