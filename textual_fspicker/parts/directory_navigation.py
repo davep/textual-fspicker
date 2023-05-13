@@ -2,13 +2,18 @@
 
 ##############################################################################
 # Python imports.
-from __future__  import annotations
-from dataclasses import dataclass
+from __future__        import annotations
+from dataclasses       import dataclass
+from datetime          import datetime
+from pathlib           import Path
+from typing            import Iterable
+from typing_extensions import Final
 
 ##############################################################################
-# Python imports.
-from pathlib import Path
-from typing  import Iterable
+# Rich imports.
+from rich.console import RenderableType
+from rich.table   import Table
+from rich.text    import Text
 
 ##############################################################################
 # Textual imports.
@@ -23,14 +28,55 @@ from textual.worker              import get_current_worker
 class DirectoryEntry( Option ):
     """A directory entry for the `DirectoryNaviation` class."""
 
+    FOLDER_ICON: Final[ RenderableType ] = Text.from_markup( ":file_folder:" )
+    """The icon to use for a folder."""
+
     def __init__( self, location: Path ) -> None:
         self.location: Path = location.resolve()
         """The location of this directory entry."""
-        super().__init__( location.name )
+        super().__init__( self._as_renderable( location ) )
+
+    @staticmethod
+    def _mtime( location: Path ) -> str:
+        return datetime.fromtimestamp( int( location.stat().st_mtime ) ).isoformat().replace( "T", " " )
+
+    def _as_renderable( self, location: Path ) -> RenderableType:
+        """Create the renderable for this entry.
+
+        Args:
+            location: The location to turn into a renderable.
+
+        Returns:
+            The entry as a Rich renderable.
+        """
+        # TODO: I can't quite get the layout I'm after here, finding the
+        # Rich table experience slightly confusing. Need to find the best
+        # way to do this. The thing I'd like to do here is say the first
+        # column is a specific size, possibly the last, then have the middle
+        # one take up the rest of the space but always be aligned left. It's
+        # not panning out that way though.
+        prompt = Table.grid( expand=True )
+        prompt.add_column( no_wrap=True, justify="left", width=2 )
+        prompt.add_column( no_wrap=True, justify="left", width=50 )
+        prompt.add_column( no_wrap=True, justify="right", width=20 )
+        prompt.add_row(
+            self.FOLDER_ICON,
+            location.name,
+            self._mtime( location )
+        )
+        return prompt
+
 
 ##############################################################################
 class DirectoryNavigation( OptionList ):
     """A directory navigation widget."""
+
+    DEFAULT_CSS = """
+    DirectoryNavigation {
+        padding-left: 1;
+        padding-right: 1;
+    }
+    """
 
     @dataclass
     class Changed( Message ):
