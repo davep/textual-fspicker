@@ -8,6 +8,7 @@ from dataclasses import dataclass
 ##############################################################################
 # Python imports.
 from pathlib import Path
+from typing  import Iterable
 
 ##############################################################################
 # Textual imports.
@@ -43,6 +44,9 @@ class DirectoryNavigation( OptionList ):
 
     show_hidden: var[ bool ] = var( False )
     """Should hidden entries be shown?"""
+
+    sort_display: var[ bool ] = var( True )
+    """Should the display be sorted?"""
 
     def __init__( self, location: Path | str | None = None ) -> None:
         """Initialise the directory navigation widget.
@@ -112,13 +116,19 @@ class DirectoryNavigation( OptionList ):
         """
         return self.is_hidden( path ) and not self.show_hidden
 
+    def _sort( self, entries: Iterable[ DirectoryEntry ] ) -> Iterable[ DirectoryEntry ]:
+        """Sort the entries as per the value of `sort_display`."""
+        if self.sort_display:
+            return sorted( entries, key=lambda entry: entry.location.name )
+        return entries
+
     def _repopulate_display( self ) -> None:
         """Repopulate the display of directories."""
         with self.app.batch_update():
             self.clear_options()
             if not self.is_root:
                 self.add_option( DirectoryEntry( self._location / ".." ) )
-            self.add_options( [ entry for entry in self._entries if not self.hide( entry.location ) ] )
+            self.add_options( self._sort( entry for entry in self._entries if not self.hide( entry.location ) ) )
         self._settle_highlight()
 
     @work(exclusive=True)
@@ -153,6 +163,10 @@ class DirectoryNavigation( OptionList ):
 
     def _watch_show_hidden( self ) -> None:
         """Reload the content if the show-hidden flag has changed."""
+        self._repopulate_display()
+
+    def _watch_sort_display( self ) -> None:
+        """Refresh the display if the sort option has been changed."""
         self._repopulate_display()
 
     def toggle_hidden( self ) -> None:
