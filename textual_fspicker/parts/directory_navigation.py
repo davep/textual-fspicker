@@ -51,8 +51,9 @@ class DirectoryNavigation( OptionList ):
             location: The starting location.
         """
         super().__init__()
-        self._mounted = False
-        self.location = Path( "~" if location is None else location ).expanduser().resolve()
+        self._mounted                       = False
+        self.location                       = Path( "~" if location is None else location ).expanduser().resolve()
+        self._entries: list[DirectoryEntry] = []
 
     @property
     def location( self ) -> Path:
@@ -111,36 +112,39 @@ class DirectoryNavigation( OptionList ):
         """
         return self.is_hidden( path ) and not self.show_hidden
 
+    def _repopulate_display( self ) -> None:
+        """Repopulate the display of directories."""
+        with self.app.batch_update():
+            self.clear_options()
+            if not self.is_root:
+                self.add_option( DirectoryEntry( self._location / ".." ) )
+            self.add_options( [ entry for entry in self._entries if not self.hide( entry.location ) ] )
+        self._settle_highlight()
+
     @work(exclusive=True)
     def _load( self ) -> None:
         """Load the current directory data."""
 
-        # Start out with a clear list.
-        self.app.call_from_thread( self.clear_options )
-
-        # If we're not at the root yet...
-        if not self.is_root:
-            # ...provide a path to the root.
-            self.app.call_from_thread( self.add_option, DirectoryEntry( self._location / ".." ) )
+        # Because we might end up slicing and dicing the list, and there's
+        # little point in reloading the data from the filesystem again if
+        # all the user is doing is requesting hidden files be shown/hidden,
+        # or the sort order be changed, or something, we're going to keep a
+        # parallel copy of *all* possible options for the list and then
+        # populate from that.
+        self._entries = []
 
         # Now loop over the directory, looking for directories within and
         # streaming them into the list via the app thread.
         worker = get_current_worker()
         for entry in self._location.iterdir():
-            if entry.is_dir() and not self.hide( entry ):
-                # TODO: While this is a more pure way of doing things...
-                # stream our way in one entry at a time, it can make it look
-                # like there's a bit of flicker while loading. So perhaps,
-                # in the end, decide to lost up the list and then blat them
-                # into the OptionList in one go.
-                self.app.call_from_thread(
-                    self.add_option, DirectoryEntry( self._location / entry.name )
-                )
+            if entry.is_dir():
+                self._entries.append( DirectoryEntry( self._location / entry.name ) )
             if worker.is_cancelled:
                 return
 
-        # Finally, ensure the first item is highlight.
-        self.app.call_from_thread( self._settle_highlight )
+        # Now that we've loaded everything up, let's make the call to update
+        # the display.
+        self.app.call_from_thread( self._repopulate_display )
 
     def _watch__location( self ) -> None:
         """Reload the content if the location changes."""
@@ -149,13 +153,7 @@ class DirectoryNavigation( OptionList ):
 
     def _watch_show_hidden( self ) -> None:
         """Reload the content if the show-hidden flag has changed."""
-        # TODO: This is a kind of expensive way to do things really.
-        # Longer-term what I'd like to do is keep a parallel cache of all
-        # entries found in the current directory so that the current view
-        # can be rebuilt without the need to go back to the filesystem. In
-        # this case I'd just rebuilt the OptionList from that parallel
-        # cache, which would include *everything* found all the time.
-        self._load()
+        self._repopulate_display()
 
     def toggle_hidden( self ) -> None:
         """Toggle the display of hidden filesystem entries."""
