@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+typing-extensions = "*"
 
 [dev-packages]
 textual = {extras = ["dev"], version = "*"}
