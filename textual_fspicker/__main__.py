@@ -13,7 +13,8 @@ class TestApp( App[ None ] ):
 
     BINDINGS = [
         Binding( "h", "toggle_hidden", "Toggle Hidden" ),
-        Binding( "s", "toggle_sort", "Toggle Sorting" )
+        Binding( "s", "toggle_sort", "Toggle Sorting" ),
+        Binding( "f", "toggle_files", "Toggle Files" )
     ]
 
 
@@ -32,6 +33,10 @@ class TestApp( App[ None ] ):
     def action_toggle_sort( self ) -> None:
         nav = self.query_one( DirectoryNavigation )
         nav.sort_display = not nav.sort_display
+
+    def action_toggle_files( self ) -> None:
+        nav = self.query_one( DirectoryNavigation )
+        nav.show_files = not nav.show_files
 
 if __name__ == "__main__":
     TestApp().run()

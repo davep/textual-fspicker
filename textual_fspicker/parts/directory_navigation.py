@@ -125,6 +125,9 @@ class DirectoryNavigation( OptionList ):
     _location: var[ Path ] = var[ Path ]( Path( "." ).absolute(), init=False )
     """The current location for the directory."""
 
+    show_files: var[ bool ] = var( True )
+    """Should files be shown and be selectable?"""
+
     show_hidden: var[ bool ] = var( False )
     """Should hidden entries be shown?"""
 
@@ -230,7 +233,8 @@ class DirectoryNavigation( OptionList ):
         # streaming them into the list via the app thread.
         worker = get_current_worker()
         for entry in self._location.iterdir():
-            self._entries.append( DirectoryEntry( self._location / entry.name ) )
+            if entry.is_dir() or ( entry.is_file and self.show_files ):
+                self._entries.append( DirectoryEntry( self._location / entry.name ) )
             if worker.is_cancelled:
                 return
 
@@ -246,6 +250,10 @@ class DirectoryNavigation( OptionList ):
     def _watch_show_hidden( self ) -> None:
         """Reload the content if the show-hidden flag has changed."""
         self._repopulate_display()
+
+    def _watch_show_files( self ) -> None:
+        """Reload the content if the show-files flag has changed."""
+        self._load()
 
     def _watch_sort_display( self ) -> None:
         """Refresh the display if the sort option has been changed."""
