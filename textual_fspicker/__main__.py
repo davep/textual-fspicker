@@ -24,8 +24,8 @@ class TestApp( App[ None ] ):
     def on_directory_navigation_changed( self, event: DirectoryNavigation.Changed ) -> None:
         self.query_one( DirectoryNavigation ).border_title = str( event.control.location )
 
-    def on_directory_navigation_selected( self, event: DirectoryNavigation.Selected ) -> None:
-        self.query_one( DirectoryNavigation ).border_subtitle = f"Last selected: {str( event.path )}"
+    def on_directory_navigation_highlighted( self, event: DirectoryNavigation.Highlighted ) -> None:
+        self.query_one( DirectoryNavigation ).border_subtitle = f"Current: {str( event.path )}"
 
     def action_toggle_hidden( self ) -> None:
         self.query_one( DirectoryNavigation ).toggle_hidden()

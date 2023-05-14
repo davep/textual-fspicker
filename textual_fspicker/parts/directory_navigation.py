@@ -116,11 +116,17 @@ class DirectoryNavigation( OptionList ):
         """Message sent when the current directory has changed."""
 
     @dataclass
-    class Selected( _BaseMessage ):
-        """Message sent when an entry in the filesystem is selected."""
+    class _PathMessage( _BaseMessage ):
+        """Base class for messages relating to a location in the filesystem."""
 
         path: Path = Path()
         """The path to the entry that was selected."""
+
+    class Highlighted( _PathMessage ):
+        """Message sent when an entry in the display is highlighted."""
+
+    class Selected( _PathMessage ):
+        """Message sent when an entry in the filesystem is selected."""
 
     _location: var[ Path ] = var[ Path ]( Path( "." ).absolute(), init=False )
     """The current location for the directory."""
@@ -262,6 +268,17 @@ class DirectoryNavigation( OptionList ):
     def toggle_hidden( self ) -> None:
         """Toggle the display of hidden filesystem entries."""
         self.show_hidden = not self.show_hidden
+
+    def _on_option_list_option_highlighted( self, event: OptionList.OptionHighlighted ) -> None:
+        """Handle an entry in the list being highlighted.
+
+        Args:
+            event: The event to handle.
+        """
+        event.stop()
+        if event.option is not None:
+            assert isinstance( event.option, DirectoryEntry )
+            self.post_message( self.Highlighted( self, event.option.location ) )
 
     def _on_option_list_option_selected( self, event: OptionList.OptionSelected ) -> None:
         """Handle an entry in the list being selected.
