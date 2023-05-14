@@ -288,9 +288,13 @@ class DirectoryNavigation( OptionList ):
         """
         event.stop()
         assert isinstance( event.option, DirectoryEntry )
+        # If the use has selected a directory...
         if event.option.location.is_dir():
+            # ...we do navigation and don't post anything from here.
             self._location = event.option.location.resolve()
         else:
+            # If it's not a directory it should be a file; that should be a
+            # selection event.
             self.post_message( self.Selected( self, event.option.location ) )
 
 ### directory_navigation.py ends here
