@@ -73,6 +73,15 @@ class DirectoryEntry( Option ):
         return str( entry_size )
 
     def _dir( self, prompt: Table, location: Path ) -> RenderableType:
+        """Generate a prompt for a directory.
+
+        Args:
+            prompt: The table to populate.
+            location: The location to generate the prompt for.
+
+        Returns:
+            A Rich renderable that will show the directory.
+        """
         prompt.add_column( no_wrap=True, width=1 )
         prompt.add_column( no_wrap=True, justify="left", width=3 )
         prompt.add_column( no_wrap=True, justify="left", ratio=1 )
@@ -90,6 +99,15 @@ class DirectoryEntry( Option ):
         return prompt
 
     def _file( self, prompt: Table, location: Path ) -> RenderableType:
+        """Generate a prompt for a file.
+
+        Args:
+            prompt: The table to populate.
+            location: The location to generate the prompt for.
+
+        Returns:
+            A Rich renderable that will show the file.
+        """
         prompt.add_column( no_wrap=True, width=1 )
         prompt.add_column( no_wrap=True, justify="left", width=3 )
         prompt.add_column( no_wrap=True, justify="left", ratio=1 )
