@@ -248,7 +248,7 @@ class DirectoryNavigation( OptionList ):
         self._load()
 
     def _watch_show_hidden( self ) -> None:
-        """Reload the content if the show-hidden flag has changed."""
+        """Refresh the display if the show-hidden flag has changed."""
         self._repopulate_display()
 
     def _watch_show_files( self ) -> None:
