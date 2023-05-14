@@ -55,16 +55,35 @@ class DirectoryEntry( Option ):
             mtime = 0
         return datetime.fromtimestamp( int( mtime ) ).isoformat().replace( "T", " " )
 
+    @staticmethod
+    def _size( location: Path ) -> str:
+        """Get a formatted size for the given location.
+
+        Args:
+            location: The location to get the size for.
+
+        Returns:
+            The formatted size.
+        """
+        try:
+            entry_size = location.stat().st_size
+        except FileNotFoundError:
+            entry_size = 0
+        # TODO: format well for a file browser.
+        return str( entry_size )
+
     def _dir( self, prompt: Table, location: Path ) -> RenderableType:
         prompt.add_column( no_wrap=True, width=1 )
         prompt.add_column( no_wrap=True, justify="left", width=3 )
         prompt.add_column( no_wrap=True, justify="left", ratio=1 )
+        prompt.add_column( no_wrap=True, justify="right", width=10 )
         prompt.add_column( no_wrap=True, justify="right", width=20 )
         prompt.add_column( no_wrap=True, width=1 )
         prompt.add_row(
             "",
             self.FOLDER_ICON,
             location.name,
+            self._size( location ),
             self._mtime( location ),
             ""
         )
@@ -74,12 +93,14 @@ class DirectoryEntry( Option ):
         prompt.add_column( no_wrap=True, width=1 )
         prompt.add_column( no_wrap=True, justify="left", width=3 )
         prompt.add_column( no_wrap=True, justify="left", ratio=1 )
+        prompt.add_column( no_wrap=True, justify="right", width=10 )
         prompt.add_column( no_wrap=True, justify="right", width=20 )
         prompt.add_column( no_wrap=True, width=1 )
         prompt.add_row(
             "",
             self.FILE_ICON,
             location.name,
+            self._size( location ),
             self._mtime( location ),
             ""
         )
