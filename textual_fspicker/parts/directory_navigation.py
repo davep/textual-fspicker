@@ -34,10 +34,26 @@ class DirectoryEntry( Option ):
     FILE_ICON: Final[ RenderableType ] = Text.from_markup( ":page_facing_up:" )
     """The icon to use for a file."""
 
+    LINK_ICON: Final[ Text ] = Text.from_markup( ":link:" )
+    """The icon to use for links."""
+
     def __init__( self, location: Path ) -> None:
         self.location: Path = location.absolute()
         """The location of this directory entry."""
         super().__init__( self._as_renderable( location ) )
+
+    def _name( self, location: Path ) -> RenderableType:
+        """Get a formatted name for the given location.
+
+        Args:
+            location: The location to get the name for.
+
+        Returns:
+            The formatted name.
+        """
+        return Text.assemble(
+            location.name, " ", self.LINK_ICON if location.is_symlink() else ""
+        )
 
     @staticmethod
     def _mtime( location: Path ) -> str:
@@ -91,7 +107,7 @@ class DirectoryEntry( Option ):
         prompt.add_row(
             "",
             self.FOLDER_ICON,
-            location.name,
+            self._name( location ),
             self._size( location ),
             self._mtime( location ),
             ""
@@ -117,7 +133,7 @@ class DirectoryEntry( Option ):
         prompt.add_row(
             "",
             self.FILE_ICON,
-            location.name,
+            self._name( location ),
             self._size( location ),
             self._mtime( location ),
             ""
