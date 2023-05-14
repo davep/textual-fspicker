@@ -28,10 +28,10 @@ from textual.worker              import get_current_worker
 class DirectoryEntry( Option ):
     """A directory entry for the `DirectoryNaviation` class."""
 
-    FOLDER_ICON: Final[ RenderableType ] = Text.from_markup( ":file_folder:" )
+    FOLDER_ICON: Final[ Text ] = Text.from_markup( ":file_folder:" )
     """The icon to use for a folder."""
 
-    FILE_ICON: Final[ RenderableType ] = Text.from_markup( ":page_facing_up:" )
+    FILE_ICON: Final[ Text ] = Text.from_markup( ":page_facing_up:" )
     """The icon to use for a file."""
 
     LINK_ICON: Final[ Text ] = Text.from_markup( ":link:" )
@@ -42,7 +42,7 @@ class DirectoryEntry( Option ):
         """The location of this directory entry."""
         super().__init__( self._as_renderable( location ) )
 
-    def _name( self, location: Path ) -> RenderableType:
+    def _name( self, location: Path ) -> Text:
         """Get a formatted name for the given location.
 
         Args:
@@ -88,7 +88,7 @@ class DirectoryEntry( Option ):
         # TODO: format well for a file browser.
         return str( entry_size )
 
-    def _dir( self, prompt: Table, location: Path ) -> RenderableType:
+    def _dir( self, prompt: Table, location: Path ) -> Table:
         """Generate a prompt for a directory.
 
         Args:
@@ -96,7 +96,7 @@ class DirectoryEntry( Option ):
             location: The location to generate the prompt for.
 
         Returns:
-            A Rich renderable that will show the directory.
+            The populated table.
         """
         prompt.add_column( no_wrap=True, width=1 )
         prompt.add_column( no_wrap=True, justify="left", width=3 )
@@ -114,7 +114,7 @@ class DirectoryEntry( Option ):
         )
         return prompt
 
-    def _file( self, prompt: Table, location: Path ) -> RenderableType:
+    def _file( self, prompt: Table, location: Path ) -> Table:
         """Generate a prompt for a file.
 
         Args:
@@ -122,7 +122,7 @@ class DirectoryEntry( Option ):
             location: The location to generate the prompt for.
 
         Returns:
-            A Rich renderable that will show the file.
+            The populated table
         """
         prompt.add_column( no_wrap=True, width=1 )
         prompt.add_column( no_wrap=True, justify="left", width=3 )
