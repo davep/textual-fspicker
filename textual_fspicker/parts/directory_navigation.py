@@ -294,7 +294,7 @@ class DirectoryNavigation( OptionList ):
         # streaming them into the list via the app thread.
         worker = get_current_worker()
         for entry in self._location.iterdir():
-            if entry.is_dir() or ( entry.is_file and self.show_files ):
+            if entry.is_dir() or ( entry.is_file() and self.show_files ):
                 self._entries.append( DirectoryEntry( self._location / entry.name ) )
             if worker.is_cancelled:
                 return
