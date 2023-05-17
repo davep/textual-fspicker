@@ -9,6 +9,7 @@ from pathlib    import Path
 # Textual imports.
 from textual            import on
 from textual.app        import ComposeResult
+from textual.binding    import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen     import ModalScreen
 from textual.widgets    import Button, Input
@@ -44,6 +45,11 @@ class FileOpen( ModalScreen[ Path ] ):
         width: 1fr;
     }
     """
+
+    BINDINGS = [
+        Binding( "escape", "dismiss" ),
+    ]
+    """The bindings for the dialog."""
 
     def compose( self ) -> ComposeResult:
         """Compose the child widgets.
