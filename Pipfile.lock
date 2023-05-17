@@ -129,11 +129,11 @@
         },
         "astroid": {
             "hashes": [
-                "sha256:a1b8543ef9d36ea777194bc9b17f5f8678d2c56ee6a45b2c2f17eec96f242347",
-                "sha256:c81e1c7fbac615037744d067a9bb5f9aeb655edf59b63ee8b59585475d6f80d8"
+                "sha256:078e5212f9885fa85fbb0cf0101978a336190aadea6e13305409d099f71b2324",
+                "sha256:1039262575027b441137ab4a62a793a9b43defb42c32d5670f38686207cd780f"
             ],
             "markers": "python_full_version >= '3.7.2'",
-            "version": "==2.15.4"
+            "version": "==2.15.5"
         },
         "async-timeout": {
             "hashes": [
@@ -273,11 +273,11 @@
         },
         "docutils": {
             "hashes": [
-                "sha256:a428f10de4de4774389734c986a01b4af2d802d26717108b0f1b9356862937c5",
-                "sha256:f75a5a52fbcacd81b47e42888ad2b380748aaccfb3f13af0fe69deb759f01eb6"
+                "sha256:96f387a2c5562db4476f09f13bbab2192e764cac08ebbf3a34a95d9b1e4a59d6",
+                "sha256:f08a4e276c3a1583a86dce3e34aba3fe04d02bba2dd51ed16106244e8a923e3b"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==0.20"
+            "version": "==0.20.1"
         },
         "frozenlist": {
             "hashes": [
@@ -772,11 +772,11 @@
                 "dev"
             ],
             "hashes": [
-                "sha256:4c7e1f4ed12b9615c63fa3eb7cb9df68d29e0ae5b2352997958cd7ee5533f926",
-                "sha256:a7deb7ac5a1502424c754fe165ae13cb3890e47ddc514d3f089cb2984c336d1d"
+                "sha256:5e2d6320026dd8ff86e0d023fc4988071e80ec2e34de913bd63263a8301d664b",
+                "sha256:8258499a09793696e13a1d1e1391810916828015a91770abd7ce3d9ab64cfd9e"
             ],
             "index": "pypi",
-            "version": "==0.24.1"
+            "version": "==0.25.0"
         },
         "tomli": {
             "hashes": [
