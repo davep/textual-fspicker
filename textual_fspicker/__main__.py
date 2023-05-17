@@ -1,42 +1,21 @@
-from textual.app     import App, ComposeResult
-from textual.binding import Binding
+from pathlib import Path
 
-from textual_fspicker.parts.directory_navigation import DirectoryNavigation
+from textual.app     import App, ComposeResult
+from textual.widgets import Label, Button
+
+from textual_fspicker.file_open import FileOpen
 
 class TestApp( App[ None ] ):
 
-    CSS = """
-    DirectoryNavigation {
-        border: thick cornflowerblue;
-    }
-    """
-
-    BINDINGS = [
-        Binding( "h", "toggle_hidden", "Toggle Hidden" ),
-        Binding( "s", "toggle_sort", "Toggle Sorting" ),
-        Binding( "f", "toggle_files", "Toggle Files" )
-    ]
-
-
     def compose( self ) -> ComposeResult:
-        yield DirectoryNavigation( "~" )
+        yield Label( "Press the button to pick something" )
+        yield Button( "Select a file" )
 
-    def on_directory_navigation_changed( self, event: DirectoryNavigation.Changed ) -> None:
-        self.query_one( DirectoryNavigation ).border_title = str( event.control.location )
+    def _open_file( self, to_open: Path ) -> None:
+        self.query_one( Label ).update( str( to_open ) )
 
-    def on_directory_navigation_highlighted( self, event: DirectoryNavigation.Highlighted ) -> None:
-        self.query_one( DirectoryNavigation ).border_subtitle = f"Current: {str( event.path )}"
-
-    def action_toggle_hidden( self ) -> None:
-        self.query_one( DirectoryNavigation ).toggle_hidden()
-
-    def action_toggle_sort( self ) -> None:
-        nav = self.query_one( DirectoryNavigation )
-        nav.sort_display = not nav.sort_display
-
-    def action_toggle_files( self ) -> None:
-        nav = self.query_one( DirectoryNavigation )
-        nav.show_files = not nav.show_files
+    def on_button_pressed( self ):
+        self.push_screen( FileOpen(), callback=self._open_file )
 
 if __name__ == "__main__":
     TestApp().run()
