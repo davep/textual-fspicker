@@ -11,6 +11,7 @@ textual = {extras = ["dev"], version = "*"}
 pylint = "*"
 mypy = "*"
 twine = "*"
+build = "*"
 
 [requires]
 python_version = "3.7"
