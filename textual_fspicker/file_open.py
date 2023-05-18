@@ -30,6 +30,9 @@ class FileOpen( ModalScreen[ Path ] ):
     FileOpen > Vertical#dialog {
         width: 80%;
         height: 80%;
+        border: thick $panel-lighten-2;
+        background: $panel-lighten-1;
+        padding: 1 2;
     }
 
     FileOpen Horizontal#input {
