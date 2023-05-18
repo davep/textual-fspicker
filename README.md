@@ -1,5 +1,8 @@
 # textual-fspicker
 
+![Viewing its own directory](https://raw.githubusercontent.com/davep/textual-fspicker/main/img/textual-fspicker.png)
+*An example of `textual-fsicker` being used in a Textual application*
+
 ## Introduction
 
 This library provides a simple set of filesystem navigation and picking
@@ -93,9 +96,11 @@ The `FileOpen` dialog has the following parameters:
 - [ ] Settle on a final set of default styles for the dialogs
 - [ ] Add a more file-save-oriented dialog
 - [ ] Add a directory picking dialog
-- [ ] Add file filtering
+- [ ] Add file filtering (extensions using `Select`)
 - [ ] Expose the hidden show/hide facility of the navigator in the dialogs
 - [ ] Better documentation
 - [ ] Test on Windows
+- [ ] Add custom mtime formatting
+- [ ] Add support for showing different times
 
 [//]: # (README.md ends here)
