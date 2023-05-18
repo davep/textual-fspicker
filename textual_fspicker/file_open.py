@@ -57,6 +57,7 @@ class FileOpen( ModalScreen[ Path ] ):
 
     BINDINGS = [
         Binding( "escape", "dismiss" ),
+        Binding( "full_stop", "hidden")
     ]
     """The bindings for the dialog."""
 
@@ -142,5 +143,9 @@ class FileOpen( ModalScreen[ Path ] ):
     def _clear_error( self ) -> None:
         """Clear any error that might be showing."""
         self._set_error()
+
+    def action_hidden( self ) -> None:
+        """Action for toggling the display of hidden files."""
+        self.query_one( DirectoryNavigation ).toggle_hidden()
 
 ### file_open.py ends here
