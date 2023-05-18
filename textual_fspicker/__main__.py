@@ -15,7 +15,7 @@ class TestApp( App[ None ] ):
         self.query_one( Label ).update( str( to_open ) )
 
     def on_button_pressed( self ):
-        self.push_screen( FileOpen(must_exist=False), callback=self._open_file )
+        self.push_screen( FileOpen("."), callback=self._open_file )
 
 if __name__ == "__main__":
     TestApp().run()

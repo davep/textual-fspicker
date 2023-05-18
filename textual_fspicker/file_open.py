@@ -30,14 +30,20 @@ class FileOpen( ModalScreen[ Path ] ):
     FileOpen > Vertical#dialog {
         width: 80%;
         height: 80%;
-        border: thick $panel-lighten-2;
+        border: panel $panel-lighten-2;
         background: $panel-lighten-1;
-        padding: 1 2;
+        border-title-color: $text;
+        border-title-background: $panel-lighten-2;
+        border-subtitle-color: $text;
+        border-subtitle-background: $error;
     }
 
     FileOpen Horizontal#input {
         height: auto;
         align: right middle;
+        padding-top: 1;
+        padding-right: 1;
+        padding-bottom: 1;
     }
 
     FileOpen Horizontal#input Button {
@@ -54,13 +60,19 @@ class FileOpen( ModalScreen[ Path ] ):
     ]
     """The bindings for the dialog."""
 
-    def __init__( self, must_exist: bool=True ) -> None:
+    def __init__( self, location: str | Path | None=None, title: str="Open", must_exist: bool=True ) -> None:
         """Initialise the `FileOpen` dialog.
 
         Args:
+            location: Optional starting location.
+            title: Optional title.
             must_exist: Flag to say if the file must exist.
         """
         super().__init__()
+        self._location = location
+        """The starting location."""
+        self._title = title
+        """The title for the dialog."""
         self._must_exist = must_exist
         """Must the file exist?"""
 
@@ -70,9 +82,10 @@ class FileOpen( ModalScreen[ Path ] ):
         Returns:
             The widgets to compose.
         """
-        with Vertical( id="dialog" ):
-            yield DirectoryNavigation()
-            with Horizontal( id="input"):
+        with Vertical( id="dialog" ) as dialog:
+            dialog.border_title = self._title
+            yield DirectoryNavigation(self._location)
+            with Horizontal( id="input" ):
                 yield Input()
                 yield Button( "Open", id="open" )
                 yield Button( "Cancel", id="cancel" )
@@ -101,6 +114,7 @@ class FileOpen( ModalScreen[ Path ] ):
         if file_name.value:
             chosen = self.query_one( DirectoryNavigation ).location / file_name.value
             if self._must_exist and not chosen.exists():
+                self.query_one( "#dialog", Vertical ).border_subtitle = "The file must exist"
                 return
             self.dismiss( result=chosen )
 
@@ -113,5 +127,10 @@ class FileOpen( ModalScreen[ Path ] ):
         """
         event.stop()
         self.dismiss()
+
+    @on( Input.Changed )
+    def _clear_error( self ) -> None:
+        """Clear any error that might be showing."""
+        self.query_one( "#dialog", Vertical ).border_subtitle = ""
 
 ### file_open.py ends here
