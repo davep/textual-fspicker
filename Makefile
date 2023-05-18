@@ -6,6 +6,7 @@ python := $(run) python
 lint   := $(run) pylint
 mypy   := $(run) mypy
 twine  := $(run) twine
+build  := $(python) -m build
 
 ##############################################################################
 # Run the plotter.
@@ -65,11 +66,11 @@ checkall: lint stricttypecheck # Check all the things
 # Package/publish.
 .PHONY: package
 package:			# Package the library
-	$(python) setup.py bdist_wheel
+	$(build) -w
 
 .PHONY: spackage
 spackage:			# Create a source package for the library
-	$(python) setup.py sdist
+	$(build) -s
 
 .PHONY: packagecheck
 packagecheck: package		# Check the packaging.
