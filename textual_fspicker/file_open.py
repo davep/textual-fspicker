@@ -51,6 +51,16 @@ class FileOpen( ModalScreen[ Path ] ):
     ]
     """The bindings for the dialog."""
 
+    def __init__( self, must_exist: bool=True ) -> None:
+        """Initialise the `FileOpen` dialog.
+
+        Args:
+            must_exist: Flag to say if the file must exist.
+        """
+        super().__init__()
+        self._must_exist = must_exist
+        """Must the file exist?"""
+
     def compose( self ) -> ComposeResult:
         """Compose the child widgets.
 
@@ -86,7 +96,10 @@ class FileOpen( ModalScreen[ Path ] ):
         event.stop()
         file_name = self.query_one( Input )
         if file_name.value:
-            self.dismiss( result=self.query_one( DirectoryNavigation ).location / file_name.value )
+            chosen = self.query_one( DirectoryNavigation ).location / file_name.value
+            if self._must_exist and not chosen.exists():
+                return
+            self.dismiss( result=chosen )
 
     @on( Button.Pressed, "#cancel" )
     def _cancel( self, event: Button.Pressed ) -> None:
