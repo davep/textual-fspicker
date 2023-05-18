@@ -90,6 +90,14 @@ class FileOpen( ModalScreen[ Path ] ):
                 yield Button( "Open", id="open" )
                 yield Button( "Cancel", id="cancel" )
 
+    def _set_error( self, message: str="" ) -> None:
+        """Set or clear the error message.
+
+        Args:
+            message: Optional message to show as an error.
+        """
+        self.query_one( "#dialog", Vertical ).border_subtitle = message
+
     @on( DirectoryNavigation.Selected )
     def _select_file( self, event: DirectoryNavigation.Selected ) -> None:
         """Handle a file being selected in the picker.
@@ -114,9 +122,11 @@ class FileOpen( ModalScreen[ Path ] ):
         if file_name.value:
             chosen = self.query_one( DirectoryNavigation ).location / file_name.value
             if self._must_exist and not chosen.exists():
-                self.query_one( "#dialog", Vertical ).border_subtitle = "The file must exist"
+                self._set_error( "The file must exist" )
                 return
             self.dismiss( result=chosen )
+        else:
+            self._set_error( "A file must be chosen" )
 
     @on( Button.Pressed, "#cancel" )
     def _cancel( self, event: Button.Pressed ) -> None:
@@ -131,6 +141,6 @@ class FileOpen( ModalScreen[ Path ] ):
     @on( Input.Changed )
     def _clear_error( self ) -> None:
         """Clear any error that might be showing."""
-        self.query_one( "#dialog", Vertical ).border_subtitle = ""
+        self._set_error()
 
 ### file_open.py ends here
