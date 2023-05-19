@@ -120,12 +120,33 @@ class FileOpen( ModalScreen[ Path ] ):
         """
         event.stop()
         file_name = self.query_one( Input )
+
+        # Only even try and process this if there's some input.
         if file_name.value:
-            chosen = self.query_one( DirectoryNavigation ).location / file_name.value
+
+            # Combine what was input with the current location of the
+            # navigation widget.
+            chosen = (
+                self.query_one( DirectoryNavigation ).location / file_name.value
+            ).expanduser().resolve()
+
+            # If it's a directory, approach it like it's the user simply
+            # doing a "cd".
+            if chosen.is_dir():
+                self.query_one( Input ).value                  = ""
+                self.query_one( DirectoryNavigation ).location = chosen
+                return
+
+            # At this point it's something that can be picked. Do the "must
+            # exist" test if needed.
             if self._must_exist and not chosen.exists():
                 self._set_error( "The file must exist" )
                 return
+
+            # Finally, we've got some sort of pickable item and it's good to
+            # be picked. Let's go with it.
             self.dismiss( result=chosen )
+
         else:
             self._set_error( "A file must be chosen" )
 
