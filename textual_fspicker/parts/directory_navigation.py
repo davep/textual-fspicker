@@ -26,7 +26,7 @@ from textual.worker              import get_current_worker
 
 ##############################################################################
 # Local imports.
-from ..safe_tests import is_dir, is_file
+from ..safe_tests import is_dir, is_file, is_symlink
 
 ##############################################################################
 class DirectoryEntry( Option ):
@@ -56,7 +56,7 @@ class DirectoryEntry( Option ):
             The formatted name.
         """
         return Text.assemble(
-            location.name, " ", self.LINK_ICON if location.is_symlink() else ""
+            location.name, " ", self.LINK_ICON if is_symlink( location ) else ""
         )
 
     @staticmethod
