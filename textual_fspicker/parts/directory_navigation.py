@@ -92,58 +92,6 @@ class DirectoryEntry( Option ):
         # TODO: format well for a file browser.
         return str( entry_size )
 
-    def _dir( self, prompt: Table, location: Path ) -> Table:
-        """Generate a prompt for a directory.
-
-        Args:
-            prompt: The table to populate.
-            location: The location to generate the prompt for.
-
-        Returns:
-            The populated table.
-        """
-        prompt.add_column( no_wrap=True, width=1 )
-        prompt.add_column( no_wrap=True, justify="left", width=3 )
-        prompt.add_column( no_wrap=True, justify="left", ratio=1 )
-        prompt.add_column( no_wrap=True, justify="right", width=10 )
-        prompt.add_column( no_wrap=True, justify="right", width=20 )
-        prompt.add_column( no_wrap=True, width=1 )
-        prompt.add_row(
-            "",
-            self.FOLDER_ICON,
-            self._name( location ),
-            self._size( location ),
-            self._mtime( location ),
-            ""
-        )
-        return prompt
-
-    def _file( self, prompt: Table, location: Path ) -> Table:
-        """Generate a prompt for a file.
-
-        Args:
-            prompt: The table to populate.
-            location: The location to generate the prompt for.
-
-        Returns:
-            The populated table
-        """
-        prompt.add_column( no_wrap=True, width=1 )
-        prompt.add_column( no_wrap=True, justify="left", width=3 )
-        prompt.add_column( no_wrap=True, justify="left", ratio=1 )
-        prompt.add_column( no_wrap=True, justify="right", width=10 )
-        prompt.add_column( no_wrap=True, justify="right", width=20 )
-        prompt.add_column( no_wrap=True, width=1 )
-        prompt.add_row(
-            "",
-            self.FILE_ICON,
-            self._name( location ),
-            self._size( location ),
-            self._mtime( location ),
-            ""
-        )
-        return prompt
-
     def _as_renderable( self, location: Path ) -> RenderableType:
         """Create the renderable for this entry.
 
@@ -153,7 +101,22 @@ class DirectoryEntry( Option ):
         Returns:
             The entry as a Rich renderable.
         """
-        return ( { True: self._dir, False: self._file }[ is_dir( location ) ] )( Table.grid( expand=True ), location )
+        prompt = Table.grid( expand=True )
+        prompt.add_column( no_wrap=True, width=1 )
+        prompt.add_column( no_wrap=True, justify="left", width=3 )
+        prompt.add_column( no_wrap=True, justify="left", ratio=1 )
+        prompt.add_column( no_wrap=True, justify="right", width=10 )
+        prompt.add_column( no_wrap=True, justify="right", width=20 )
+        prompt.add_column( no_wrap=True, width=1 )
+        prompt.add_row(
+            "",
+            self.FOLDER_ICON if is_dir( location ) else self.FILE_ICON,
+            self._name( location ),
+            self._size( location ),
+            self._mtime( location ),
+            ""
+        )
+        return prompt
 
 ##############################################################################
 class DirectoryNavigation( OptionList ):
