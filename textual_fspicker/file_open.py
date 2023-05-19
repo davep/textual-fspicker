@@ -19,6 +19,14 @@ from textual.widgets    import Button, Input
 from .parts import DirectoryNavigation
 
 ##############################################################################
+class Dialog( Vertical ):
+    """Layout class for the main dialog area."""
+
+##############################################################################
+class InputBar( Horizontal ):
+    """The input bar area of the dialog."""
+
+##############################################################################
 class FileOpen( ModalScreen[ Path ] ):
     """A file opening dialog."""
 
@@ -27,7 +35,7 @@ class FileOpen( ModalScreen[ Path ] ):
         align: center middle;
     }
 
-    FileOpen > Vertical#dialog {
+    FileOpen Dialog {
         width: 80%;
         height: 80%;
         border: panel $panel-lighten-2;
@@ -38,7 +46,7 @@ class FileOpen( ModalScreen[ Path ] ):
         border-subtitle-background: $error;
     }
 
-    FileOpen Horizontal#input {
+    FileOpen InputBar {
         height: auto;
         align: right middle;
         padding-top: 1;
@@ -46,11 +54,11 @@ class FileOpen( ModalScreen[ Path ] ):
         padding-bottom: 1;
     }
 
-    FileOpen Horizontal#input Button {
+    FileOpen InputBar Button {
         margin-left: 1;
     }
 
-    FileOpen Horizontal#input Input {
+    FileOpen InputBar Input {
         width: 1fr;
     }
     """
@@ -83,10 +91,10 @@ class FileOpen( ModalScreen[ Path ] ):
         Returns:
             The widgets to compose.
         """
-        with Vertical( id="dialog" ) as dialog:
+        with Dialog() as dialog:
             dialog.border_title = self._title
             yield DirectoryNavigation(self._location)
-            with Horizontal( id="input" ):
+            with InputBar():
                 yield Input()
                 yield Button( "Open", id="open" )
                 yield Button( "Cancel", id="cancel" )
@@ -97,7 +105,7 @@ class FileOpen( ModalScreen[ Path ] ):
         Args:
             message: Optional message to show as an error.
         """
-        self.query_one( "#dialog", Vertical ).border_subtitle = message
+        self.query_one( Dialog ).border_subtitle = message
 
     @on( DirectoryNavigation.Selected )
     def _select_file( self, event: DirectoryNavigation.Selected ) -> None:
