@@ -161,6 +161,7 @@ class FileOpen( ModalScreen[ Path ] ):
                 if chosen.is_dir():
                     self.query_one( Input ).value                  = ""
                     self.query_one( DirectoryNavigation ).location = chosen
+                    self.query_one( DirectoryNavigation ).focus()
                     return
             except PermissionError:
                 self._set_error( "Permission error" )
