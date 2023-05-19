@@ -38,12 +38,12 @@ def is_file( location: Path ) -> bool:
         location: The location to test.
 
     Returns:
-        `True` if the location looks like a directory, `False` if not, or if
-        it could not be determined.
+        `True` if the location looks like a file or if it could not be
+        determined, `False` it can be known it doesn't look like a file.
 
     Note:
         This function swallows `PermissionError` and just returns that the
-        location isn't a directory.
+        location is a file.
     """
     try:
         return location.is_file()
@@ -63,7 +63,7 @@ def is_symlink( location: Path ) -> bool:
 
     Note:
         This function swallows `PermissionError` and just returns that the
-        location isn't a directory.
+        location isn't a symlink.
     """
     try:
         return location.is_symlink()
