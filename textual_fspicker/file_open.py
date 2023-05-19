@@ -118,6 +118,11 @@ class FileOpen( ModalScreen[ Path ] ):
         file_name.value = str( event.path.name )
         file_name.focus()
 
+    @on( DirectoryNavigation.PermissionError )
+    def _show_permission_error( self ) -> None:
+        """Show any permission error bubbled up from the directory navigator."""
+        self._set_error( "Permission error" )
+
     @on( Input.Submitted )
     @on( Button.Pressed, "#open" )
     def _confirm_file( self, event: Input.Submitted | Button.Pressed ) -> None:
@@ -152,9 +157,13 @@ class FileOpen( ModalScreen[ Path ] ):
 
             # If it's a directory, approach it like it's the user simply
             # doing a "cd".
-            if chosen.is_dir():
-                self.query_one( Input ).value                  = ""
-                self.query_one( DirectoryNavigation ).location = chosen
+            try:
+                if chosen.is_dir():
+                    self.query_one( Input ).value                  = ""
+                    self.query_one( DirectoryNavigation ).location = chosen
+                    return
+            except PermissionError:
+                self._set_error( "Permission error" )
                 return
 
             # At this point it's something that can be picked. Do the "must

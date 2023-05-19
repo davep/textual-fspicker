@@ -25,6 +25,10 @@ from textual.widgets.option_list import Option
 from textual.worker              import get_current_worker
 
 ##############################################################################
+# Local imports.
+from ..safe_tests import is_dir, is_file
+
+##############################################################################
 class DirectoryEntry( Option ):
     """A directory entry for the `DirectoryNaviation` class."""
 
@@ -149,7 +153,7 @@ class DirectoryEntry( Option ):
         Returns:
             The entry as a Rich renderable.
         """
-        return ( { True: self._dir, False: self._file }[ location.is_dir() ] )( Table.grid( expand=True ), location )
+        return ( { True: self._dir, False: self._file }[ is_dir( location ) ] )( Table.grid( expand=True ), location )
 
 ##############################################################################
 class DirectoryNavigation( OptionList ):
@@ -182,6 +186,9 @@ class DirectoryNavigation( OptionList ):
 
     class Selected( _PathMessage ):
         """Message sent when an entry in the filesystem is selected."""
+
+    class PermissionError( _PathMessage ):
+        """Message sent when there's a permission problem with a path."""
 
     _location: var[ Path ] = var[ Path ]( Path( "." ).absolute(), init=False )
     """The current location for the directory."""
@@ -266,7 +273,7 @@ class DirectoryNavigation( OptionList ):
     def _sort( self, entries: Iterable[ DirectoryEntry ] ) -> Iterable[ DirectoryEntry ]:
         """Sort the entries as per the value of `sort_display`."""
         if self.sort_display:
-            return sorted( entries, key=lambda entry: ( not entry.location.is_dir(), entry.location.name ) )
+            return sorted( entries, key=lambda entry: ( not is_dir( entry.location ), entry.location.name ) )
         return entries
 
     def _repopulate_display( self ) -> None:
@@ -293,11 +300,14 @@ class DirectoryNavigation( OptionList ):
         # Now loop over the directory, looking for directories within and
         # streaming them into the list via the app thread.
         worker = get_current_worker()
-        for entry in self._location.iterdir():
-            if entry.is_dir() or ( entry.is_file() and self.show_files ):
-                self._entries.append( DirectoryEntry( self._location / entry.name ) )
-            if worker.is_cancelled:
-                return
+        try:
+            for entry in self._location.iterdir():
+                if is_dir( entry ) or ( is_file( entry ) and self.show_files ):
+                    self._entries.append( DirectoryEntry( self._location / entry.name ) )
+                if worker.is_cancelled:
+                    return
+        except PermissionError:
+            self.post_message( self.PermissionError( self, self._location ) )
 
         # Now that we've loaded everything up, let's make the call to update
         # the display.
@@ -344,7 +354,7 @@ class DirectoryNavigation( OptionList ):
         event.stop()
         assert isinstance( event.option, DirectoryEntry )
         # If the use has selected a directory...
-        if event.option.location.is_dir():
+        if is_dir( event.option.location ):
             # ...we do navigation and don't post anything from here.
             self._location = event.option.location.resolve()
         else:
