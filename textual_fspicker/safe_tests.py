@@ -50,4 +50,24 @@ def is_file( location: Path ) -> bool:
     except PermissionError:
         return True
 
+##############################################################################
+def is_symlink( location: Path ) -> bool:
+    """A safe version of is_symlink.
+
+    Args:
+        location: The location to test.
+
+    Returns:
+        `True` if the location looks like a symlink, `False` if not, or if
+        it could not be determined.
+
+    Note:
+        This function swallows `PermissionError` and just returns that the
+        location isn't a directory.
+    """
+    try:
+        return location.is_symlink()
+    except PermissionError:
+        return False
+
 ### safe_tests.py ends here
