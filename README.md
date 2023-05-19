@@ -1,7 +1,7 @@
 # textual-fspicker
 
 ![Viewing its own directory](https://raw.githubusercontent.com/davep/textual-fspicker/main/img/textual-fspicker.png)
-*An example of `textual-fsicker` being used in a Textual application*
+*An example of `textual-fspicker` being used in a Textual application*
 
 ## Introduction
 
