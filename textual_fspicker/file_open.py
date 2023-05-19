@@ -124,11 +124,23 @@ class FileOpen( ModalScreen[ Path ] ):
         # Only even try and process this if there's some input.
         if file_name.value:
 
-            # Combine what was input with the current location of the
-            # navigation widget.
-            chosen = (
-                self.query_one( DirectoryNavigation ).location / file_name.value
-            ).expanduser().resolve()
+            # If it looks like the user is typing in some sort of home
+            # directory path... (does pathlib let me test for this, or at
+            # least ask what the home character is? Docs don't mention this;
+            # so for now I'm going to hard-code this).
+            if file_name.value.startswith( "~" ):
+                # ...let's simply expand and go with that.
+                try:
+                    chosen = Path( file_name.value ).expanduser()
+                except RuntimeError as error:
+                    self._set_error( str( error ) )
+                    return
+            else:
+                # It's not a home directory path, so let's combine with the
+                # location of the directory navigator widget.
+                chosen = (
+                    self.query_one( DirectoryNavigation ).location / file_name.value
+                ).resolve()
 
             # If it's a directory, approach it like it's the user simply
             # doing a "cd".
