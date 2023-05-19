@@ -191,6 +191,7 @@ class FileOpen( ModalScreen[ Path ] ):
         self.dismiss()
 
     @on( Input.Changed )
+    @on( DirectoryNavigation.Changed )
     def _clear_error( self ) -> None:
         """Clear any error that might be showing."""
         self._set_error()
