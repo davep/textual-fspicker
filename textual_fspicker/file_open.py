@@ -65,7 +65,7 @@ class FileOpen( ModalScreen[ Path ] ):
 
     BINDINGS = [
         Binding( "escape", "dismiss" ),
-        Binding( "full_stop", "hidden")
+        Binding( "full_stop", "hidden" )
     ]
     """The bindings for the dialog."""
 
