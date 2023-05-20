@@ -1,5 +1,11 @@
 # ChangeLog
 
+## v0.0.3
+
+**Released: WiP**
+
+- Added the ability to style the content of the `DirectoryNaviation` widget.
+
 ## v0.0.2
 
 **Released: 2023-05-19**

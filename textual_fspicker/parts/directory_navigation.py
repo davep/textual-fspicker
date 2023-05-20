@@ -6,12 +6,13 @@ from __future__        import annotations
 from dataclasses       import dataclass
 from datetime          import datetime
 from pathlib           import Path
-from typing            import Iterable
+from typing            import ClassVar, Iterable, NamedTuple
 from typing_extensions import Final
 
 ##############################################################################
 # Rich imports.
 from rich.console import RenderableType
+from rich.style   import Style
 from rich.table   import Table
 from rich.text    import Text
 
@@ -29,6 +30,22 @@ from textual.worker              import get_current_worker
 from ..safe_tests import is_dir, is_file, is_symlink
 
 ##############################################################################
+class DirectoryEntryStyling( NamedTuple ):
+    """Styling for directory entries."""
+
+    hidden: Style
+    """Styling for hidden entries."""
+
+    name: Style
+    """Styling for a name."""
+
+    size: Style
+    """Styling for a size."""
+
+    time: Style
+    """Styling for a time."""
+
+##############################################################################
 class DirectoryEntry( Option ):
     """A directory entry for the `DirectoryNaviation` class."""
 
@@ -41,9 +58,10 @@ class DirectoryEntry( Option ):
     LINK_ICON: Final[ Text ] = Text.from_markup( ":link:" )
     """The icon to use for links."""
 
-    def __init__( self, location: Path ) -> None:
+    def __init__( self, location: Path, styles: DirectoryEntryStyling ) -> None:
         self.location: Path = location.absolute()
         """The location of this directory entry."""
+        self._styles = styles
         super().__init__( self._as_renderable( location ) )
 
     def _name( self, location: Path ) -> Text:
@@ -59,8 +77,7 @@ class DirectoryEntry( Option ):
             location.name, " ", self.LINK_ICON if is_symlink( location ) else ""
         )
 
-    @staticmethod
-    def _mtime( location: Path ) -> str:
+    def _mtime( self, location: Path ) -> str:
         """Get a formatted modification time for the given location.
 
         Args:
@@ -75,8 +92,7 @@ class DirectoryEntry( Option ):
             mtime = 0
         return datetime.fromtimestamp( int( mtime ) ).isoformat().replace( "T", " " )
 
-    @staticmethod
-    def _size( location: Path ) -> str:
+    def _size( self, location: Path ) -> str:
         """Get a formatted size for the given location.
 
         Args:
@@ -92,6 +108,18 @@ class DirectoryEntry( Option ):
         # TODO: format well for a file browser.
         return str( entry_size )
 
+    def _style( self, base: Style, location: Path ) -> Style:
+        """Decide the best style to use.
+
+        Args:
+            base: The base style to start with.
+            location: The location to decide the style for.
+        """
+        return Style(
+            color  = self._styles.hidden.color,
+            italic = self._styles.hidden.italic
+        ) if DirectoryNavigation.is_hidden( location ) else base
+
     def _as_renderable( self, location: Path ) -> RenderableType:
         """Create the renderable for this entry.
 
@@ -101,12 +129,13 @@ class DirectoryEntry( Option ):
         Returns:
             The entry as a Rich renderable.
         """
+
         prompt = Table.grid( expand=True )
         prompt.add_column( no_wrap=True, width=1 )
         prompt.add_column( no_wrap=True, justify="left", width=3 )
-        prompt.add_column( no_wrap=True, justify="left", ratio=1 )
-        prompt.add_column( no_wrap=True, justify="right", width=10 )
-        prompt.add_column( no_wrap=True, justify="right", width=20 )
+        prompt.add_column( no_wrap=True, justify="left", ratio=1, style=self._style( self._styles.name, location ) )
+        prompt.add_column( no_wrap=True, justify="right", width=10, style=self._style( self._styles.size, location ) )
+        prompt.add_column( no_wrap=True, justify="right", width=20, style=self._style( self._styles.time, location ) )
         prompt.add_column( no_wrap=True, width=1 )
         prompt.add_row(
             "",
@@ -126,6 +155,34 @@ class DirectoryNavigation( OptionList ):
     through a filesystenm, changing in and out of directories, and selecting
     a file.
     """
+
+    COMPONENT_CLASSES: ClassVar[set[str]] = {
+        "directory-navigation--hidden",
+        "directory-navigation--name",
+        "directory-navigation--size",
+        "directory-navigation--time",
+    }
+    """Component styles for the directory navigation widget."""
+
+    DEFAULT_CSS = """
+    DirectoryNavigation > .directory-navigation--hidden {
+        color: $text-muted;
+        text-style: italic;
+    }
+
+    DirectoryNavigation > .directory-navigation--name {
+        color: $text;
+    }
+
+    DirectoryNavigation > .directory-navigation--size {
+        color: $text;
+    }
+
+    DirectoryNavigation > .directory-navigation--time {
+        color: $text;
+    }
+    """
+    """Default styling for the widget."""
 
     @dataclass
     class _BaseMessage( Message ):
@@ -220,7 +277,7 @@ class DirectoryNavigation( OptionList ):
             I'll extend this to detect hidden files in the most appropriate
             way for the current operating system.
         """
-        return path.name.startswith( "." )
+        return path.name.startswith( "." ) and path.name != ".."
 
     def hide( self, path: Path ) -> bool:
         """Should we hide the given path?
@@ -239,12 +296,23 @@ class DirectoryNavigation( OptionList ):
             return sorted( entries, key=lambda entry: ( not is_dir( entry.location ), entry.location.name ) )
         return entries
 
+    @property
+    def _styles( self ) -> DirectoryEntryStyling:
+        """The styles to use for a directory entry."""
+        return DirectoryEntryStyling(
+            self.get_component_rich_style( "directory-navigation--hidden" ),
+            self.get_component_rich_style( "directory-navigation--name", partial=True ),
+            self.get_component_rich_style( "directory-navigation--size", partial=True  ),
+            self.get_component_rich_style( "directory-navigation--time", partial=True  ),
+        )
+
     def _repopulate_display( self ) -> None:
         """Repopulate the display of directories."""
+        styles = self._styles
         with self.app.batch_update():
             self.clear_options()
             if not self.is_root:
-                self.add_option( DirectoryEntry( self._location / ".." ) )
+                self.add_option( DirectoryEntry( self._location / "..", styles ) )
             self.add_options( self._sort( entry for entry in self._entries if not self.hide( entry.location ) ) )
         self._settle_highlight()
 
@@ -263,10 +331,11 @@ class DirectoryNavigation( OptionList ):
         # Now loop over the directory, looking for directories within and
         # streaming them into the list via the app thread.
         worker = get_current_worker()
+        styles = self._styles
         try:
             for entry in self._location.iterdir():
                 if is_dir( entry ) or ( is_file( entry ) and self.show_files ):
-                    self._entries.append( DirectoryEntry( self._location / entry.name ) )
+                    self._entries.append( DirectoryEntry( self._location / entry.name, styles ) )
                 if worker.is_cancelled:
                     return
         except PermissionError:
