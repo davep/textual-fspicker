@@ -64,7 +64,8 @@ class DirectoryEntry( Option ):
         self._styles = styles
         super().__init__( self._as_renderable( location ) )
 
-    def _name( self, location: Path ) -> Text:
+    @classmethod
+    def _name( cls, location: Path ) -> Text:
         """Get a formatted name for the given location.
 
         Args:
@@ -74,10 +75,11 @@ class DirectoryEntry( Option ):
             The formatted name.
         """
         return Text.assemble(
-            location.name, " ", self.LINK_ICON if is_symlink( location ) else ""
+            location.name, " ", cls.LINK_ICON if is_symlink( location ) else ""
         )
 
-    def _mtime( self, location: Path ) -> str:
+    @staticmethod
+    def _mtime( location: Path ) -> str:
         """Get a formatted modification time for the given location.
 
         Args:
@@ -92,7 +94,8 @@ class DirectoryEntry( Option ):
             mtime = 0
         return datetime.fromtimestamp( int( mtime ) ).isoformat().replace( "T", " " )
 
-    def _size( self, location: Path ) -> str:
+    @staticmethod
+    def _size( location: Path ) -> str:
         """Get a formatted size for the given location.
 
         Args:
