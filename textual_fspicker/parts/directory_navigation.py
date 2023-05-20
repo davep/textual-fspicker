@@ -118,9 +118,11 @@ class DirectoryEntry( Option ):
             base: The base style to start with.
             location: The location to decide the style for.
         """
-        return Style(
-            color  = self._styles.hidden.color,
-            italic = self._styles.hidden.italic
+        return base + Style(
+            color     = self._styles.hidden.color,
+            italic    = self._styles.hidden.italic,
+            bold      = self._styles.hidden.bold,
+            underline = self._styles.hidden.underline
         ) if DirectoryNavigation.is_hidden( location ) else base
 
     def _as_renderable( self, location: Path ) -> RenderableType:
