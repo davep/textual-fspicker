@@ -120,6 +120,8 @@ The `FileOpen` dialog has the following parameters:
 - `title` - The optional title, defaults to `"Open"`
 - `must_exist` - Optional flag to say the chosen file must exist, defaults
   to `True`.
+- `filters` - Optional `Filters` object that provides a collection of file
+  filters for the dialog.
 
 ## TODO
 
