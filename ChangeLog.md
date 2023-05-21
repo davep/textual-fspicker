@@ -2,7 +2,7 @@
 
 ## v0.0.3
 
-**Released: WiP**
+**Released: 2023-05-21**
 
 - Added the ability to style the content of the `DirectoryNaviation` widget.
 - Added support for file filters to `FileOpen`.
