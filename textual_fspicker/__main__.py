@@ -43,7 +43,7 @@ class TestApp( App[ None ] ):
         """
         self.query_one( Label ).update( str( to_show ) )
 
-    def on_button_pressed( self ):
+    def on_button_pressed( self ) -> None:
         """Show the `FileOpen` dialog when the button is pushed."""
         self.push_screen(
             FileOpen( ".", filters=Filters(
