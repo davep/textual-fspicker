@@ -6,7 +6,7 @@ from __future__        import annotations
 from dataclasses       import dataclass
 from datetime          import datetime
 from pathlib           import Path
-from typing            import ClassVar, Iterable, NamedTuple
+from typing            import ClassVar, Iterable, NamedTuple, Optional
 from typing_extensions import Final
 
 ##############################################################################
@@ -27,7 +27,8 @@ from textual.worker              import get_current_worker
 
 ##############################################################################
 # Local imports.
-from ..safe_tests import is_dir, is_file, is_symlink
+from ..safe_tests   import is_dir, is_file, is_symlink
+from ..path_filters import Filter
 
 ##############################################################################
 class DirectoryEntryStyling( NamedTuple ):
@@ -218,6 +219,9 @@ class DirectoryNavigation( OptionList ):
     _location: var[ Path ] = var[ Path ]( Path( "." ).absolute(), init=False )
     """The current location for the directory."""
 
+    file_filter: var[ Filter | None ] = var[ Optional[ Filter ] ]( None )
+    """The active file filter."""
+
     show_files: var[ bool ] = var( True )
     """Should files be shown and be selectable?"""
 
@@ -293,6 +297,12 @@ class DirectoryNavigation( OptionList ):
         Returns:
             `True` if the path should be hidden, `False` if not.
         """
+        # If there's a custom filter in place, give that a go first...
+        if self.file_filter is not None and is_file( path ):
+            if not self.file_filter( path ):
+                return True
+        # Either there is no custom filter, or whatever we're looking at
+        # passed so far; not do final checks.
         return self.is_hidden( path ) and not self.show_hidden
 
     def _sort( self, entries: Iterable[ DirectoryEntry ] ) -> Iterable[ DirectoryEntry ]:
@@ -365,6 +375,10 @@ class DirectoryNavigation( OptionList ):
 
     def _watch_sort_display( self ) -> None:
         """Refresh the display if the sort option has been changed."""
+        self._repopulate_display()
+
+    def _watch_file_filter( self ) -> None:
+        """Refresh the display when the file filter has been changed."""
         self._repopulate_display()
 
     def toggle_hidden( self ) -> None:

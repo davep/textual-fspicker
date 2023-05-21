@@ -12,11 +12,12 @@ from textual.app        import ComposeResult
 from textual.binding    import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen     import ModalScreen
-from textual.widgets    import Button, Input
+from textual.widgets    import Button, Input, Select
 
 ##############################################################################
 # Local imports.
-from .parts import DirectoryNavigation
+from .parts        import DirectoryNavigation
+from .path_filters import Filters
 
 ##############################################################################
 class Dialog( Vertical ):
@@ -25,6 +26,10 @@ class Dialog( Vertical ):
 ##############################################################################
 class InputBar( Horizontal ):
     """The input bar area of the dialog."""
+
+##############################################################################
+class FileFilter( Select[ int ] ):
+    """The file filter."""
 
 ##############################################################################
 class FileOpen( ModalScreen[ Path ] ):
@@ -59,6 +64,10 @@ class FileOpen( ModalScreen[ Path ] ):
     }
 
     FileOpen InputBar Input {
+        width: 2fr;
+    }
+
+    FileOpen InputBar Select {
         width: 1fr;
     }
     """
@@ -69,7 +78,13 @@ class FileOpen( ModalScreen[ Path ] ):
     ]
     """The bindings for the dialog."""
 
-    def __init__( self, location: str | Path | None=None, title: str="Open", must_exist: bool=True ) -> None:
+    def __init__(
+            self,
+            location: str | Path | None = None,
+            title: str = "Open",
+            must_exist: bool = True,
+            filters: Filters | None = None
+        ) -> None:
         """Initialise the `FileOpen` dialog.
 
         Args:
@@ -84,6 +99,8 @@ class FileOpen( ModalScreen[ Path ] ):
         """The title for the dialog."""
         self._must_exist = must_exist
         """Must the file exist?"""
+        self._filters = filters
+        """The filters for the dialog."""
 
     def compose( self ) -> ComposeResult:
         """Compose the child widgets.
@@ -96,6 +113,13 @@ class FileOpen( ModalScreen[ Path ] ):
             yield DirectoryNavigation(self._location)
             with InputBar():
                 yield Input()
+                if self._filters:
+                    yield FileFilter(
+                        self._filters.selections,
+                        prompt      = "File filter",
+                        value       = 0,
+                        allow_blank = False
+                    )
                 yield Button( "Open", id="open" )
                 yield Button( "Cancel", id="cancel" )
 
@@ -199,5 +223,20 @@ class FileOpen( ModalScreen[ Path ] ):
     def action_hidden( self ) -> None:
         """Action for toggling the display of hidden files."""
         self.query_one( DirectoryNavigation ).toggle_hidden()
+
+    @on( Select.Changed )
+    def _change_filter( self, event: Select.Changed ) -> None:
+        """Handle a change in the filter.
+
+        Args:
+            event: The event to handle.
+        """
+        if self._filters is not None and isinstance( event.value, int ):
+            self.query_one( DirectoryNavigation ).file_filter = self._filters[
+                event.value
+            ]
+        else:
+            self.query_one( DirectoryNavigation ).file_filter = None
+        self.query_one( DirectoryNavigation ).focus()
 
 ### file_open.py ends here

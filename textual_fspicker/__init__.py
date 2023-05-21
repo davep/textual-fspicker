@@ -12,10 +12,11 @@ __licence__    = "MIT"
 
 ##############################################################################
 # Local imports.
-from .file_open import FileOpen
+from .file_open    import FileOpen
+from .path_filters import Filters
 
 ##############################################################################
 # Export the imports.
-__all__ = [ "FileOpen" ]
+__all__ = [ "FileOpen", "Filters" ]
 
 ### __init__.py ends here

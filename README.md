@@ -96,7 +96,7 @@ The `FileOpen` dialog has the following parameters:
 - [ ] Settle on a final set of default styles for the dialogs
 - [ ] Add a more file-save-oriented dialog
 - [ ] Add a directory picking dialog
-- [ ] Add file filtering (extensions using `Select`)
+- [X] Add file filtering (extensions using `Select`)
 - [ ] Expose the hidden show/hide facility of the navigator in the dialogs
 - [ ] Better documentation
 - [ ] Test on Windows

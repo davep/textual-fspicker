@@ -5,6 +5,7 @@
 **Released: WiP**
 
 - Added the ability to style the content of the `DirectoryNaviation` widget.
+- Added support for file filters to `FileOpen`.
 
 ## v0.0.2
 
