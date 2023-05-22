@@ -60,6 +60,7 @@ class FileSystemPickerScreen( ModalScreen[ Path ] ):
     """
 
     BINDINGS = [
+        Binding( "full_stop", "hidden" ),
         Binding( "escape", "dismiss" )
     ]
     """The bindings for the dialog."""
@@ -124,5 +125,9 @@ class FileSystemPickerScreen( ModalScreen[ Path ] ):
         """
         event.stop()
         self.dismiss()
+
+    def action_hidden( self ) -> None:
+        """Action for toggling the display of hidden entries."""
+        self.query_one( DirectoryNavigation ).toggle_hidden()
 
 ### base_dialog.py ends here

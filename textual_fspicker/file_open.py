@@ -9,7 +9,6 @@ from pathlib    import Path
 # Textual imports.
 from textual         import on
 from textual.app     import ComposeResult
-from textual.binding import Binding
 from textual.widgets import Button, Input, Select
 
 ##############################################################################
@@ -35,11 +34,6 @@ class FileOpen( FileSystemPickerScreen ):
         width: 1fr;
     }
     """
-
-    BINDINGS = [
-        Binding( "full_stop", "hidden" )
-    ]
-    """The bindings for the dialog."""
 
     def __init__(
             self,
@@ -145,10 +139,6 @@ class FileOpen( FileSystemPickerScreen ):
     def _clear_error( self ) -> None:
         """Clear any error that might be showing."""
         super()._clear_error()
-
-    def action_hidden( self ) -> None:
-        """Action for toggling the display of hidden files."""
-        self.query_one( DirectoryNavigation ).toggle_hidden()
 
     @on( Select.Changed )
     def _change_filter( self, event: Select.Changed ) -> None:
