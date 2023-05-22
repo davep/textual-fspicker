@@ -2,7 +2,7 @@
 
 ## v0.0.4
 
-**Released: WiP**
+**Released: 2023-05-22**
 
 - Moved much of the code in `FileOpen` into `FileSystemPickerScreen`,
   providing a common base class for other dialogs.
