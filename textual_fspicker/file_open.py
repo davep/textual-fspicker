@@ -56,7 +56,7 @@ class FileOpen( FileSystemPickerScreen ):
             must_exist: Flag to say if the file must exist.
             filters: Optional filters to show in the dialog.
         """
-        super().__init__( location, title )
+        super().__init__( location, title, select_button="Open" )
         self._must_exist = must_exist
         """Must the file exist?"""
         self._filters = filters

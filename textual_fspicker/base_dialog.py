@@ -64,7 +64,7 @@ class FileSystemPickerScreen( ModalScreen[ Path ] ):
     ]
     """The bindings for the dialog."""
 
-    def __init__( self, location: str | Path | None = None, title: str = "" ) -> None:
+    def __init__( self, location: str | Path | None = None, title: str = "", select_button: str = "Select" ) -> None:
         """Initialise the dialog.
 
         Args:
@@ -76,6 +76,8 @@ class FileSystemPickerScreen( ModalScreen[ Path ] ):
         """The starting location."""
         self._title = title
         """The title for the dialog."""
+        self._select_button = select_button
+        """The text prompt for the select button."""
 
     def _input_bar( self ) -> ComposeResult:
         """Provide any widgets for the input before, before the buttons."""
@@ -92,7 +94,7 @@ class FileSystemPickerScreen( ModalScreen[ Path ] ):
             yield DirectoryNavigation( self._location )
             with InputBar():
                 yield from self._input_bar()
-                yield Button( "Open", id="select" )
+                yield Button( self._select_button, id="select" )
                 yield Button( "Cancel", id="cancel" )
 
     def _set_error( self, message: str="" ) -> None:
