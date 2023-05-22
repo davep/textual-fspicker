@@ -80,7 +80,7 @@ class FileSystemPickerScreen( ModalScreen[ Path ] ):
         """The text prompt for the select button."""
 
     def _input_bar( self ) -> ComposeResult:
-        """Provide any widgets for the input before, before the buttons."""
+        """Provide any widgets for the input bar, before the buttons."""
         yield from ()
 
     def compose( self ) -> ComposeResult:
