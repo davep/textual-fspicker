@@ -7,62 +7,26 @@ from pathlib    import Path
 
 ##############################################################################
 # Textual imports.
-from textual            import on
-from textual.app        import ComposeResult
-from textual.binding    import Binding
-from textual.containers import Horizontal, Vertical
-from textual.screen     import ModalScreen
-from textual.widgets    import Button, Input, Select
+from textual         import on
+from textual.app     import ComposeResult
+from textual.binding import Binding
+from textual.widgets import Button, Input, Select
 
 ##############################################################################
 # Local imports.
+from .base_dialog  import FileSystemPickerScreen
 from .parts        import DirectoryNavigation
 from .path_filters import Filters
-
-##############################################################################
-class Dialog( Vertical ):
-    """Layout class for the main dialog area."""
-
-##############################################################################
-class InputBar( Horizontal ):
-    """The input bar area of the dialog."""
 
 ##############################################################################
 class FileFilter( Select[ int ] ):
     """The file filter."""
 
 ##############################################################################
-class FileOpen( ModalScreen[ Path ] ):
+class FileOpen( FileSystemPickerScreen ):
     """A file opening dialog."""
 
     DEFAULT_CSS = """
-    FileOpen {
-        align: center middle;
-    }
-
-    FileOpen Dialog {
-        width: 80%;
-        height: 80%;
-        border: panel $panel-lighten-2;
-        background: $panel-lighten-1;
-        border-title-color: $text;
-        border-title-background: $panel-lighten-2;
-        border-subtitle-color: $text;
-        border-subtitle-background: $error;
-    }
-
-    FileOpen InputBar {
-        height: auto;
-        align: right middle;
-        padding-top: 1;
-        padding-right: 1;
-        padding-bottom: 1;
-    }
-
-    FileOpen InputBar Button {
-        margin-left: 1;
-    }
-
     FileOpen InputBar Input {
         width: 2fr;
     }
@@ -73,7 +37,6 @@ class FileOpen( ModalScreen[ Path ] ):
     """
 
     BINDINGS = [
-        Binding( "escape", "dismiss" ),
         Binding( "full_stop", "hidden" )
     ]
     """The bindings for the dialog."""
@@ -91,45 +54,24 @@ class FileOpen( ModalScreen[ Path ] ):
             location: Optional starting location.
             title: Optional title.
             must_exist: Flag to say if the file must exist.
+            filters: Optional filters to show in the dialog.
         """
-        super().__init__()
-        self._location = location
-        """The starting location."""
-        self._title = title
-        """The title for the dialog."""
+        super().__init__( location, title )
         self._must_exist = must_exist
         """Must the file exist?"""
         self._filters = filters
         """The filters for the dialog."""
 
-    def compose( self ) -> ComposeResult:
-        """Compose the child widgets.
-
-        Returns:
-            The widgets to compose.
-        """
-        with Dialog() as dialog:
-            dialog.border_title = self._title
-            yield DirectoryNavigation(self._location)
-            with InputBar():
-                yield Input()
-                if self._filters:
-                    yield FileFilter(
-                        self._filters.selections,
-                        prompt      = "File filter",
-                        value       = 0,
-                        allow_blank = False
-                    )
-                yield Button( "Open", id="open" )
-                yield Button( "Cancel", id="cancel" )
-
-    def _set_error( self, message: str="" ) -> None:
-        """Set or clear the error message.
-
-        Args:
-            message: Optional message to show as an error.
-        """
-        self.query_one( Dialog ).border_subtitle = message
+    def _input_bar( self ) -> ComposeResult:
+        """Provide any widgets for the input before, before the buttons."""
+        yield Input()
+        if self._filters:
+            yield FileFilter(
+                self._filters.selections,
+                prompt      = "File filter",
+                value       = 0,
+                allow_blank = False
+            )
 
     @on( DirectoryNavigation.Selected )
     def _select_file( self, event: DirectoryNavigation.Selected ) -> None:
@@ -142,13 +84,8 @@ class FileOpen( ModalScreen[ Path ] ):
         file_name.value = str( event.path.name )
         file_name.focus()
 
-    @on( DirectoryNavigation.PermissionError )
-    def _show_permission_error( self ) -> None:
-        """Show any permission error bubbled up from the directory navigator."""
-        self._set_error( "Permission error" )
-
     @on( Input.Submitted )
-    @on( Button.Pressed, "#open" )
+    @on( Button.Pressed, "#select" )
     def _confirm_file( self, event: Input.Submitted | Button.Pressed ) -> None:
         """Confirm the selection of the file in the input box.
 
@@ -204,21 +141,10 @@ class FileOpen( ModalScreen[ Path ] ):
         else:
             self._set_error( "A file must be chosen" )
 
-    @on( Button.Pressed, "#cancel" )
-    def _cancel( self, event: Button.Pressed ) -> None:
-        """Cancel the dialog.
-
-        Args:
-            event: The even to handle.
-        """
-        event.stop()
-        self.dismiss()
-
     @on( Input.Changed )
-    @on( DirectoryNavigation.Changed )
     def _clear_error( self ) -> None:
         """Clear any error that might be showing."""
-        self._set_error()
+        super()._clear_error()
 
     def action_hidden( self ) -> None:
         """Action for toggling the display of hidden files."""
