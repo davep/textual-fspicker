@@ -6,9 +6,9 @@
 ## Introduction
 
 This library provides a simple set of filesystem navigation and picking
-dialogs (actually, as of the time of writing, it only provides the one, this
-is a very early WiP you're seeing). The aim is to provide "ready to go"
-dialogs that should also be fairly easy to tailor to your own applications.
+dialogs (actually, as of the time of writing, it only provides two, this is
+a very early WiP you're seeing). The aim is to provide "ready to go" dialogs
+that should also be fairly easy to tailor to your own applications.
 
 ## Installing
 
