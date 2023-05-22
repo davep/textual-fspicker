@@ -41,87 +41,17 @@ possible in the longer term.
 
 ## The library
 
-Right at the moment there's just the one dialog available, which is geared
-to getting the path to a file that you'll open. Here's a little example
-Textual application that shows using it:
+Right at the moment there's just two dialogs available:
 
-```python
-"""Main entry point for testing the library."""
+- `FileOpen` -- For selecting a file from the filesystem.
+- `SelectDirectory` -- For selecting a directory from the filesysrem.
 
-##############################################################################
-# Python imports.
-from pathlib import Path
+You can see them in action in the [demo/test
+code](https://github.com/davep/textual-fspicker/blob/main/textual_fspicker/__main__.py).
 
-##############################################################################
-# Textual imports.
-from textual.app        import App, ComposeResult
-from textual.containers import Center
-from textual.widgets    import Label, Button
-
-##############################################################################
-# Local imports.
-from textual_fspicker import FileOpen, Filters
-
-##############################################################################
-class TestApp( App[ None ] ):
-    """A simple test application."""
-
-    CSS = """
-    Screen#_default {
-        align: center middle;
-    }
-
-    Screen#_default Button {
-        margin-bottom: 2;
-    }
-    """
-
-    def compose( self ) -> ComposeResult:
-        """Compose the layout of the test application."""
-        with Center():
-            yield Button( "Select a file" )
-        with Center():
-            yield Label( "Press the button to pick something" )
-
-    def show_selected( self, to_show: Path ) -> None:
-        """Show the file that was selected by the user.
-
-        Args:
-            to_show: The file to show.
-        """
-        self.query_one( Label ).update( str( to_show ) )
-
-    def on_button_pressed( self ):
-        """Show the `FileOpen` dialog when the button is pushed."""
-        self.push_screen(
-            FileOpen( ".", filters=Filters(
-                ( "Any",     lambda _: True ),
-                ( "Emacs",   lambda p: p.suffix.lower() == ".el" ),
-                ( "Lisp",    lambda p: p.suffix.lower() in ( ".lisp", ".lsp", ".cl" ) ),
-                ( "Python",  lambda p: p.suffix.lower() == ".py" ),
-                ( "Pascal",  lambda p: p.suffix.lower() == ".pas" ),
-                ( "Clipper", lambda p: p.suffix.lower() in ( ".prg", ".ch" ) ),
-                ( "C",       lambda p: p.suffix.lower() in ( ".c", ".h" ) ),
-                ( "C++",     lambda p: p.suffix.lower() in ( ".cpp", ".cc", ".h" ) ),
-            ) ),
-            callback=self.show_selected
-        )
-
-##############################################################################
-if __name__ == "__main__":
-    TestApp().run()
-
-### __main__.py ends here
-```
-
-The `FileOpen` dialog has the following parameters:
-
-- `location` - The optional start location.
-- `title` - The optional title, defaults to `"Open"`
-- `must_exist` - Optional flag to say the chosen file must exist, defaults
-  to `True`.
-- `filters` - Optional `Filters` object that provides a collection of file
-  filters for the dialog.
+Yes, I know that documentation is lacking right now -- I'm still fleshing
+out how this will work and what it will provide -- so the best place to see
+how the code can be used is in that demo/test code.
 
 ## TODO
 
@@ -129,9 +59,9 @@ The `FileOpen` dialog has the following parameters:
 - [ ] Add lots of styling options for directory entries
 - [ ] Settle on a final set of default styles for the dialogs
 - [ ] Add a more file-save-oriented dialog
-- [ ] Add a directory picking dialog
+- [X] Add a directory picking dialog
 - [X] Add file filtering (extensions using `Select`)
-- [ ] Expose the hidden show/hide facility of the navigator in the dialogs
+- [X] Expose the hidden show/hide facility of the navigator in the dialogs
 - [ ] Better documentation
 - [ ] Test on Windows
 - [ ] Add custom mtime formatting

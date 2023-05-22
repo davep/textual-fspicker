@@ -6,13 +6,14 @@ from pathlib import Path
 
 ##############################################################################
 # Textual imports.
+from textual            import on
 from textual.app        import App, ComposeResult
-from textual.containers import Center
+from textual.containers import Center, Horizontal
 from textual.widgets    import Label, Button
 
 ##############################################################################
 # Local imports.
-from textual_fspicker import FileOpen, Filters
+from textual_fspicker import FileOpen, Filters, SelectDirectory
 
 ##############################################################################
 class TestApp( App[ None ] ):
@@ -23,15 +24,23 @@ class TestApp( App[ None ] ):
         align: center middle;
     }
 
-    Screen#_default Button {
-        margin-bottom: 2;
+    Screen#_default Horizontal {
+        align: center middle;
+        height: auto;
+        margin-bottom: 1;
+    }
+
+    Screen#_default Horizontal Button {
+        margin-left: 1;
+        margin-right: 1;
     }
     """
 
     def compose( self ) -> ComposeResult:
         """Compose the layout of the test application."""
-        with Center():
-            yield Button( "Select a file" )
+        with Horizontal():
+            yield Button( "Select a file", id="file" )
+            yield Button( "Select a directory", id="directory" )
         with Center():
             yield Label( "Press the button to pick something" )
 
@@ -43,7 +52,8 @@ class TestApp( App[ None ] ):
         """
         self.query_one( Label ).update( str( to_show ) )
 
-    def on_button_pressed( self ) -> None:
+    @on( Button.Pressed, "#file" )
+    def open_file( self ) -> None:
         """Show the `FileOpen` dialog when the button is pushed."""
         self.push_screen(
             FileOpen( ".", filters=Filters(
@@ -58,6 +68,11 @@ class TestApp( App[ None ] ):
             ) ),
             callback=self.show_selected
         )
+
+    @on( Button.Pressed, "#directory" )
+    def select_directory( self ) -> None:
+        """show the `SelectDirectory` dialog when the button is pushed."""
+        self.push_screen( SelectDirectory(), callback=self.show_selected )
 
 ##############################################################################
 if __name__ == "__main__":

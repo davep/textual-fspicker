@@ -1,5 +1,13 @@
 # ChangeLog
 
+## v0.0.4
+
+**Released: WiP**
+
+- Moved much of the code in `FileOpen` into `FileSystemPickerScreen`,
+  providing a common base class for other dialogs.
+- Added `SelectDirectory`.
+
 ## v0.0.3
 
 **Released: 2023-05-21**
