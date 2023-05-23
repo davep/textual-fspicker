@@ -44,6 +44,7 @@ possible in the longer term.
 Right at the moment there's just two dialogs available:
 
 - `FileOpen` -- For selecting a file from the filesystem.
+- `FileSave` -- For selecting a file for saving in the filesystem.
 - `SelectDirectory` -- For selecting a directory from the filesysrem.
 
 You can see them in action in the [demo/test
@@ -58,7 +59,7 @@ how the code can be used is in that demo/test code.
 - [ ] Flesh out what's displayed for directory entries
 - [ ] Add lots of styling options for directory entries
 - [ ] Settle on a final set of default styles for the dialogs
-- [ ] Add a more file-save-oriented dialog
+- [X] Add a more file-save-oriented dialog
 - [X] Add a directory picking dialog
 - [X] Add file filtering (extensions using `Select`)
 - [X] Expose the hidden show/hide facility of the navigator in the dialogs
