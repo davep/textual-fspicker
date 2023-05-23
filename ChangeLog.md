@@ -4,7 +4,7 @@
 
 **Released: 2023-05-23**
 
-- Added `FlileSave`.
+- Added `FileSave`.
 
 ## v0.0.4
 
