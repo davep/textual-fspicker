@@ -15,13 +15,13 @@ class FileOpen( BaseFileDialog ):
     """A file opening dialog."""
 
     def __init__(
-            self,
-            location: str | Path | None = None,
-            title: str = "Open",
-            *,
-            filters: Filters | None = None,
-            must_exist: bool = True
-        ) -> None:
+        self,
+        location: str | Path | None = None,
+        title: str = "Open",
+        *,
+        filters: Filters | None = None,
+        must_exist: bool = True
+    ) -> None:
         """Initialise the `FileOpen` dialog.
 
         Args:

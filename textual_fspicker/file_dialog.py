@@ -36,13 +36,13 @@ class BaseFileDialog( FileSystemPickerScreen ):
     """
 
     def __init__(
-            self,
-            location: str | Path | None = None,
-            title: str = "Open",
-            select_button: str = "",
-            *,
-            filters: Filters | None = None
-        ) -> None:
+        self,
+        location: str | Path | None = None,
+        title: str = "Open",
+        select_button: str = "",
+        *,
+        filters: Filters | None = None
+    ) -> None:
         """Initialise the base dialog dialog.
 
         Args:
