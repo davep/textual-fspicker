@@ -127,6 +127,7 @@ class BaseFileDialog( FileSystemPickerScreen ):
         # Only even try and process this if there's some input.
         if not file_name.value:
             self._set_error( "A file must be chosen" )
+            return
 
         # If it looks like the user is typing in some sort of home
         # directory path... (does pathlib let me test for this, or at
