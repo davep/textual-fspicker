@@ -13,7 +13,7 @@ from textual.widgets    import Label, Button
 
 ##############################################################################
 # Local imports.
-from textual_fspicker import FileOpen, Filters, SelectDirectory
+from textual_fspicker import FileOpen, FileSave, Filters, SelectDirectory
 
 ##############################################################################
 class TestApp( App[ None ] ):
@@ -39,7 +39,8 @@ class TestApp( App[ None ] ):
     def compose( self ) -> ComposeResult:
         """Compose the layout of the test application."""
         with Horizontal():
-            yield Button( "Select a file", id="file" )
+            yield Button( "Open a file", id="open" )
+            yield Button( "Save a file", id="save" )
             yield Button( "Select a directory", id="directory" )
         with Center():
             yield Label( "Press the button to pick something" )
@@ -52,7 +53,7 @@ class TestApp( App[ None ] ):
         """
         self.query_one( Label ).update( str( to_show ) )
 
-    @on( Button.Pressed, "#file" )
+    @on( Button.Pressed, "#open" )
     def open_file( self ) -> None:
         """Show the `FileOpen` dialog when the button is pushed."""
         self.push_screen(
@@ -68,6 +69,11 @@ class TestApp( App[ None ] ):
             ) ),
             callback=self.show_selected
         )
+
+    @on( Button.Pressed, "#save" )
+    def save_file( self ) -> None:
+        """Show the `FileSave` dialog when the button is pushed."""
+        self.push_screen( FileSave(can_overwrite=False), callback=self.show_selected)
 
     @on( Button.Pressed, "#directory" )
     def select_directory( self ) -> None:

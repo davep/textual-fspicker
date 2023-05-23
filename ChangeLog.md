@@ -1,5 +1,11 @@
 # ChangeLog
 
+## v0.0.5
+
+**Released: 2023-05-23**
+
+- Added `FlileSave`.
+
 ## v0.0.4
 
 **Released: 2023-05-22**
