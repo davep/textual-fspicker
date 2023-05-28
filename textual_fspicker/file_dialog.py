@@ -16,6 +16,7 @@ from textual.widgets import Button,Input, Select
 from .base_dialog  import FileSystemPickerScreen
 from .parts        import DirectoryNavigation
 from .path_filters import Filters
+from .path_maker   import MakePath
 
 ##############################################################################
 class FileFilter( Select[ int ] ):
@@ -136,7 +137,7 @@ class BaseFileDialog( FileSystemPickerScreen ):
         if file_name.value.startswith( "~" ):
             # ...let's simply expand and go with that.
             try:
-                chosen = Path( file_name.value ).expanduser()
+                chosen = MakePath.of( file_name.value ).expanduser()
             except RuntimeError as error:
                 self._set_error( str( error ) )
                 return

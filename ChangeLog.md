@@ -1,5 +1,12 @@
 # ChangeLog
 
+## v0.0.6
+
+**Release: WiP**
+
+- Add support for setting an alternative to `Path` as the core of path
+  handling in the library.
+
 ## v0.0.5
 
 **Released: 2023-05-23**

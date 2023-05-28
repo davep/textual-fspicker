@@ -29,6 +29,7 @@ from textual.worker              import get_current_worker
 # Local imports.
 from ..safe_tests   import is_dir, is_file, is_symlink
 from ..path_filters import Filter
+from ..path_maker   import MakePath
 
 ##############################################################################
 class DirectoryEntryStyling( NamedTuple ):
@@ -204,7 +205,7 @@ class DirectoryNavigation( OptionList ):
     class _PathMessage( _BaseMessage ):
         """Base class for messages relating to a location in the filesystem."""
 
-        path: Path = Path()
+        path: Path = MakePath.of()
         """The path to the entry that was selected."""
 
     class Highlighted( _PathMessage ):
@@ -216,7 +217,7 @@ class DirectoryNavigation( OptionList ):
     class PermissionError( _PathMessage ):
         """Message sent when there's a permission problem with a path."""
 
-    _location: var[ Path ] = var[ Path ]( Path( "." ).absolute(), init=False )
+    _location: var[ Path ] = var[ Path ]( MakePath.of( "." ).absolute(), init=False )
     """The current location for the directory."""
 
     file_filter: var[ Filter | None ] = var[ Optional[ Filter ] ]( None )
@@ -239,7 +240,7 @@ class DirectoryNavigation( OptionList ):
         """
         super().__init__()
         self._mounted                       = False
-        self.location                       = Path( "~" if location is None else location ).expanduser().absolute()
+        self.location                       = MakePath.of( "~" if location is None else location ).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
 
     @property
@@ -249,7 +250,7 @@ class DirectoryNavigation( OptionList ):
 
     @location.setter
     def location( self, new_location: Path | str ) -> None:
-        new_location = Path( new_location ).expanduser().absolute()
+        new_location = MakePath.of( new_location ).expanduser().absolute()
         if self._mounted:
             self._location = new_location
         else:
@@ -269,7 +270,7 @@ class DirectoryNavigation( OptionList ):
     def is_root( self ) -> bool:
         """Are we at the root of the filesystem?"""
         # TODO: Worry about portability.
-        return self._location == Path( self._location.root )
+        return self._location == MakePath.of( self._location.root )
 
     @staticmethod
     def is_hidden( path: Path ) -> bool:
