@@ -1,5 +1,11 @@
 # ChangeLog
 
+## v0.0.7
+
+**Released: WiP**
+
+- Work in progress.
+
 ## v0.0.6
 
 **Released: 2023-06-03**
