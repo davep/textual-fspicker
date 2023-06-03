@@ -2,9 +2,12 @@
 
 ## v0.0.7
 
-**Released: WiP**
+**Released: 2023-06-03**
 
-- Work in progress.
+- Updated how the messages work to take into account changes around
+  `control`.
+- Updated dependency information making this require a Textual version of at
+  least 0.27.0.
 
 ## v0.0.6
 

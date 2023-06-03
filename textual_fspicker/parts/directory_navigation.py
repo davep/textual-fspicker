@@ -195,8 +195,13 @@ class DirectoryNavigation( OptionList ):
     class _BaseMessage( Message ):
         """Base class for directory navigation messages."""
 
-        control: DirectoryNavigation
+        navigation: DirectoryNavigation
         """The directory navigation control sending the message."""
+
+        @property
+        def control( self ) -> DirectoryNavigation:
+            """An alias for `navigation`."""
+            return self.navigation
 
     class Changed( _BaseMessage ):
         """Message sent when the current directory has changed."""

@@ -7,7 +7,7 @@ __copyright__  = "Copyright 2023, Dave Pearson"
 __credits__    = [ "Dave Pearson" ]
 __maintainer__ = "Dave Pearson"
 __email__      = "davep@davep.org"
-__version__    = "0.0.6"
+__version__    = "0.0.7"
 __licence__    = "MIT"
 
 ##############################################################################
