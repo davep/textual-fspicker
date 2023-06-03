@@ -9,6 +9,7 @@ from pathlib    import Path
 # Textual imports.
 from textual         import on
 from textual.app     import ComposeResult
+from textual.events  import Mount
 from textual.widgets import Button,Input, Select
 
 ##############################################################################
@@ -65,6 +66,12 @@ class BaseFileDialog( FileSystemPickerScreen ):
                 value       = 0,
                 allow_blank = False
             )
+
+    @on( Mount )
+    def _initial_filter( self ) -> None:
+        """Set the initial filter once the DOM is ready."""
+        if self._filters:
+            self.query_one( DirectoryNavigation ).file_filter = self._filters[ 0 ]
 
     @on( DirectoryNavigation.Selected )
     def _select_file( self, event: DirectoryNavigation.Selected ) -> None:

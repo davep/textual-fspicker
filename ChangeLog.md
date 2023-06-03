@@ -1,5 +1,12 @@
 # ChangeLog
 
+## v0.0.8
+
+**Released: WiP**
+
+- Fixed the initial filter in the `FileOpen` and `FileSave` dialogs not
+  applying on startup.
+
 ## v0.0.7
 
 **Released: 2023-06-03**

@@ -63,10 +63,10 @@ class TestApp( App[ None ] ):
         """Show the `FileOpen` dialog when the button is pushed."""
         self.push_screen(
             FileOpen( ".", filters=Filters(
+                ( "Python",  lambda p: p.suffix.lower() == ".py" ),
                 ( "Any",     lambda _: True ),
                 ( "Emacs",   lambda p: p.suffix.lower() == ".el" ),
                 ( "Lisp",    lambda p: p.suffix.lower() in ( ".lisp", ".lsp", ".cl" ) ),
-                ( "Python",  lambda p: p.suffix.lower() == ".py" ),
                 ( "Pascal",  lambda p: p.suffix.lower() == ".pas" ),
                 ( "Clipper", lambda p: p.suffix.lower() in ( ".prg", ".ch" ) ),
                 ( "C",       lambda p: p.suffix.lower() in ( ".c", ".h" ) ),
