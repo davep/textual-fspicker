@@ -2,7 +2,7 @@
 
 ## v0.0.6
 
-**Release: 2023-06-03**
+**Released: 2023-06-03**
 
 - Add support for setting an alternative to `Path` as the core of path
   handling in the library.
