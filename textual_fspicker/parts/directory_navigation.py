@@ -178,15 +178,15 @@ class DirectoryNavigation( OptionList ):
     }
 
     DirectoryNavigation > .directory-navigation--name {
-        color: $text;
+        /*color: $text;*/
     }
 
     DirectoryNavigation > .directory-navigation--size {
-        color: $text;
+        /*color: $text;*/
     }
 
     DirectoryNavigation > .directory-navigation--time {
-        color: $text;
+        /*color: $text;*/
     }
     """
     """Default styling for the widget."""
