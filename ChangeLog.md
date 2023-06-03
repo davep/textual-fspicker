@@ -2,10 +2,12 @@
 
 ## v0.0.6
 
-**Release: WiP**
+**Release: 2023-06-03**
 
 - Add support for setting an alternative to `Path` as the core of path
   handling in the library.
+- Fixed a problem where text was unreadable when a Textual application was
+  in light mode.
 
 ## v0.0.5
 
