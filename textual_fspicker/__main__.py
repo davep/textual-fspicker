@@ -9,7 +9,7 @@ from pathlib import Path
 from textual            import on
 from textual.app        import App, ComposeResult
 from textual.containers import Center, Horizontal
-from textual.widgets    import Label, Button
+from textual.widgets    import Label, Button, Footer
 
 ##############################################################################
 # Local imports.
@@ -36,6 +36,10 @@ class TestApp( App[ None ] ):
     }
     """
 
+    BINDINGS = [
+        ( "d", "toggle_dark", "Light/Dark" )
+    ]
+
     def compose( self ) -> ComposeResult:
         """Compose the layout of the test application."""
         with Horizontal():
@@ -44,6 +48,7 @@ class TestApp( App[ None ] ):
             yield Button( "Select a directory", id="directory" )
         with Center():
             yield Label( "Press the button to pick something" )
+        yield Footer()
 
     def show_selected( self, to_show: Path ) -> None:
         """Show the file that was selected by the user.
