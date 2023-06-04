@@ -27,8 +27,8 @@ class FileOpen( BaseFileDialog ):
         Args:
             location: Optional starting location.
             title: Optional title.
-            must_exist: Flag to say if the file must exist.
             filters: Optional filters to show in the dialog.
+            must_exist: Flag to say if the file must exist.
         """
         super().__init__( location, title, select_button="Open", filters=filters )
         self._must_exist = must_exist
