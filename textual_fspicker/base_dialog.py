@@ -71,6 +71,7 @@ class FileSystemPickerScreen( ModalScreen[ Path ] ):
         Args:
             location: Optional starting location.
             title: Optional title.
+            select_button: Label for the select button.
         """
         super().__init__()
         self._location = location
