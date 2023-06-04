@@ -16,7 +16,7 @@ class FileOpen( BaseFileDialog ):
 
     def __init__(
         self,
-        location: str | Path | None = None,
+        location: str | Path = ".",
         title: str = "Open",
         *,
         filters: Filters | None = None,

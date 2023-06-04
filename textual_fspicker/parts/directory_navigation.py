@@ -237,7 +237,7 @@ class DirectoryNavigation( OptionList ):
     sort_display: var[ bool ] = var( True )
     """Should the display be sorted?"""
 
-    def __init__( self, location: Path | str | None = None ) -> None:
+    def __init__( self, location: Path | str = "." ) -> None:
         """Initialise the directory navigation widget.
 
         Args:
@@ -245,7 +245,7 @@ class DirectoryNavigation( OptionList ):
         """
         super().__init__()
         self._mounted                       = False
-        self.location                       = MakePath.of( "~" if location is None else location ).expanduser().absolute()
+        self.location                       = MakePath.of( location ).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
 
     @property

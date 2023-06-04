@@ -65,7 +65,7 @@ class FileSystemPickerScreen( ModalScreen[ Path ] ):
     ]
     """The bindings for the dialog."""
 
-    def __init__( self, location: str | Path | None = None, title: str = "", select_button: str = "" ) -> None:
+    def __init__( self, location: str | Path = ".", title: str = "", select_button: str = "" ) -> None:
         """Initialise the dialog.
 
         Args:

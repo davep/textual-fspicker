@@ -39,7 +39,7 @@ class BaseFileDialog( FileSystemPickerScreen ):
 
     def __init__(
         self,
-        location: str | Path | None = None,
+        location: str | Path = ".",
         title: str = "Open",
         select_button: str = "",
         *,

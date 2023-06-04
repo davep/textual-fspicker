@@ -16,7 +16,7 @@ class FileSave( BaseFileDialog ):
 
     def __init__(
         self,
-        location: str | Path | None = None,
+        location: str | Path = ".",
         title: str = "Save as",
         *,
         filters: Filters | None = None,

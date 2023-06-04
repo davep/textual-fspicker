@@ -29,7 +29,7 @@ class SelectDirectory( FileSystemPickerScreen ):
     }
     """
 
-    def __init__( self, location: str | Path | None = None, title: str = "Select directory" ) -> None:
+    def __init__( self, location: str | Path = ".", title: str = "Select directory" ) -> None:
         """Initialise the dialog.
 
         Args:
