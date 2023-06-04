@@ -9,6 +9,7 @@
 - Changed the way the dialogs cancel. Instead of dismissing with no result,
   a result is now set to `None`. That is, if something is selected then a
   `Path` will be the result, if the user cancels then `None` is the result.
+- Fixed `SelectDirectory` not showing the current selection on startup.
 
 ## v0.0.8
 

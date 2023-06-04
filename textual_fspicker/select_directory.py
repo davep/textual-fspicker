@@ -40,11 +40,23 @@ class SelectDirectory( FileSystemPickerScreen ):
 
     def on_mount( self ) -> None:
         """Configure the dialog once the DOM is ready."""
-        self.query_one( DirectoryNavigation ).show_files = False
+        navigation = self.query_one( DirectoryNavigation )
+        navigation.show_files = False
+        self._set_current( navigation.location )
 
     def _input_bar( self ) -> ComposeResult:
         """Provide any widgets for the input before, before the buttons."""
         yield Label()
+
+    def _set_current( self, location: Path ) -> None:
+        """Set the current location.
+
+        Args:
+            location: The location to indicate.
+        """
+        current_selection = self.query_one( "InputBar > Label", Label )
+        # TODO: A nicer way of indicating we're looking at just the tail.
+        current_selection.update( str( location )[ -current_selection.size.width: ] )
 
     @on( DirectoryNavigation.Changed )
     def _show_selected( self, event: DirectoryNavigation.Changed ) -> None:
@@ -54,9 +66,7 @@ class SelectDirectory( FileSystemPickerScreen ):
             event: The event with the selection information in.
         """
         event.stop()
-        current_selection = self.query_one( "InputBar > Label", Label )
-        # TODO: A nicer way of indicating we're looking at just the tail.
-        current_selection.update( str( event.control.location )[ -current_selection.size.width: ] )
+        self._set_current( event.control.location )
 
     @on( Button.Pressed, "#select" )
     def _select_directory( self, event: Button.Pressed ) -> None:
