@@ -2,7 +2,7 @@
 
 ## v0.0.9
 
-**Released: WiP**
+**Released: 2023-06-04**
 
 - Changed the underlying type of the dialog screens to be `Path | None`
   rather than `Path`.
