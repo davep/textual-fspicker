@@ -2,7 +2,8 @@
 
 ##############################################################################
 # Python imports.
-from pathlib import Path
+from __future__ import annotations
+from pathlib    import Path
 
 ##############################################################################
 # Textual imports.
@@ -50,13 +51,13 @@ class TestApp( App[ None ] ):
             yield Label( "Press the button to pick something" )
         yield Footer()
 
-    def show_selected( self, to_show: Path ) -> None:
+    def show_selected( self, to_show: Path | None ) -> None:
         """Show the file that was selected by the user.
 
         Args:
             to_show: The file to show.
         """
-        self.query_one( Label ).update( str( to_show ) )
+        self.query_one( Label ).update( "Cancelled" if to_show is None else str( to_show ) )
 
     @on( Button.Pressed, "#open" )
     def open_file( self ) -> None:

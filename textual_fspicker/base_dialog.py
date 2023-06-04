@@ -4,6 +4,7 @@
 # Python imports.
 from __future__ import annotations
 from pathlib    import Path
+from typing     import Optional
 
 ##############################################################################
 # Textual imports.
@@ -27,7 +28,7 @@ class InputBar( Horizontal ):
     """The input bar area of the dialog."""
 
 ##############################################################################
-class FileSystemPickerScreen( ModalScreen[ Path ] ):
+class FileSystemPickerScreen( ModalScreen[ Optional[ Path ] ] ):
     """Base screen for the dialogs in this library."""
 
     DEFAULT_CSS = """
@@ -61,7 +62,7 @@ class FileSystemPickerScreen( ModalScreen[ Path ] ):
 
     BINDINGS = [
         Binding( "full_stop", "hidden" ),
-        Binding( "escape", "dismiss" )
+        Binding( "escape", "dismiss( None )" )
     ]
     """The bindings for the dialog."""
 
@@ -125,7 +126,7 @@ class FileSystemPickerScreen( ModalScreen[ Path ] ):
             event: The even to handle.
         """
         event.stop()
-        self.dismiss()
+        self.dismiss( None )
 
     def action_hidden( self ) -> None:
         """Action for toggling the display of hidden entries."""

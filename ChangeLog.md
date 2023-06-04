@@ -1,5 +1,15 @@
 # ChangeLog
 
+## v0.0.9
+
+**Released: WiP**
+
+- Changed the underlying type of the dialog screens to be `Path | None`
+  rather than `Path`.
+- Changed the way the dialogs cancel. Instead of dismissing with no result,
+  a result is now set to `None`. That is, if something is selected then a
+  `Path` will be the result, if the user cancels then `None` is the result.
+
 ## v0.0.8
 
 **Released: 2023-06-04**
