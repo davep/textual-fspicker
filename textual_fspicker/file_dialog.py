@@ -50,6 +50,7 @@ class BaseFileDialog( FileSystemPickerScreen ):
         Args:
             location: Optional starting location.
             title: Optional title.
+            select_button: The label for the selection button.
             filters: Optional filters to show in the dialog.
         """
         super().__init__( location, title, select_button=select_button )
