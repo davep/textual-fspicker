@@ -29,7 +29,7 @@ class MakePath:
         cls._path = path_maker
 
     @classmethod
-    def of( cls, out_of: str | Path="" ) -> Path:
+    def of( cls, out_of: str | Path="" ) -> Path: # pylint:disable=invalid-name
         """Make a Path out of the given value.
 
         Args:
