@@ -6,8 +6,6 @@ from .directory_navigation import DirectoryNavigation
 
 ##############################################################################
 # Export public items.
-__all__ = [
-    "DirectoryNavigation"
-]
+__all__ = ["DirectoryNavigation"]
 
 ### __init__.py ends here

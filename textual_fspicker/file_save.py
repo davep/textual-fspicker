@@ -3,15 +3,16 @@
 ##############################################################################
 # Python imports.
 from __future__ import annotations
-from pathlib    import Path
+from pathlib import Path
 
 ##############################################################################
 # Local imports.
-from .file_dialog  import BaseFileDialog
+from .file_dialog import BaseFileDialog
 from .path_filters import Filters
 
+
 ##############################################################################
-class FileSave( BaseFileDialog ):
+class FileSave(BaseFileDialog):
     """A file save dialog."""
 
     def __init__(
@@ -20,7 +21,7 @@ class FileSave( BaseFileDialog ):
         title: str = "Save as",
         *,
         filters: Filters | None = None,
-        can_overwrite: bool = True
+        can_overwrite: bool = True,
     ) -> None:
         """Initialise the `FileOpen` dialog.
 
@@ -30,19 +31,20 @@ class FileSave( BaseFileDialog ):
             filters: Optional filters to show in the dialog.
             can_overwrite: Flag to say if an existing file can be overwritten.
         """
-        super().__init__( location, title, select_button="Save", filters=filters )
+        super().__init__(location, title, select_button="Save", filters=filters)
         self._can_overwrite = can_overwrite
         """Can an existing file be overwritten?"""
 
-    def _should_return( self, candidate: Path ) -> bool:
+    def _should_return(self, candidate: Path) -> bool:
         """Perform the final checks on the chosen file.
 
         Args:
             candidate: The file to check.
         """
         if candidate.exists() and not self._can_overwrite:
-            self._set_error( "Overwrite is not allowed" )
+            self._set_error("Overwrite is not allowed")
             return False
         return True
+
 
 ### file_save.py ends here

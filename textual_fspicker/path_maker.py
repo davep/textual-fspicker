@@ -9,18 +9,19 @@ dependencies of this library.
 ##############################################################################
 # Python imports.
 from __future__ import annotations
-from pathlib    import Path
-from typing     import Callable
+from pathlib import Path
+from typing import Callable
+
 
 ##############################################################################
 class MakePath:
     """Utility class for setting and getting the Path builder."""
 
-    _path: Callable[ [ str | Path ], Path ] = Path
+    _path: Callable[[str | Path], Path] = Path
     """The callable to use to make a Path."""
 
     @classmethod
-    def using( cls, path_maker: Callable[ [ str | Path ], Path ] ) -> None:
+    def using(cls, path_maker: Callable[[str | Path], Path]) -> None:
         """Set the builder callable to use when making a path.
 
         Args:
@@ -29,7 +30,7 @@ class MakePath:
         cls._path = path_maker
 
     @classmethod
-    def of( cls, out_of: str | Path="" ) -> Path: # pylint:disable=invalid-name
+    def of(cls, out_of: str | Path = "") -> Path:  # pylint:disable=invalid-name
         """Make a Path out of the given value.
 
         Args:
@@ -38,6 +39,7 @@ class MakePath:
         Returns:
             An instance of a Path or a related class.
         """
-        return cls._path( out_of )
+        return cls._path(out_of)
+
 
 ### path_maker.py ends here

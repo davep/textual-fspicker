@@ -10,8 +10,9 @@ PermissionError, which for UI stuff is better ignored than raised.
 # Python imports.
 from pathlib import Path
 
+
 ##############################################################################
-def is_dir( location: Path ) -> bool:
+def is_dir(location: Path) -> bool:
     """A safe version of is_dir.
 
     Args:
@@ -30,8 +31,9 @@ def is_dir( location: Path ) -> bool:
     except PermissionError:
         return False
 
+
 ##############################################################################
-def is_file( location: Path ) -> bool:
+def is_file(location: Path) -> bool:
     """A safe version of is_file.
 
     Args:
@@ -50,8 +52,9 @@ def is_file( location: Path ) -> bool:
     except PermissionError:
         return True
 
+
 ##############################################################################
-def is_symlink( location: Path ) -> bool:
+def is_symlink(location: Path) -> bool:
     """A safe version of is_symlink.
 
     Args:
@@ -69,5 +72,6 @@ def is_symlink( location: Path ) -> bool:
         return location.is_symlink()
     except PermissionError:
         return False
+
 
 ### safe_tests.py ends here
