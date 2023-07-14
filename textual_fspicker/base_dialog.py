@@ -63,7 +63,7 @@ class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
     }
     """
 
-    BINDINGS = [Binding("full_stop", "hidden"), Binding("escape", "dismiss( None )")]
+    BINDINGS = [Binding("full_stop", "hidden"), Binding("escape", "dismiss(None)")]
     """The bindings for the dialog."""
 
     def __init__(
