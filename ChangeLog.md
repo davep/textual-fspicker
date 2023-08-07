@@ -2,7 +2,7 @@
 
 ## v0.0.10
 
-**Released: WiP**
+**Released: 2023-08-07**
 
 - Fixed a breaking change with threaded workers with newer versions of
   Textual ([thanks to
