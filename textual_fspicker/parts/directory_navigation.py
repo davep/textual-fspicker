@@ -367,7 +367,7 @@ class DirectoryNavigation(OptionList):
             )
         self._settle_highlight()
 
-    @work(exclusive=True)
+    @work(exclusive=True, thread=True)
     def _load(self) -> None:
         """Load the current directory data."""
 
