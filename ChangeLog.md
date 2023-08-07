@@ -1,5 +1,13 @@
 # ChangeLog
 
+## v0.0.10
+
+**Released: WiP**
+
+- Fixed a breaking change with threaded workers with newer versions of
+  Textual ([thanks to
+  adeemm](https://github.com/davep/textual-fspicker/pull/3)).
+
 ## v0.0.9
 
 **Released: 2023-06-04**
