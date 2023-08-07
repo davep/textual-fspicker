@@ -7,6 +7,8 @@
 - Fixed a breaking change with threaded workers with newer versions of
   Textual ([thanks to
   adeemm](https://github.com/davep/textual-fspicker/pull/3)).
+- Fixed the look and size of the main navigation control in all dialogs,
+  taking into account recent default styling changes in Textual.
 
 ## v0.0.9
 

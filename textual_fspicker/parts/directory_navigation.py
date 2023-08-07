@@ -195,6 +195,10 @@ class DirectoryNavigation(OptionList):
     """Component styles for the directory navigation widget."""
 
     DEFAULT_CSS = """
+    DirectoryNavigation, DirectoryNavigation:focus {
+        border: blank;
+    }
+
     DirectoryNavigation > .directory-navigation--hidden {
         color: $text-muted;
         text-style: italic;

@@ -50,6 +50,10 @@ class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
         border-subtitle-background: $error;
     }
 
+    FileSystemPickerScreen DirectoryNavigation {
+        height: 1fr;
+    }
+
     FileSystemPickerScreen InputBar {
         height: auto;
         align: right middle;
