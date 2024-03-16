@@ -18,27 +18,6 @@ The package can be installed with `pip` or related tools, for example:
 $ pip install textual-fspicker
 ```
 
-## It's early days
-
-This is a very early release of this code, it's still very much a work in
-progress. This means things may change and break; it's also sitting atop
-Textual which is, of course, still undergoing rapid development. As much as
-possible I'll try and ensure that it's always working with the latest stable
-release of Textual.
-
-Also, because it's early days... while I love the collaborative aspect of
-FOSS, I'm highly unlikely to be accepting any non-trivial PRs at the moment.
-Developing this is a learning exercise for me, it's a hobby project, and
-it's also something to help me further test Textual (disclaimer for those
-who may not have gathered, I am employed by
-[Textualize](https://www.textualize.io/)).
-
-On the other hand: I'm *very* open to feedback and suggestions so don't
-hesitate to engage with me in Discussions, or if it's a bug, in Issues. I
-can't and won't promise that I'll take everything on board (see above about
-hobby project, etc), but helpful input should help make this as useful as
-possible in the longer term.
-
 ## The library
 
 Right at the moment there's just two dialogs available:
