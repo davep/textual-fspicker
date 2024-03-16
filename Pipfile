@@ -7,7 +7,7 @@ name = "pypi"
 typing-extensions = "*"
 
 [dev-packages]
-textual = {extras = ["dev"], version = "*"}
+textual = "*"
 pylint = "*"
 mypy = "*"
 twine = "*"
@@ -16,5 +16,4 @@ black = "*"
 pre-commit = "*"
 
 [requires]
-python_version = "3.7"
-python_full_version = "3.7.16"
+python_version = "3.12"
