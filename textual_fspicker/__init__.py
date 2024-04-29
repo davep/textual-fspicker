@@ -7,16 +7,16 @@ __copyright__ = "Copyright 2023, Dave Pearson"
 __credits__ = ["Dave Pearson"]
 __maintainer__ = "Dave Pearson"
 __email__ = "davep@davep.org"
-__version__ = "0.0.10"
+__version__ = "0.0.11"
 __licence__ = "MIT"
 
 ##############################################################################
 # Local imports.
 from .file_open import FileOpen
 from .file_save import FileSave
-from .select_directory import SelectDirectory
 from .path_filters import Filters
 from .path_maker import MakePath
+from .select_directory import SelectDirectory
 
 ##############################################################################
 # Export the imports.

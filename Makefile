@@ -75,7 +75,7 @@ spackage:			# Create a source package for the library
 	$(build) -s
 
 .PHONY: packagecheck
-packagecheck: package		# Check the packaging.
+packagecheck: package	spackage # Check the packaging.
 	$(twine) check dist/*
 
 .PHONY: testdist
