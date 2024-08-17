@@ -186,6 +186,10 @@ class DirectoryNavigation(OptionList):
     a file.
     """
 
+    BINDINGS = [
+        ("backspace", "navigate_up"),
+    ]
+
     COMPONENT_CLASSES: ClassVar[set[str]] = {
         "directory-navigation--hidden",
         "directory-navigation--name",
@@ -337,6 +341,10 @@ class DirectoryNavigation(OptionList):
         # Either there is no custom filter, or whatever we're looking at
         # passed so far; not do final checks.
         return self.is_hidden(path) and not self.show_hidden
+
+    def action_navigate_up(self):
+        """Navigate to the parent location"""
+        self._location = self._location.parent
 
     def _sort(self, entries: Iterable[DirectoryEntry]) -> Iterable[DirectoryEntry]:
         """Sort the entries as per the value of `sort_display`."""
