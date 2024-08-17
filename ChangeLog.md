@@ -1,5 +1,12 @@
 # ChangeLog
 
+## WiP
+
+**Released: WiP**
+
+- Added <kbd>backspace</kbd> as a navigation shortcut for "change to parent"
+  ([thanks to ihabunek](https://github.com/davep/textual-fspicker/pull/7)).
+
 ## v0.0.10
 
 **Released: 2023-08-07**
