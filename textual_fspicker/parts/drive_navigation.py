@@ -1,11 +1,11 @@
-from textual.widgets import OptionList, Static
-from textual.widgets.option_list import Option
+import os
+import pathlib
+from dataclasses import dataclass
+
+from textual import on
 from textual.app import App, ComposeResult
 from textual.message import Message
-import pathlib
-from textual import on
-from dataclasses import dataclass
-import os
+from textual.widgets import OptionList, Static
 
 
 class DriveNavigation(OptionList):
