@@ -3,11 +3,11 @@
 ##############################################################################
 # Python imports.
 from __future__ import annotations
+
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import ClassVar, Iterable, NamedTuple, Optional
-from typing_extensions import Final
 
 ##############################################################################
 # Rich imports.
@@ -19,17 +19,19 @@ from rich.text import Text
 ##############################################################################
 # Textual imports.
 from textual import work
-from textual.reactive import var
 from textual.message import Message
+from textual.reactive import var
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 from textual.worker import get_current_worker
+from typing_extensions import Final
+
+from ..path_filters import Filter
+from ..path_maker import MakePath
 
 ##############################################################################
 # Local imports.
 from ..safe_tests import is_dir, is_file, is_symlink
-from ..path_filters import Filter
-from ..path_maker import MakePath
 
 
 ##############################################################################

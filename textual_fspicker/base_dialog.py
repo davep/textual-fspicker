@@ -3,6 +3,8 @@
 ##############################################################################
 # Python imports.
 from __future__ import annotations
+
+import platform
 from pathlib import Path
 from typing import Optional
 
@@ -17,7 +19,7 @@ from textual.widgets import Button
 
 ##############################################################################
 # Local imports.
-from .parts import DirectoryNavigation
+from .parts import DirectoryNavigation, DriveNavigation
 
 
 ##############################################################################
@@ -100,7 +102,10 @@ class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
         """
         with Dialog() as dialog:
             dialog.border_title = self._title
-            yield DirectoryNavigation(self._location)
+            with Horizontal():
+                if platform.system() == "Windows":
+                    yield DriveNavigation()
+                yield DirectoryNavigation(self._location)
             with InputBar():
                 yield from self._input_bar()
                 yield Button(self._select_button, id="select")
@@ -113,6 +118,10 @@ class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
             message: Optional message to show as an error.
         """
         self.query_one(Dialog).border_subtitle = message
+
+    @on(DriveNavigation.DriveSelected)
+    def _change_drive(self, event: DriveNavigation.DriveSelected) -> None:
+        self.query_one(DirectoryNavigation).location = event.drive_root
 
     @on(DirectoryNavigation.Changed)
     def _clear_error(self) -> None:
