@@ -308,7 +308,7 @@ class DirectoryNavigation(OptionList):
     def is_root(self) -> bool:
         """Are we at the root of the filesystem?"""
         # TODO: Worry about portability.
-        return self._location == MakePath.of(self._location.root)
+        return self._location == MakePath.of(self._location.parent)
 
     @staticmethod
     def is_hidden(path: Path) -> bool:
