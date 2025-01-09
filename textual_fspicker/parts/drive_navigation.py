@@ -16,6 +16,16 @@ from textual.widgets import OptionList, Static
 
 ##############################################################################
 class DriveNavigation(OptionList):
+    DEFAULT_CSS = """
+    DriveNavigation, DriveNavigation:focus {
+        border: blank;
+        border-right: $panel-darken-1;
+        width: 10;
+        height: 100%;
+    }
+    """
+    """Default styling for the widget."""
+
     @dataclass
     class DriveSelected(Message):
         """Message sent when a drive is selected."""
