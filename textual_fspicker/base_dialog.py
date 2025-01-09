@@ -121,6 +121,7 @@ class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
 
     @on(DriveNavigation.DriveSelected)
     def _change_drive(self, event: DriveNavigation.DriveSelected) -> None:
+        """Reload DirectoryNavigation in response to drive change."""
         self.query_one(DirectoryNavigation).location = event.drive_root
 
     @on(DirectoryNavigation.Changed)
