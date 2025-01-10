@@ -4,14 +4,14 @@
 # Python imports.
 import os
 import pathlib
+import platform
 from dataclasses import dataclass
 
 ##############################################################################
 # Textual imports.
 from textual import on
-from textual.app import App, ComposeResult
 from textual.message import Message
-from textual.widgets import OptionList, Static
+from textual.widgets import OptionList
 
 
 ##############################################################################
@@ -37,12 +37,13 @@ class DriveNavigation(OptionList):
     class DriveSelected(Message):
         """Message sent when a drive is selected."""
 
-        drive_root: str
+        drive_root: pathlib.Path
         """The selected drive root, like `c:\\`."""
 
     def on_mount(self) -> None:
         """Add available drives to the widget."""
-        self.add_options(os.listdrives())
+        if platform.system() == "Windows":
+            self.add_options(os.listdrives())
 
     @on(OptionList.OptionSelected)
     def select_drive(self, event: OptionList.OptionSelected) -> None:
@@ -51,7 +52,9 @@ class DriveNavigation(OptionList):
         Args:
             event: the drive selected event from the parent OptionList.
         """
-        self.post_message(self.DriveSelected(drive_root=event.option.prompt))
+        self.post_message(
+            self.DriveSelected(drive_root=pathlib.Path(str(event.option.prompt)))
+        )
 
 
 ### drive_navigation.py ends here
