@@ -52,7 +52,7 @@ class DirectoryEntryStyling(NamedTuple):
 
 ##############################################################################
 class DirectoryEntry(Option):
-    """A directory entry for the `DirectoryNaviation` class."""
+    """A directory entry for the `DirectoryNavigation` class."""
 
     FOLDER_ICON: Final[Text] = Text.from_markup(":file_folder:")
     """The icon to use for a folder."""

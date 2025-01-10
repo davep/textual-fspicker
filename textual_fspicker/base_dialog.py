@@ -104,12 +104,16 @@ class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
             dialog.border_title = self._title
             with Horizontal():
                 if platform.system() == "Windows":
-                    yield DriveNavigation()
+                    yield DriveNavigation(self._location)
                 yield DirectoryNavigation(self._location)
             with InputBar():
                 yield from self._input_bar()
                 yield Button(self._select_button, id="select")
                 yield Button("Cancel", id="cancel")
+
+    def on_mount(self) -> None:
+        """Focus directory widget on mount."""
+        self.query_one(DirectoryNavigation).focus()
 
     def _set_error(self, message: str = "") -> None:
         """Set or clear the error message.

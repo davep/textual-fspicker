@@ -3,7 +3,7 @@
 ##############################################################################
 # Python imports.
 import os
-import pathlib
+from pathlib import Path
 import platform
 from dataclasses import dataclass
 
@@ -12,9 +12,24 @@ from dataclasses import dataclass
 from textual import on
 from textual.message import Message
 from textual.widgets import OptionList
+from textual.widgets.option_list import Option
+from textual.reactive import var
+
+##############################################################################
+# Local imports.
+from ..path_maker import MakePath
 
 
 ##############################################################################
+class DriveEntry(Option):
+    """A drive entry for the `DriveNavigation` class."""
+
+    def __init__(self, drive: Path | str) -> None:
+        self.drive_root: Path = MakePath.of(drive)
+        """The drive root for this entry."""
+        super().__init__(self.drive_root.drive, id=self.drive_root.drive)
+
+
 class DriveNavigation(OptionList):
     """A drive navigation widget.
 
@@ -30,6 +45,11 @@ class DriveNavigation(OptionList):
         width: 10;
         height: 100%;
     }
+
+    DriveNavigation > .option-list--option-highlighted {
+        text-style: bold;
+        color: white;
+    }
     """
     """Default styling for the widget."""
 
@@ -37,24 +57,56 @@ class DriveNavigation(OptionList):
     class DriveSelected(Message):
         """Message sent when a drive is selected."""
 
-        drive_root: pathlib.Path
+        drive_root: Path
         """The selected drive root, like `c:\\`."""
+
+    _drive: var[str] = var[str](MakePath.of(".").absolute().drive, init=False)
+
+    def __init__(self, location: Path | str = ".") -> None:
+        """Initialise the drive navigation widget.
+
+        Args:
+            location: The starting location.
+        """
+        super().__init__()
+        self.set_reactive(
+            DriveNavigation._drive, MakePath.of(location).absolute().drive
+        )
+        if platform.system() == "Windows":
+            self._entries = [DriveEntry(drive) for drive in os.listdrives()]
 
     def on_mount(self) -> None:
         """Add available drives to the widget."""
-        if platform.system() == "Windows":
-            self.add_options(os.listdrives())
+        self.add_options(self._entries)
+        self.highlight_drive(self._drive)
+
+    def _watch__drive(self, drive: str) -> None: ...
+
+    def highlight_drive(self, drive: str) -> None:
+        """Highlight the given drive.
+
+        Args:
+            drive: The drive to be highlighted.
+
+        Raises:
+            RuntimeError: Raised if there is no entry for the drive.
+        """
+        for entry in self._entries:
+            if entry.drive_root.drive == drive:
+                break
+        else:
+            raise RuntimeError(f"Drive {drive} not found in DriveNavigation widget.")
+        self.highlighted = self.get_option_index(entry.id)
 
     @on(OptionList.OptionSelected)
-    def select_drive(self, event: OptionList.OptionSelected) -> None:
+    def drive_selected(self, event: OptionList.OptionSelected) -> None:
         """Post a DriveSelected message.
 
         Args:
             event: The drive selected event from the parent `OptionList`.
         """
-        self.post_message(
-            self.DriveSelected(drive_root=pathlib.Path(str(event.option.prompt)))
-        )
+        assert isinstance(event.option, DriveEntry)
+        self.post_message(self.DriveSelected(drive_root=event.option.drive_root))
 
 
 ### drive_navigation.py ends here
