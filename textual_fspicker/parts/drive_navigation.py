@@ -102,6 +102,7 @@ class DriveNavigation(OptionList):
             event: The drive selected event from the parent `OptionList`.
         """
         assert isinstance(event.option, DriveEntry)
+        event.stop()
         self.post_message(self.DriveSelected(drive_root=event.option.drive_root))
 
 
