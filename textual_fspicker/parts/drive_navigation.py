@@ -19,7 +19,7 @@ class DriveNavigation(OptionList):
     """A drive navigation widget.
 
     Provides a single-pane widget that lets the user select a drive. This is
-    very useful in combination with the DirectoryNavigation widget. A dialog can
+    very useful in combination with the `DirectoryNavigation` widget. A dialog can
     reload that widget in response to drive selection changes.
     """
 
