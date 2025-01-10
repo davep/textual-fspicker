@@ -3,7 +3,7 @@
 ##############################################################################
 # Python imports.
 import os
-import platform
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -70,8 +70,10 @@ class DriveNavigation(OptionList):
         """
         super().__init__()
         self.set_reactive(DriveNavigation.drive, MakePath.of(location).absolute().drive)
-        if platform.system() == "Windows":
+        if sys.platform == "win32":
             self._entries = [DriveEntry(drive) for drive in os.listdrives()]
+        else:
+            self._entries: list[DriveEntry] = []
 
     def on_mount(self) -> None:
         """Add available drives to the widget."""

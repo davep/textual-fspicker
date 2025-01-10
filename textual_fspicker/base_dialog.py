@@ -4,7 +4,7 @@
 # Python imports.
 from __future__ import annotations
 
-import platform
+import sys
 from pathlib import Path
 from typing import Optional
 
@@ -103,7 +103,7 @@ class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
         with Dialog() as dialog:
             dialog.border_title = self._title
             with Horizontal():
-                if platform.system() == "Windows":
+                if sys.platform == "win32":
                     yield DriveNavigation(self._location)
                 yield DirectoryNavigation(self._location)
             with InputBar():
