@@ -103,6 +103,7 @@ class DriveNavigation(OptionList):
         """
         assert isinstance(event.option, DriveEntry)
         event.stop()
+        self.drive = event.option.drive_root.drive
         self.post_message(self.DriveSelected(drive_root=event.option.drive_root))
 
 
