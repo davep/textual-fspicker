@@ -91,16 +91,8 @@ class DriveNavigation(OptionList):
 
         Args:
             drive: The drive to be highlighted.
-
-        Raises:
-            RuntimeError: Raised if there is no entry for the drive.
         """
-        for entry in self._entries:
-            if entry.drive_root.drive == drive:
-                break
-        else:
-            raise RuntimeError(f"Drive {drive} not found in DriveNavigation widget.")
-        self.highlighted = self.get_option_index(entry.id)
+        self.highlighted = self.get_option_index(drive)
 
     @on(OptionList.OptionSelected)
     def drive_selected(self, event: OptionList.OptionSelected) -> None:
