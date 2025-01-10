@@ -2,10 +2,31 @@
 
 ##############################################################################
 # Python imports.
-import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+
+try:
+    from os import listdrives  # type: ignore[attr-defined]
+except ImportError:
+    import string
+
+    def listdrives() -> list[str]:
+        """Return a list containing the names of drives in the system.
+
+        A drive name typically looks like 'C:\\'. This is an implementation for
+        Python versions before 3.12. It does _not_ list removable drives which
+        have no media inserted.
+
+        Returns:
+            list[str]: The list of available drives.
+        """
+        return [
+            f"{letter}:"
+            for letter in string.ascii_uppercase
+            if Path(f"{letter}:\\").exists()
+        ]
+
 
 ##############################################################################
 # Textual imports.
@@ -71,7 +92,7 @@ class DriveNavigation(OptionList):
         super().__init__()
         self.set_reactive(DriveNavigation.drive, MakePath.of(location).absolute().drive)
         if sys.platform == "win32":
-            self._entries = [DriveEntry(drive) for drive in os.listdrives()]
+            self._entries = [DriveEntry(drive) for drive in listdrives()]
         else:
             self._entries: list[DriveEntry] = []
 
