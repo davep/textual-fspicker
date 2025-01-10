@@ -49,7 +49,7 @@ class DriveNavigation(OptionList):
         """Post a DriveSelected message.
 
         Args:
-            event: the drive selected event from the parent OptionList.
+            event: The drive selected event from the parent `OptionList`.
         """
         self.post_message(self.DriveSelected(drive_root=event.option.prompt))
 
