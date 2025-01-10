@@ -92,7 +92,7 @@ class DriveNavigation(OptionList):
         Args:
             drive: The drive to be highlighted.
         """
-        self.highlighted = self.get_option_index(drive)
+        self.highlighted = self.get_option_index(drive.upper())
 
     @on(OptionList.OptionSelected)
     def drive_selected(self, event: OptionList.OptionSelected) -> None:

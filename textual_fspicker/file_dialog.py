@@ -161,9 +161,10 @@ class BaseFileDialog(FileSystemPickerScreen):
         # doing a "cd".
         try:
             if chosen.is_dir():
+                drive = MakePath.of(file_name.value).drive
                 self.query_one(Input).value = ""
                 self.query_one(DirectoryNavigation).location = chosen
-                self.query_one(DriveNavigation).drive = chosen.drive
+                self.query_one(DriveNavigation).drive = drive
                 self.query_one(DirectoryNavigation).focus()
                 return
         except PermissionError:
