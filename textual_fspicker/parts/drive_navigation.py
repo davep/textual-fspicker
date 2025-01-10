@@ -54,27 +54,4 @@ class DriveNavigation(OptionList):
         self.post_message(self.DriveSelected(drive_root=event.option.prompt))
 
 
-class TestApp(App[None]):
-    """Simple test app for the DriveNavigation widget."""
-
-    def compose(self) -> ComposeResult:
-        yield DriveNavigation()
-        yield Static("No drive selected", id="drive_contents")
-
-    @on(DriveNavigation.DriveSelected)
-    def show_drive_contents(self, event: DriveNavigation.DriveSelected) -> None:
-        """Show selected drive contents.
-
-        Args:
-            event (DriveNavigation.DriveSelected): the event for the drive selection.
-        """
-        self.query_one("#drive_contents", Static).update(
-            "\n".join([str(p) for p in pathlib.Path(event.drive_root).glob("*")])
-        )
-
-
-if __name__ == "__main__":
-    TestApp().run()
-
-
 ### drive_navigation.py ends here
