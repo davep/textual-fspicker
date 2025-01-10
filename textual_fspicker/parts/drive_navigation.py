@@ -60,7 +60,7 @@ class DriveNavigation(OptionList):
         drive_root: Path
         """The selected drive root, like `c:\\`."""
 
-    _drive: var[str] = var[str](MakePath.of(".").absolute().drive, init=False)
+    drive: var[str] = var[str](MakePath.of(".").absolute().drive, init=False)
 
     def __init__(self, location: Path | str = ".") -> None:
         """Initialise the drive navigation widget.
@@ -69,18 +69,22 @@ class DriveNavigation(OptionList):
             location: The starting location.
         """
         super().__init__()
-        self.set_reactive(
-            DriveNavigation._drive, MakePath.of(location).absolute().drive
-        )
+        self.set_reactive(DriveNavigation.drive, MakePath.of(location).absolute().drive)
         if platform.system() == "Windows":
             self._entries = [DriveEntry(drive) for drive in os.listdrives()]
 
     def on_mount(self) -> None:
         """Add available drives to the widget."""
         self.add_options(self._entries)
-        self.highlight_drive(self._drive)
+        self.highlight_drive(self.drive)
 
-    def _watch__drive(self, drive: str) -> None: ...
+    def _watch_drive(self, drive: str) -> None:
+        """Highlight the new drive.
+
+        Args:
+            drive: The new value of the current drive.
+        """
+        self.highlight_drive(drive)
 
     def highlight_drive(self, drive: str) -> None:
         """Highlight the given drive.

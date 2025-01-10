@@ -15,7 +15,7 @@ from textual.widgets import Button, Input, Select
 ##############################################################################
 # Local imports.
 from .base_dialog import FileSystemPickerScreen
-from .parts import DirectoryNavigation
+from .parts import DirectoryNavigation, DriveNavigation
 from .path_filters import Filters
 from .path_maker import MakePath
 
@@ -162,6 +162,7 @@ class BaseFileDialog(FileSystemPickerScreen):
             if chosen.is_dir():
                 self.query_one(Input).value = ""
                 self.query_one(DirectoryNavigation).location = chosen
+                self.query_one(DriveNavigation).drive = chosen.drive
                 self.query_one(DirectoryNavigation).focus()
                 return
         except PermissionError:
