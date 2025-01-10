@@ -3,17 +3,17 @@
 ##############################################################################
 # Python imports.
 import os
-from pathlib import Path
 import platform
 from dataclasses import dataclass
+from pathlib import Path
 
 ##############################################################################
 # Textual imports.
 from textual import on
 from textual.message import Message
+from textual.reactive import var
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
-from textual.reactive import var
 
 ##############################################################################
 # Local imports.
