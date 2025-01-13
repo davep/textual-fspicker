@@ -1,0 +1,46 @@
+name: Code quality tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+
+  style-lint-and-test:
+
+    name: Style and lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Rye
+        uses: eifinger/setup-rye@v4
+        with:
+          version: "latest"
+
+      - name: Install Dependencies
+        run: make setup
+
+      - name: Check the Code style
+        run: make codestyle
+
+      - name: Lint the code
+        run: make lint
+
+      - name: Type check the code
+        run: make stricttypecheck
+
+### style-and-lint.yaml ends here
