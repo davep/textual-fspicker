@@ -21,10 +21,6 @@ debug:				# Run the code with Textual devtools enabled
 console:			# Run the textual console
 	$(run) textual console
 
-.PHONY: api
-api:				# Explore the API with Posting
-	posting --collection .posting --env .env
-
 ##############################################################################
 # Setup/update packages the system requires.
 .PHONY: setup
