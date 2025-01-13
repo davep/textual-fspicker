@@ -3,6 +3,7 @@
 ##############################################################################
 # Python imports.
 from __future__ import annotations
+
 from pathlib import Path
 
 ##############################################################################
@@ -10,7 +11,7 @@ from pathlib import Path
 from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Center, Horizontal
-from textual.widgets import Label, Button, Footer
+from textual.widgets import Button, Footer, Label
 
 ##############################################################################
 # Local imports.

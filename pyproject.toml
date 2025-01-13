@@ -1,5 +1,63 @@
-[build-system]
-requires = ["setuptools>=42", "wheel"]
-build-backend = "setuptools.build_meta"
+[project]
+name = "textual-fspicker"
+version = "0.1.0"
+description = "A simple Textual filesystem picker dialog library."
+authors = [
+    { name = "Dave Pearson", email = "davep@davep.org" }
+]
+dependencies = [
+    "textual>=1.0.0",
+]
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "License :: OSI Approved :: MIT License" }
+keywords = [
+    "terminal",
+    "library",
+    "file system",
+    "filesystem",
+    "dialog",
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Environment :: Console",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Terminals",
+    "Topic :: Software Development :: Libraries",
+    "Typing :: Typed",
+]
 
-### pyproject.toml ends here
+[project.urls]
+Homepage = "https://github.com/davep/textual-fspicker"
+Repository = "https://github.com/davep/textual-fspicker"
+Documentation = "https://github.com/davep/textual-fspicker/blob/main/README.md"
+Source = "https://github.com/davep/textual-fspicker"
+Issues = "https://github.com/davep/textual-fspicker/issues"
+Discussions = "https://github.com/davep/textual-fspicker/discussions"
+
+[build-system]
+# https://github.com/astral-sh/rye/issues/1446
+requires = ["hatchling==1.26.3", "hatch-vcs"]
+# requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pre-commit>=4.0.1",
+    "mypy>=1.14.1",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/textual_fspicker"]
