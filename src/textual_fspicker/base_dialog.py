@@ -46,12 +46,17 @@ class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
     FileSystemPickerScreen Dialog {
         width: 80%;
         height: 80%;
-        border: panel $panel-lighten-2;
-        background: $panel-lighten-1;
+        border: $border;
+        background: $panel;
         border-title-color: $text;
-        border-title-background: $panel-lighten-2;
+        border-title-background: $panel;
         border-subtitle-color: $text;
         border-subtitle-background: $error;
+
+        OptionList, OptionList:focus {
+            background: $panel;
+            background-tint: $panel;
+        }
     }
 
     FileSystemPickerScreen DirectoryNavigation {
