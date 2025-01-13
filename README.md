@@ -43,7 +43,7 @@ how the code can be used is in that demo/test code.
 - [X] Add file filtering (extensions using `Select`)
 - [X] Expose the hidden show/hide facility of the navigator in the dialogs
 - [ ] Better documentation
-- [ ] Test on Windows
+- [X] Test on Windows
 - [ ] Add custom mtime formatting
 - [ ] Add support for showing different times
 
