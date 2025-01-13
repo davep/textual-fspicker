@@ -164,7 +164,8 @@ class BaseFileDialog(FileSystemPickerScreen):
             if chosen.is_dir():
                 if sys.platform == "win32":
                     drive = MakePath.of(file_name.value).drive
-                    self.query_one(DriveNavigation).drive = drive
+                    if drive:
+                        self.query_one(DriveNavigation).drive = drive
                 self.query_one(DirectoryNavigation).location = chosen
                 self.query_one(DirectoryNavigation).focus()
                 self.query_one(Input).value = ""
