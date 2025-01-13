@@ -1,8 +1,11 @@
-"""Provides a file opening dialog."""
+"""Provides a file save dialog."""
+
+##############################################################################
+# Backward compatibility.
+from __future__ import annotations
 
 ##############################################################################
 # Python imports.
-from __future__ import annotations
 from pathlib import Path
 
 ##############################################################################
@@ -12,16 +15,16 @@ from .path_filters import Filters
 
 
 ##############################################################################
-class FileOpen(BaseFileDialog):
-    """A file opening dialog."""
+class FileSave(BaseFileDialog):
+    """A file save dialog."""
 
     def __init__(
         self,
         location: str | Path = ".",
-        title: str = "Open",
+        title: str = "Save as",
         *,
         filters: Filters | None = None,
-        must_exist: bool = True,
+        can_overwrite: bool = True,
     ) -> None:
         """Initialise the `FileOpen` dialog.
 
@@ -29,11 +32,11 @@ class FileOpen(BaseFileDialog):
             location: Optional starting location.
             title: Optional title.
             filters: Optional filters to show in the dialog.
-            must_exist: Flag to say if the file must exist.
+            can_overwrite: Flag to say if an existing file can be overwritten.
         """
-        super().__init__(location, title, select_button="Open", filters=filters)
-        self._must_exist = must_exist
-        """Must the file exist?"""
+        super().__init__(location, title, select_button="Save", filters=filters)
+        self._can_overwrite = can_overwrite
+        """Can an existing file be overwritten?"""
 
     def _should_return(self, candidate: Path) -> bool:
         """Perform the final checks on the chosen file.
@@ -41,10 +44,10 @@ class FileOpen(BaseFileDialog):
         Args:
             candidate: The file to check.
         """
-        if self._must_exist and not candidate.exists():
-            self._set_error("The file must exist")
+        if candidate.exists() and not self._can_overwrite:
+            self._set_error("Overwrite is not allowed")
             return False
         return True
 
 
-### file_open.py ends here
+### file_save.py ends here

@@ -1,10 +1,16 @@
 """Code to handle the filters for the dialogs."""
 
 ##############################################################################
-# Python imports.
+# Backward compatibility.
 from __future__ import annotations
+
+##############################################################################
+# Python imports.
 from pathlib import Path
 from typing import Callable, NamedTuple
+
+##############################################################################
+# Typing extension imports.
 from typing_extensions import TypeAlias
 
 ##############################################################################

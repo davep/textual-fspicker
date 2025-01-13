@@ -1,4 +1,8 @@
-"""A library that provides a widgets for selecting things from the filesystem."""
+"""A library that provides widgets for selecting things from the filesystem."""
+
+##############################################################################
+# Python imports.
+from importlib.metadata import version
 
 ######################################################################
 # Main app information.
@@ -7,7 +11,7 @@ __copyright__ = "Copyright 2023, Dave Pearson"
 __credits__ = ["Dave Pearson"]
 __maintainer__ = "Dave Pearson"
 __email__ = "davep@davep.org"
-__version__ = "0.0.11"
+__version__ = version("textual_fspicker")
 __licence__ = "MIT"
 
 ##############################################################################

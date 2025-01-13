@@ -6,6 +6,8 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+##############################################################################
+# Import or provide a version of listdrives.
 try:
     from os import listdrives  # type: ignore[attr-defined]
 except ImportError:
@@ -46,11 +48,17 @@ class DriveEntry(Option):
     """A drive entry for the `DriveNavigation` class."""
 
     def __init__(self, drive: Path | str) -> None:
+        """Initialise the object.
+
+        Args:
+            drive: The drive to handle.
+        """
         self.drive_root: Path = MakePath.of(drive)
         """The drive root for this entry."""
         super().__init__(self.drive_root.drive, id=self.drive_root.drive)
 
 
+##############################################################################
 class DriveNavigation(OptionList):
     """A drive navigation widget.
 

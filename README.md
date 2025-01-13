@@ -27,7 +27,7 @@ Right at the moment there's just two dialogs available:
 - `SelectDirectory` -- For selecting a directory from the filesysrem.
 
 You can see them in action in the [demo/test
-code](https://github.com/davep/textual-fspicker/blob/main/textual_fspicker/__main__.py).
+code](https://github.com/davep/textual-fspicker/blob/main/src/textual_fspicker/__main__.py).
 
 Yes, I know that documentation is lacking right now -- I'm still fleshing
 out how this will work and what it will provide -- so the best place to see
@@ -43,7 +43,7 @@ how the code can be used is in that demo/test code.
 - [X] Add file filtering (extensions using `Select`)
 - [X] Expose the hidden show/hide facility of the navigator in the dialogs
 - [ ] Better documentation
-- [ ] Test on Windows
+- [X] Test on Windows
 - [ ] Add custom mtime formatting
 - [ ] Add support for showing different times
 
