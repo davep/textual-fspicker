@@ -1,9 +1,11 @@
 """Base file-oriented dialog."""
 
 ##############################################################################
-# Python imports.
+# Backward compatibility.
 from __future__ import annotations
 
+##############################################################################
+# Python imports.
 import sys
 from pathlib import Path
 
@@ -163,8 +165,7 @@ class BaseFileDialog(FileSystemPickerScreen):
         try:
             if chosen.is_dir():
                 if sys.platform == "win32":
-                    drive = MakePath.of(file_name.value).drive
-                    if drive:
+                    if drive := MakePath.of(file_name.value).drive:
                         self.query_one(DriveNavigation).drive = drive
                 self.query_one(DirectoryNavigation).location = chosen
                 self.query_one(DirectoryNavigation).focus()

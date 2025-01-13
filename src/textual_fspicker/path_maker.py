@@ -7,9 +7,11 @@ dependencies of this library.
 """
 
 ##############################################################################
-# Python imports.
+# Backward compatibility.
 from __future__ import annotations
 
+##############################################################################
+# Python imports.
 from pathlib import Path
 from typing import Callable
 

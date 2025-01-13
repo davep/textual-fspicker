@@ -1,9 +1,11 @@
 """Provides a directory selection dialog."""
 
 ##############################################################################
-# Python imports.
+# Backward compatibility.
 from __future__ import annotations
 
+##############################################################################
+# Python imports.
 from pathlib import Path
 
 ##############################################################################

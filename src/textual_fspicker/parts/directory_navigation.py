@@ -1,9 +1,11 @@
 """Provides a widget for directory navigation."""
 
 ##############################################################################
-# Python imports.
+# Backward compatibility.
 from __future__ import annotations
 
+##############################################################################
+# Python imports.
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -26,11 +28,10 @@ from textual.widgets.option_list import Option
 from textual.worker import get_current_worker
 from typing_extensions import Final
 
-from ..path_filters import Filter
-from ..path_maker import MakePath
-
 ##############################################################################
 # Local imports.
+from ..path_filters import Filter
+from ..path_maker import MakePath
 from ..safe_tests import is_dir, is_file, is_symlink
 
 

@@ -1,9 +1,11 @@
 """Provides a file save dialog."""
 
 ##############################################################################
-# Python imports.
+# Backward compatibility.
 from __future__ import annotations
 
+##############################################################################
+# Python imports.
 from pathlib import Path
 
 ##############################################################################

@@ -1,9 +1,11 @@
 """The base dialog code for the other dialogs in the library."""
 
 ##############################################################################
-# Python imports.
+# Backward compatibility.
 from __future__ import annotations
 
+##############################################################################
+# Python imports.
 import sys
 from pathlib import Path
 from typing import Optional

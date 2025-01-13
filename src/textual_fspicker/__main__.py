@@ -1,9 +1,11 @@
 """Main entry point for testing the library."""
 
 ##############################################################################
-# Python imports.
+# Backward compatibility.
 from __future__ import annotations
 
+##############################################################################
+# Python imports.
 from pathlib import Path
 
 ##############################################################################
@@ -38,8 +40,6 @@ class TestApp(App[None]):
         margin-right: 1;
     }
     """
-
-    BINDINGS = [("d", "toggle_dark", "Light/Dark")]
 
     def compose(self) -> ComposeResult:
         """Compose the layout of the test application."""
