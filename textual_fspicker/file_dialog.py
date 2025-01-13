@@ -3,6 +3,8 @@
 ##############################################################################
 # Python imports.
 from __future__ import annotations
+
+import sys
 from pathlib import Path
 
 ##############################################################################
@@ -15,7 +17,7 @@ from textual.widgets import Button, Input, Select
 ##############################################################################
 # Local imports.
 from .base_dialog import FileSystemPickerScreen
-from .parts import DirectoryNavigation
+from .parts import DirectoryNavigation, DriveNavigation
 from .path_filters import Filters
 from .path_maker import MakePath
 
@@ -160,9 +162,13 @@ class BaseFileDialog(FileSystemPickerScreen):
         # doing a "cd".
         try:
             if chosen.is_dir():
-                self.query_one(Input).value = ""
+                if sys.platform == "win32":
+                    drive = MakePath.of(file_name.value).drive
+                    if drive:
+                        self.query_one(DriveNavigation).drive = drive
                 self.query_one(DirectoryNavigation).location = chosen
                 self.query_one(DirectoryNavigation).focus()
+                self.query_one(Input).value = ""
                 return
         except PermissionError:
             self._set_error("Permission error")

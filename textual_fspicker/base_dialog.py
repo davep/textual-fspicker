@@ -3,6 +3,8 @@
 ##############################################################################
 # Python imports.
 from __future__ import annotations
+
+import sys
 from pathlib import Path
 from typing import Optional
 
@@ -17,7 +19,7 @@ from textual.widgets import Button
 
 ##############################################################################
 # Local imports.
-from .parts import DirectoryNavigation
+from .parts import DirectoryNavigation, DriveNavigation
 
 
 ##############################################################################
@@ -100,11 +102,18 @@ class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
         """
         with Dialog() as dialog:
             dialog.border_title = self._title
-            yield DirectoryNavigation(self._location)
+            with Horizontal():
+                if sys.platform == "win32":
+                    yield DriveNavigation(self._location)
+                yield DirectoryNavigation(self._location)
             with InputBar():
                 yield from self._input_bar()
                 yield Button(self._select_button, id="select")
                 yield Button("Cancel", id="cancel")
+
+    def on_mount(self) -> None:
+        """Focus directory widget on mount."""
+        self.query_one(DirectoryNavigation).focus()
 
     def _set_error(self, message: str = "") -> None:
         """Set or clear the error message.
@@ -113,6 +122,11 @@ class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
             message: Optional message to show as an error.
         """
         self.query_one(Dialog).border_subtitle = message
+
+    @on(DriveNavigation.DriveSelected)
+    def _change_drive(self, event: DriveNavigation.DriveSelected) -> None:
+        """Reload DirectoryNavigation in response to drive change."""
+        self.query_one(DirectoryNavigation).location = event.drive_root
 
     @on(DirectoryNavigation.Changed)
     def _clear_error(self) -> None:

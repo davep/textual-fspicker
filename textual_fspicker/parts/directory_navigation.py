@@ -3,6 +3,7 @@
 ##############################################################################
 # Python imports.
 from __future__ import annotations
+
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -19,8 +20,8 @@ from rich.text import Text
 ##############################################################################
 # Textual imports.
 from textual import work
-from textual.reactive import var
 from textual.message import Message
+from textual.reactive import var
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 from textual.worker import get_current_worker
@@ -51,7 +52,7 @@ class DirectoryEntryStyling(NamedTuple):
 
 ##############################################################################
 class DirectoryEntry(Option):
-    """A directory entry for the `DirectoryNaviation` class."""
+    """A directory entry for the `DirectoryNavigation` class."""
 
     FOLDER_ICON: Final[Text] = Text.from_markup(":file_folder:")
     """The icon to use for a folder."""
@@ -305,8 +306,7 @@ class DirectoryNavigation(OptionList):
     @property
     def is_root(self) -> bool:
         """Are we at the root of the filesystem?"""
-        # TODO: Worry about portability.
-        return self._location == MakePath.of(self._location.root)
+        return self._location == MakePath.of(self._location.parent)
 
     @staticmethod
     def is_hidden(path: Path) -> bool:
