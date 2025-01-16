@@ -1,5 +1,12 @@
 # ChangeLog
 
+## Unreleased
+
+**Released: WiP**
+
+- Fixed the cosmetics of the directory label in `SelectDirectory`.
+  ([#15](https://github.com/davep/textual-fspicker/pull/15))
+
 ## v0.1.0
 
 **Released: 2025-01-15**
