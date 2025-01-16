@@ -1,9 +1,11 @@
 # ChangeLog
 
-## Unreleased
+## v0.1.1
 
-**Released: WiP**
+**Released: 2025-01-16**
 
+- Fixed a backward-compatibility issue on Windows ([thanks to
+  SoulMelody](https://github.com/davep/textual-fspicker/pull/14)).
 - Fixed the cosmetics of the directory label in `SelectDirectory`.
   ([#15](https://github.com/davep/textual-fspicker/pull/15))
 
@@ -14,7 +16,7 @@
 - Added <kbd>backspace</kbd> as a navigation shortcut for "change to parent"
   ([thanks to ihabunek](https://github.com/davep/textual-fspicker/pull/7)).
 - Added support for drive selection on Microsoft Windows
-  ([davidfokkema](https://github.com/davep/textual-fspicker/pull/9)),
+  ([thanks to davidfokkema](https://github.com/davep/textual-fspicker/pull/9)),
 
 ## v0.0.10
 
