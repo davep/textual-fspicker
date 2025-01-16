@@ -48,7 +48,7 @@ class CurrentDirectory(Label):
             )
             >= self.size.width
         ):
-            display = "…" + display[1:]
+            display = f"…{display[1:]}"
         self.update(display)
 
     def on_resize(self) -> None:
