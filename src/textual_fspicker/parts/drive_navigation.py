@@ -1,6 +1,10 @@
 """Provides a widget for drive navigation."""
 
 ##############################################################################
+# Backward compatibility.
+from __future__ import annotations
+
+##############################################################################
 # Python imports.
 import sys
 from dataclasses import dataclass
