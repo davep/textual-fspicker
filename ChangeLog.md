@@ -1,9 +1,11 @@
 # ChangeLog
 
-## Unreleased
+## v0.1.1
 
-**Released: WiP**
+**Released: 2025-01-16**
 
+- Fixed a backward-compatibility issue on Windows ([thanks to
+  SoulMelody](https://github.com/davep/textual-fspicker/pull/14)).
 - Fixed the cosmetics of the directory label in `SelectDirectory`.
   ([#15](https://github.com/davep/textual-fspicker/pull/15))
 
