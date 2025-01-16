@@ -1,5 +1,11 @@
 # ChangeLog
 
+## Unreleased
+
+**Released: WiP**
+
+- Fixed the cosmetics of the directory label in `SelectDirectory`.
+
 ## v0.1.0
 
 **Released: 2025-01-15**

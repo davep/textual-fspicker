@@ -12,6 +12,7 @@ from pathlib import Path
 # Textual imports.
 from textual import on
 from textual.app import ComposeResult
+from textual.reactive import var
 from textual.widgets import Button, Label
 
 ##############################################################################
@@ -21,17 +22,42 @@ from .parts import DirectoryNavigation
 
 
 ##############################################################################
-class SelectDirectory(FileSystemPickerScreen):
-    """A directory selection dialog."""
+class CurrentDirectory(Label):
+    """A widget to show the current directory."""
 
     DEFAULT_CSS = """
-    SelectDirectory > Dialog > InputBar > Label {
+    CurrentDirectory {
         width: 1fr;
+        height: 3;
         border: tall $background;
         padding-left: 1;
         padding-right: 1;
     }
     """
+
+    current_directory: var[Path | None] = var(None, always_update=True)
+    """The current directory."""
+
+    def watch_current_directory(self) -> None:
+        """Watch for the current directory being changed."""
+        if (
+            len(
+                display := ""
+                if self.current_directory is None
+                else str(self.current_directory)[-self.size.width :]
+            )
+            >= self.size.width
+        ):
+            display = "…" + display[1:]
+        self.update(display)
+
+    def on_resize(self) -> None:
+        self.current_directory = self.current_directory
+
+
+##############################################################################
+class SelectDirectory(FileSystemPickerScreen):
+    """A directory selection dialog."""
 
     def __init__(
         self, location: str | Path = ".", title: str = "Select directory"
@@ -48,21 +74,11 @@ class SelectDirectory(FileSystemPickerScreen):
         """Configure the dialog once the DOM is ready."""
         navigation = self.query_one(DirectoryNavigation)
         navigation.show_files = False
-        self._set_current(navigation.location)
+        self.query_one(CurrentDirectory).current_directory = navigation.location
 
     def _input_bar(self) -> ComposeResult:
         """Provide any widgets for the input before, before the buttons."""
-        yield Label()
-
-    def _set_current(self, location: Path) -> None:
-        """Set the current location.
-
-        Args:
-            location: The location to indicate.
-        """
-        current_selection = self.query_one("InputBar > Label", Label)
-        # TODO: A nicer way of indicating we're looking at just the tail.
-        current_selection.update(str(location)[-current_selection.size.width :])
+        yield CurrentDirectory()
 
     @on(DirectoryNavigation.Changed)
     def _show_selected(self, event: DirectoryNavigation.Changed) -> None:
@@ -72,7 +88,7 @@ class SelectDirectory(FileSystemPickerScreen):
             event: The event with the selection information in.
         """
         event.stop()
-        self._set_current(event.control.location)
+        self.query_one(CurrentDirectory).current_directory = event.control.location
 
     @on(Button.Pressed, "#select")
     def _select_directory(self, event: Button.Pressed) -> None:
