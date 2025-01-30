@@ -8,7 +8,6 @@ from __future__ import annotations
 # Python imports.
 import sys
 from pathlib import Path
-from typing import Optional
 
 ##############################################################################
 # Textual imports.
@@ -35,7 +34,7 @@ class InputBar(Horizontal):
 
 
 ##############################################################################
-class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
+class FileSystemPickerScreen(ModalScreen[Path | None]):
     """Base screen for the dialogs in this library."""
 
     DEFAULT_CSS = """
