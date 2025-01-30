@@ -8,7 +8,6 @@ from __future__ import annotations
 # Python imports.
 import sys
 from pathlib import Path
-from typing import Optional
 
 ##############################################################################
 # Textual imports.
@@ -35,44 +34,43 @@ class InputBar(Horizontal):
 
 
 ##############################################################################
-class FileSystemPickerScreen(ModalScreen[Optional[Path]]):
+class FileSystemPickerScreen(ModalScreen[Path | None]):
     """Base screen for the dialogs in this library."""
 
     DEFAULT_CSS = """
     FileSystemPickerScreen {
         align: center middle;
-    }
 
-    FileSystemPickerScreen Dialog {
-        width: 80%;
-        height: 80%;
-        border: $border;
-        background: $panel;
-        border-title-color: $text;
-        border-title-background: $panel;
-        border-subtitle-color: $text;
-        border-subtitle-background: $error;
-
-        OptionList, OptionList:focus {
+        Dialog {
+            width: 80%;
+            height: 80%;
+            border: $border;
             background: $panel;
-            background-tint: $panel;
+            border-title-color: $text;
+            border-title-background: $panel;
+            border-subtitle-color: $text;
+            border-subtitle-background: $error;
+
+            OptionList, OptionList:focus {
+                background: $panel;
+                background-tint: $panel;
+            }
         }
-    }
 
-    FileSystemPickerScreen DirectoryNavigation {
-        height: 1fr;
-    }
+        DirectoryNavigation {
+            height: 1fr;
+        }
 
-    FileSystemPickerScreen InputBar {
-        height: auto;
-        align: right middle;
-        padding-top: 1;
-        padding-right: 1;
-        padding-bottom: 1;
-    }
-
-    FileSystemPickerScreen InputBar Button {
-        margin-left: 1;
+        InputBar {
+            height: auto;
+            align: right middle;
+            padding-top: 1;
+            padding-right: 1;
+            padding-bottom: 1;
+            Button {
+                margin-left: 1;
+            }
+        }
     }
     """
 
