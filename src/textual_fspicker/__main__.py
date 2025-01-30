@@ -27,17 +27,17 @@ class TestApp(App[None]):
     CSS = """
     Screen#_default {
         align: center middle;
-    }
 
-    Screen#_default Horizontal {
-        align: center middle;
-        height: auto;
-        margin-bottom: 1;
-    }
+        Horizontal {
+            align: center middle;
+            height: auto;
+            margin-bottom: 1;
+        }
 
-    Screen#_default Horizontal Button {
-        margin-left: 1;
-        margin-right: 1;
+        Horizontal Button {
+            margin-left: 1;
+            margin-right: 1;
+        }
     }
     """
 
