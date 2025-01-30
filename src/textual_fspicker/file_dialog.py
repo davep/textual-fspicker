@@ -34,12 +34,13 @@ class BaseFileDialog(FileSystemPickerScreen):
     """The base dialog for file-oriented picking dialogs."""
 
     DEFAULT_CSS = """
-    BaseFileDialog InputBar Input {
-        width: 2fr;
-    }
-
-    BaseFileDialog InputBar Select {
-        width: 1fr;
+    BaseFileDialog InputBar {
+        Input {
+            width: 2fr;
+        }
+        Select {
+            width: 1fr;
+        }
     }
     """
 
