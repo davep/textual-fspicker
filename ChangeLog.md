@@ -1,8 +1,8 @@
 # ChangeLog
 
-## Unreleased
+## v0.2.0
 
-**Released: WiP**
+**Released: 2025-01-30**
 
 - Added `default_file` to `FileOpen` and `FileSave`.
   ([#18](https://github.com/davep/textual-fspicker/pull/18))
