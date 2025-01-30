@@ -5,6 +5,7 @@
 **Released: WiP**
 
 - Added `default_file` to `FileOpen` and `FileSave`.
+  ([#18](https://github.com/davep/textual-fspicker/pull/18))
 
 ## v0.1.1
 
