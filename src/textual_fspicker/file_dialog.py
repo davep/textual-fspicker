@@ -50,6 +50,7 @@ class BaseFileDialog(FileSystemPickerScreen):
         select_button: str = "",
         *,
         filters: Filters | None = None,
+        default_file: str | Path | None = None,
     ) -> None:
         """Initialise the base dialog dialog.
 
@@ -58,14 +59,17 @@ class BaseFileDialog(FileSystemPickerScreen):
             title: Optional title.
             select_button: The label for the selection button.
             filters: Optional filters to show in the dialog.
+            default_file: The default filename to place in the input.
         """
         super().__init__(location, title, select_button=select_button)
         self._filters = filters
         """The filters for the dialog."""
+        self._default_file = default_file
+        """The default filename to put in the input field."""
 
     def _input_bar(self) -> ComposeResult:
         """Provide any widgets for the input before, before the buttons."""
-        yield Input()
+        yield Input(Path(self._default_file or "").name)
         if self._filters:
             yield FileFilter(
                 self._filters.selections,

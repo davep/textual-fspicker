@@ -25,6 +25,7 @@ class FileSave(BaseFileDialog):
         *,
         filters: Filters | None = None,
         can_overwrite: bool = True,
+        default_file: str | Path | None = None,
     ) -> None:
         """Initialise the `FileOpen` dialog.
 
@@ -33,8 +34,15 @@ class FileSave(BaseFileDialog):
             title: Optional title.
             filters: Optional filters to show in the dialog.
             can_overwrite: Flag to say if an existing file can be overwritten.
+            default_file: The default filename to place in the input.
         """
-        super().__init__(location, title, select_button="Save", filters=filters)
+        super().__init__(
+            location,
+            title,
+            select_button="Save",
+            filters=filters,
+            default_file=default_file,
+        )
         self._can_overwrite = can_overwrite
         """Can an existing file be overwritten?"""
 
