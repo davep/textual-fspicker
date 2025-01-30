@@ -6,6 +6,7 @@
 
 - Added `default_file` to `FileOpen` and `FileSave`.
   ([#18](https://github.com/davep/textual-fspicker/pull/18))
+- Dropped support for Python 3.8.
 
 ## v0.1.1
 
