@@ -27,7 +27,7 @@ class FileSave(BaseFileDialog):
         can_overwrite: bool = True,
         default_file: str | Path | None = None,
     ) -> None:
-        """Initialise the `FileOpen` dialog.
+        """Initialise the `FileSave` dialog.
 
         Args:
             location: Optional starting location.
