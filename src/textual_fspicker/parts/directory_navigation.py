@@ -99,7 +99,16 @@ class DirectoryEntry(Option):
             mtime = location.stat().st_mtime
         except FileNotFoundError:
             mtime = 0
-        return datetime.fromtimestamp(int(mtime)).isoformat().replace("T", " ")
+        try:
+            mdatetime = datetime.fromtimestamp(int(mtime))
+        except OSError:
+            # It's possible, on Windows anyway, for the attempt to convert a
+            # time like this to throw an OSError. So we'll capture that and
+            # default to the epoch.
+            #
+            # https://github.com/davep/textual-fspicker/issues/6#issuecomment-2669234263
+            mdatetime = datetime.fromtimestamp(0)
+        return mdatetime.isoformat().replace("T", " ")
 
     @staticmethod
     def _size(location: Path) -> str:
