@@ -1,12 +1,12 @@
 # ChangeLog
 
-## Unreleased
+## v0.3.0
 
-**Released: WiP**
+**Released: 2025-02-19**
 
 - Handled Windows throwing an `OSError` when `mtime` can't be adequately
-  worked out.
-  ([6#issuecomment-2669234263](https://github.com/davep/textual-fspicker/issues/6#issuecomment-2669234263))
+  worked out. ([#24](https://github.com/davep/textual-fspicker/pull/24) for
+  [6#issuecomment-2669234263](https://github.com/davep/textual-fspicker/issues/6#issuecomment-2669234263))
 
 ## v0.2.0
 
