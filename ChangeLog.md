@@ -1,8 +1,8 @@
 # ChangeLog
 
-## Unreleased
+## v0.4.0
 
-**Released: WiP**
+**Released: 2025-02-20**
 
 - Added the ability to configure any button label of any dialog.
   ([#26](https://github.com/davep/textual-fspicker/pull/26))
