@@ -18,7 +18,7 @@ from textual.widgets import Button, Input, Select
 
 ##############################################################################
 # Local imports.
-from .base_dialog import FileSystemPickerScreen
+from .base_dialog import ButtonLabel, FileSystemPickerScreen
 from .parts import DirectoryNavigation, DriveNavigation
 from .path_filters import Filters
 from .path_maker import MakePath
@@ -48,7 +48,8 @@ class BaseFileDialog(FileSystemPickerScreen):
         self,
         location: str | Path = ".",
         title: str = "Open",
-        select_button: str = "",
+        select_button: ButtonLabel = "",
+        cancel_button: ButtonLabel = "",
         *,
         filters: Filters | None = None,
         default_file: str | Path | None = None,
@@ -58,11 +59,14 @@ class BaseFileDialog(FileSystemPickerScreen):
         Args:
             location: Optional starting location.
             title: Optional title.
-            select_button: The label for the selection button.
+            select_button: The label for the select button.
+            cancel_button: The label for the cancel button.
             filters: Optional filters to show in the dialog.
             default_file: The default filename to place in the input.
         """
-        super().__init__(location, title, select_button=select_button)
+        super().__init__(
+            location, title, select_button=select_button, cancel_button=cancel_button
+        )
         self._filters = filters
         """The filters for the dialog."""
         self._default_file = default_file

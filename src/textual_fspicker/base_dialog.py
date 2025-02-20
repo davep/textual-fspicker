@@ -8,6 +8,7 @@ from __future__ import annotations
 # Python imports.
 import sys
 from pathlib import Path
+from typing import Callable, TypeAlias
 
 ##############################################################################
 # Textual imports.
@@ -31,6 +32,11 @@ class Dialog(Vertical):
 ##############################################################################
 class InputBar(Horizontal):
     """The input bar area of the dialog."""
+
+
+##############################################################################
+ButtonLabel: TypeAlias = str | Callable[[str], str]
+"""The type for a button label value."""
 
 
 ##############################################################################
@@ -78,26 +84,48 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
     """The bindings for the dialog."""
 
     def __init__(
-        self, location: str | Path = ".", title: str = "", select_button: str = ""
+        self,
+        location: str | Path = ".",
+        title: str = "",
+        select_button: ButtonLabel = "",
+        cancel_button: ButtonLabel = "",
     ) -> None:
         """Initialise the dialog.
 
         Args:
             location: Optional starting location.
             title: Optional title.
-            select_button: Label for the select button.
+            select_button: Label or format function for the select button.
+            cancel_button: Label or format function for the cancel button.
         """
         super().__init__()
         self._location = location
         """The starting location."""
         self._title = title
         """The title for the dialog."""
-        self._select_button = select_button or "Select"
-        """The text prompt for the select button."""
+        self._select_button = select_button
+        """The text prompt for the select button, or a function to format it."""
+        self._cancel_button = cancel_button
+        """The text prompt for the cancel button, or a function to format it."""
 
     def _input_bar(self) -> ComposeResult:
         """Provide any widgets for the input bar, before the buttons."""
         yield from ()
+
+    @staticmethod
+    def _label(label: ButtonLabel, default: str) -> str:
+        """Create a label for use with a button.
+
+        Args:
+            label: The label value for the button.
+            default: The default label for the button.
+
+        Returns:
+            The formatted label.
+        """
+        # If the label is callable, then call it with the default as a
+        # parameter; otherwise use it as-is as it'll be a string.
+        return label(default) if callable(label) else label or default
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets.
@@ -113,8 +141,8 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
                 yield DirectoryNavigation(self._location)
             with InputBar():
                 yield from self._input_bar()
-                yield Button(self._select_button, id="select")
-                yield Button("Cancel", id="cancel")
+                yield Button(self._label(self._select_button, "Select"), id="select")
+                yield Button(self._label(self._cancel_button, "Cancel"), id="cancel")
 
     def on_mount(self) -> None:
         """Focus directory widget on mount."""

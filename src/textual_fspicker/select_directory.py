@@ -17,7 +17,7 @@ from textual.widgets import Button, Label
 
 ##############################################################################
 # Local imports.
-from .base_dialog import FileSystemPickerScreen
+from .base_dialog import ButtonLabel, FileSystemPickerScreen
 from .parts import DirectoryNavigation
 
 
@@ -60,15 +60,29 @@ class SelectDirectory(FileSystemPickerScreen):
     """A directory selection dialog."""
 
     def __init__(
-        self, location: str | Path = ".", title: str = "Select directory"
+        self,
+        location: str | Path = ".",
+        title: str = "Select directory",
+        *,
+        select_button: ButtonLabel = "",
+        cancel_button: ButtonLabel = "",
     ) -> None:
         """Initialise the dialog.
 
         Args:
             location: Optional starting location.
             title: Optional title.
+            select_button: The label for the select button.
+            cancel_button: The label for the cancel button.
+
+        Notes:
+            `select_button` and `cancel_button` can either be strings that
+            set the button label, or they can be functions that take the
+            default button label as a parameter and return the label to use.
         """
-        super().__init__(location, title)
+        super().__init__(
+            location, title, select_button=select_button, cancel_button=cancel_button
+        )
 
     def on_mount(self) -> None:
         """Configure the dialog once the DOM is ready."""

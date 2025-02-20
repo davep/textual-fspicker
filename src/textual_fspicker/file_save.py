@@ -10,6 +10,7 @@ from pathlib import Path
 
 ##############################################################################
 # Local imports.
+from .base_dialog import ButtonLabel
 from .file_dialog import BaseFileDialog
 from .path_filters import Filters
 
@@ -23,6 +24,8 @@ class FileSave(BaseFileDialog):
         location: str | Path = ".",
         title: str = "Save as",
         *,
+        save_button: ButtonLabel = "",
+        cancel_button: ButtonLabel = "",
         filters: Filters | None = None,
         can_overwrite: bool = True,
         default_file: str | Path | None = None,
@@ -32,14 +35,22 @@ class FileSave(BaseFileDialog):
         Args:
             location: Optional starting location.
             title: Optional title.
+            save_button: The label for the save button.
+            cancel_button: The label for the cancel button.
             filters: Optional filters to show in the dialog.
             can_overwrite: Flag to say if an existing file can be overwritten.
             default_file: The default filename to place in the input.
+
+        Notes:
+            `open_button` and `cancel_button` can either be strings that
+            set the button label, or they can be functions that take the
+            default button label as a parameter and return the label to use.
         """
         super().__init__(
             location,
             title,
-            select_button="Save",
+            select_button=self._label(save_button, "Save"),
+            cancel_button=cancel_button,
             filters=filters,
             default_file=default_file,
         )
