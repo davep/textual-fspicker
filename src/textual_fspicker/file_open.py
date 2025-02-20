@@ -19,6 +19,9 @@ from .path_filters import Filters
 class FileOpen(BaseFileDialog):
     """A file opening dialog."""
 
+    ERROR_A_FILE_MUST_EXIST = "The file must exist"
+    """An error to show a user when a file must exist."""
+
     def __init__(
         self,
         location: str | Path = ".",
@@ -64,7 +67,7 @@ class FileOpen(BaseFileDialog):
             candidate: The file to check.
         """
         if self._must_exist and not candidate.exists():
-            self._set_error("The file must exist")
+            self._set_error(self.ERROR_A_FILE_MUST_EXIST)
             return False
         return True
 

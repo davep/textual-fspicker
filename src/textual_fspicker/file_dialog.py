@@ -44,6 +44,9 @@ class BaseFileDialog(FileSystemPickerScreen):
     }
     """
 
+    ERROR_A_FILE_MUST_BE_CHOSEN = "A file must be chosen"
+    """An error to show the user when a file should be chosen."""
+
     def __init__(
         self,
         location: str | Path = ".",
@@ -148,7 +151,7 @@ class BaseFileDialog(FileSystemPickerScreen):
 
         # Only even try and process this if there's some input.
         if not file_name.value:
-            self._set_error("A file must be chosen")
+            self._set_error(self.ERROR_A_FILE_MUST_BE_CHOSEN)
             return
 
         # If it looks like the user is typing in some sort of home
@@ -181,7 +184,7 @@ class BaseFileDialog(FileSystemPickerScreen):
                 self.query_one(Input).value = ""
                 return
         except PermissionError:
-            self._set_error("Permission error")
+            self._set_error(self.ERROR_PERMISSION_ERROR)
             return
 
         # If the chosen file passes the final tests...

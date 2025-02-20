@@ -80,6 +80,9 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
     }
     """
 
+    ERROR_PERMISSION_ERROR = "Permission error"
+    """Error to tell there user there was a problem with permissions."""
+
     BINDINGS = [Binding("full_stop", "hidden"), Binding("escape", "dismiss(None)")]
     """The bindings for the dialog."""
 
@@ -169,7 +172,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
     @on(DirectoryNavigation.PermissionError)
     def _show_permission_error(self) -> None:
         """Show any permission error bubbled up from the directory navigator."""
-        self._set_error("Permission error")
+        self._set_error(self.ERROR_PERMISSION_ERROR)
 
     @on(Button.Pressed, "#cancel")
     def _cancel(self, event: Button.Pressed) -> None:

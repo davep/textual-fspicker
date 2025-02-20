@@ -19,6 +19,9 @@ from .path_filters import Filters
 class FileSave(BaseFileDialog):
     """A file save dialog."""
 
+    ERROR_OVERWRITE_IS_NOT_ALLOWED = "Overwrite is not allowed"
+    """The error to show if the user attempts to overwrite a file."""
+
     def __init__(
         self,
         location: str | Path = ".",
@@ -64,7 +67,7 @@ class FileSave(BaseFileDialog):
             candidate: The file to check.
         """
         if candidate.exists() and not self._can_overwrite:
-            self._set_error("Overwrite is not allowed")
+            self._set_error(self.ERROR_OVERWRITE_IS_NOT_ALLOWED)
             return False
         return True
 
