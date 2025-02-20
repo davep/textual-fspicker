@@ -6,6 +6,9 @@
 
 - Added the ability to configure any button label of any dialog.
   ([#26](https://github.com/davep/textual-fspicker/pull/26))
+- All hard-coded error messages destined for the error label of the dialogs
+  are now soft-coded in class variables to allow easy overriding by the
+  developer.
 
 ## v0.3.0
 
