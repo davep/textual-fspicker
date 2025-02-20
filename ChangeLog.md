@@ -8,7 +8,7 @@
   ([#26](https://github.com/davep/textual-fspicker/pull/26))
 - All hard-coded error messages destined for the error label of the dialogs
   are now soft-coded in class variables to allow easy overriding by the
-  developer.
+  developer. ([#28](https://github.com/davep/textual-fspicker/pull/28))
 
 ## v0.3.0
 
