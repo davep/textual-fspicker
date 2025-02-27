@@ -233,4 +233,39 @@ prompt the user for a directory. The most basic example looks like this:
     ```{.textual path="docs/examples/guide/basic_select_directory.py" press="enter,down,down,enter,tab,enter"}
     ```
 
+## Filtering
+
+The [`FileOpen`][textual_fspicker.FileOpen] and
+[`FileSave`][textual_fspicker.FileSave] dialogs have an optional filter
+facility; this displays as a [Textual `Select`][textual.widgets.Select]
+widget within the dialog and provides the user with a list of prompts that
+can filter down the content of the dialog.
+
+For example:
+
+```{.textual path="docs/examples/guide/filter_open.py" lines=30 columns=100 press="tab,tab,enter"}
+```
+
+The filters are passed to either dialog using the `filters` keyword
+argument, the value being a [`Filters`][textual_fspicker.Filters] object.
+`Filters` takes as its parameters a series of [tuples][tuple], each
+comprising of a [string][str] label and a function that takes a
+[`Path`][pathlib.Path] and returns a [`bool`][bool]. For any given function,
+if it returns `True` the file will be included in the display, if `False` it
+will be filtered out.
+
+The code for the dialog shown above would look something like this:
+
+```python
+FileOpen(
+    filters=Filters(
+        ("Python", lambda p: p.suffix.lower() == ".py"),
+        ("Markdown", lambda p: p.suffix.lower() == ".md"),
+        ("TOML", lambda p: p.suffix.lower() == ".toml"),
+        ("YAML", lambda p: p.suffix.lower() == ".yaml"),
+        ("All", lambda _: True),
+    )
+)
+```
+
 [//]: # (using.md ends here)
