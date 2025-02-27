@@ -184,7 +184,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         event.stop()
         self.dismiss(None)
 
-    def action_hidden(self) -> None:
+    def _action_hidden(self) -> None:
         """Action for toggling the display of hidden entries."""
         self.query_one(DirectoryNavigation).toggle_hidden()
 
