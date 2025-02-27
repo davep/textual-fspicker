@@ -94,8 +94,9 @@ be shown to the user when the dialog opens; this can be done with the
 
 A user can select a file by either picking one from the directory navigation
 widget within the dialog, or by typing the path and name of a file in the
-`Input` widget in the dialog. If they type in a name it's possible for them
-to type in the name of a file that doesn't exist.
+[`Input`][textual.widgets.Input] widget in the dialog. If they type in a
+name it's possible for them to type in the name of a file that doesn't
+exist.
 
 In such a case the dialog will refuse to close and an error will be shown:
 
