@@ -25,7 +25,7 @@ plugins:
   autorefs:
   mkdocstrings:
     default_handler: python
-    enable_inventory: false
+    enable_inventory: true
     handlers:
       python:
         inventories:
