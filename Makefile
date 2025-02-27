@@ -1,12 +1,13 @@
-lib    := textual_fspicker
-src    := src/
-run    := rye run
-test   := rye test
-python := $(run) python
-lint   := rye lint -- --select I
-fmt    := rye fmt
-mypy   := $(run) mypy
-mkdocs := $(run) mkdocs
+lib      := textual_fspicker
+src      := src/
+examples := docs/examples
+run      := rye run
+test     := rye test
+python   := $(run) python
+lint     := rye lint -- --select I
+fmt      := rye fmt
+mypy     := $(run) mypy
+mkdocs   := $(run) mkdocs
 
 ##############################################################################
 # Local "interactive testing" of the code.
@@ -41,19 +42,19 @@ resetup: realclean		# Recreate the virtual environment from scratch
 # Checking/testing/linting/etc.
 .PHONY: lint
 lint:				# Check the code for linting issues
-	$(lint) $(src)
+	$(lint) $(src) $(examples)
 
 .PHONY: codestyle
 codestyle:			# Is the code formatted correctly?
-	$(fmt) --check $(src)
+	$(fmt) --check $(src) $(examples)
 
 .PHONY: typecheck
 typecheck:			# Perform static type checks with mypy
-	$(mypy) --scripts-are-modules $(src)
+	$(mypy) --scripts-are-modules $(src) $(examples)
 
 .PHONY: stricttypecheck
 stricttypecheck:	        # Perform a strict static type checks with mypy
-	$(mypy) --scripts-are-modules --strict $(src)
+	$(mypy) --scripts-are-modules --strict $(src) $(examples)
 
 .PHONY: checkall
 checkall: codestyle lint stricttypecheck # Check all the things
@@ -98,11 +99,11 @@ repl:				# Start a Python REPL in the venv.
 
 .PHONY: delint
 delint:			# Fix linting issues.
-	$(lint) --fix  $(src)
+	$(lint) --fix $(src) $(examples)
 
 .PHONY: pep8ify
 pep8ify:			# Reformat the code to be as PEP8 as possible.
-	$(fmt) $(src)
+	$(fmt) $(src) $(examples)
 
 .PHONY: tidy
 tidy: delint pep8ify		# Tidy up the code, fixing lint and format issues.
