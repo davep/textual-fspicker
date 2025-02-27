@@ -63,4 +63,31 @@ open. The most basic example looks like this:
     ```{.textual path="docs/examples/guide/basic_open_file.py" press="enter,down,down,down,down,down,enter,enter"}
     ```
 
+### Setting the default file
+
+When opening a file, you may want to specify a default filename which will
+be shown to the user when the dialog opens; this can be done with the
+`default_file` keyword parameter:
+
+=== "Opening with a default file"
+
+    ```py
+    --8<-- "docs/examples/guide/default_open_file.py"
+    ```
+
+=== "Initially"
+
+    ```{.textual path="docs/examples/guide/default_open_file.py"}
+    ```
+
+=== "Dialog Open"
+
+    ```{.textual path="docs/examples/guide/default_open_file.py" press="enter"}
+    ```
+
+=== "File Picked"
+
+    ```{.textual path="docs/examples/guide/default_open_file.py" press="enter,tab,enter"}
+    ```
+
 [//]: # (using.md ends here)
