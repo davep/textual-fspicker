@@ -67,7 +67,7 @@ open. The most basic example looks like this:
 
 When opening a file, you may want to specify a default filename which will
 be shown to the user when the dialog opens; this can be done with the
-`default_file` keyword parameter:
+[`default_file`][textual_fspicker.FileOpen] keyword parameter:
 
 === "Opening with a default file"
 
@@ -88,6 +88,49 @@ be shown to the user when the dialog opens; this can be done with the
 === "File Picked"
 
     ```{.textual path="docs/examples/guide/default_open_file.py" press="enter,tab,enter"}
+    ```
+
+### Ensuring the file exists
+
+A user can select a file by either picking one from the directory navigation
+widget within the dialog, or by typing the path and name of a file in the
+`Input` widget in the dialog. If they type in a name it's possible for them
+to type in the name of a file that doesn't exist.
+
+In such a case the dialog will refuse to close and an error will be shown:
+
+```{.textual path="docs/examples/guide/basic_open_file.py" press="enter,tab,b,a,d,.,p,y,enter"}
+```
+
+If you want the allow the user to "open" a file that doesn't really exist,
+in other words you want them to be able to type in any name they wish, you
+can set the [`must_exist`][textual_fspicker.FileOpen] keyword parameter to
+[`False`][False]:
+
+=== "Allowing files that don't exist"
+
+    ```py
+    --8<-- "docs/examples/guide/any_open_file.py"
+    ```
+
+=== "Initially"
+
+    ```{.textual path="docs/examples/guide/any_open_file.py"}
+    ```
+
+=== "Dialog Open"
+
+    ```{.textual path="docs/examples/guide/any_open_file.py" press="enter"}
+    ```
+
+=== "File Entered"
+
+    ```{.textual path="docs/examples/guide/any_open_file.py" press="enter,tab,b,a,d,.,p,y"}
+    ```
+
+=== "File Picked"
+
+    ```{.textual path="docs/examples/guide/any_open_file.py" press="enter,tab,b,a,d,.,p,y,enter"}
     ```
 
 [//]: # (using.md ends here)
