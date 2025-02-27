@@ -1,0 +1,59 @@
+site_name: textual-fspicker
+
+nav:
+  - Introduction:
+    - index.md
+
+watch:
+  - src/textual_fspicker
+
+plugins:
+  search:
+  autorefs:
+  mkdocstrings:
+    default_handler: python
+    enable_inventory: false
+    handlers:
+      python:
+        inventories:
+          - https://docs.python.org/3/objects.inv
+        options:
+          filters:
+            - "!^_[^-]+$"
+            - "^__.+__$"
+          modernize_annotations: false
+          show_symbol_type_heading: true
+          show_symbol_type_toc: true
+          show_signature_annotations: false
+          separate_signature: true
+          signature_crossrefs: true
+          merge_init_into_class: true
+          parameter_headings: true
+          show_root_heading: false
+          docstring_options:
+            ignore_init_summary: true
+          show_source: false
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.tabs.sticky
+    - navigation.footer
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      accent: purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+### mkdocs.yml ends here
