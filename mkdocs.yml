@@ -7,6 +7,17 @@ nav:
 watch:
   - src/textual_fspicker
 
+markdown_extensions:
+  - pymdownx.snippets
+  - markdown.extensions.attr_list
+  - pymdownx.superfences:
+      custom_fences:
+        - name: textual
+          class: textual
+          format: !!python/name:textual._doc.format_svg
+  - pymdownx.tabbed:
+      alternate_style: true
+
 plugins:
   search:
   autorefs:

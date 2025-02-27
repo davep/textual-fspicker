@@ -9,6 +9,44 @@ saving, or they need to pick a directory, this might be the library for you.
 
 ## Examples
 
-TODO: Some screenshots to give examples here.
+### Opening a file
+
+=== "Opening a file"
+
+    ```{.textual path="examples/open_a_file.py"}
+    ```
+
+=== "open_a_file.py"
+
+    ```py
+    --8<-- "examples/open_a_file.py"
+    ```
+
+### Saving a file
+
+=== "Saving a file"
+
+    ```{.textual path="examples/save_a_file.py"}
+    ```
+
+=== "save_a_file.py"
+
+    ```py
+    --8<-- "examples/save_a_file.py"
+    ```
+
+### Selecting a directory
+
+=== "Selecting a directory"
+
+    ```{.textual path="examples/select_a_directory.py"}
+    ```
+
+=== "select_a_directory.py"
+
+    ```py
+    --8<-- "examples/select_a_directory.py"
+    ```
+
 
 [//]: # (index.md ends here)
