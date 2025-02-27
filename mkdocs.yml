@@ -14,6 +14,7 @@ nav:
       - library-contents/path_filters.md
       - library-contents/path_maker.md
       - library-contents/safe_tests.md
+      - library-contents/select_directory.md
 
 watch:
   - src/textual_fspicker

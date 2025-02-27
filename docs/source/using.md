@@ -207,4 +207,30 @@ selected:
     ```{.textual path="docs/examples/guide/no_overwrite_save_file.py" press="enter,down,down,down,down,down,enter,enter"}
     ```
 
+## Picking a directory
+
+The [`SelectDirectory`][textual_fspicker.SelectDirectory] dialog is used to
+prompt the user for a directory. The most basic example looks like this:
+
+=== "Basic directory picking example"
+
+    ```py
+    --8<-- "docs/examples/guide/basic_select_directory.py"
+    ```
+
+=== "Initially"
+
+    ```{.textual path="docs/examples/guide/basic_select_directory.py"}
+    ```
+
+=== "Dialog Open"
+
+    ```{.textual path="docs/examples/guide/basic_select_directory.py" press="enter"}
+    ```
+
+=== "Directory picked"
+
+    ```{.textual path="docs/examples/guide/basic_select_directory.py" press="enter,down,down,enter,tab,enter"}
+    ```
+
 [//]: # (using.md ends here)
