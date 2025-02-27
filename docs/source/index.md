@@ -11,39 +11,39 @@ saving, or they need to pick a directory, this might be the library for you.
 
 === "Opening a file"
 
-    ```{.textual path="docs/examples/open_a_file.py"}
+    ```{.textual path="docs/examples/index/open_a_file.py"}
     ```
 
 === "open_a_file.py"
 
     ```py
-    --8<-- "docs/examples/open_a_file.py"
+    --8<-- "docs/examples/index/open_a_file.py"
     ```
 
 ## Saving a file
 
 === "Saving a file"
 
-    ```{.textual path="docs/examples/save_a_file.py"}
+    ```{.textual path="docs/examples/index/save_a_file.py"}
     ```
 
 === "save_a_file.py"
 
     ```py
-    --8<-- "docs/examples/save_a_file.py"
+    --8<-- "docs/examples/index/save_a_file.py"
     ```
 
 ## Selecting a directory
 
 === "Selecting a directory"
 
-    ```{.textual path="docs/examples/select_a_directory.py"}
+    ```{.textual path="docs/examples/index/select_a_directory.py"}
     ```
 
 === "select_a_directory.py"
 
     ```py
-    --8<-- "docs/examples/select_a_directory.py"
+    --8<-- "docs/examples/index/select_a_directory.py"
     ```
 
 [//]: # (index.md ends here)

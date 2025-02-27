@@ -37,5 +37,30 @@ class SomeApp(App):
            self.notify("Save cancelled")
 ```
 
+## Opening a file
+
+The [`FileOpen`][textual_fspicker.FileOpen] dialog is used to prompt the user for file to
+open. The most basic example looks like this:
+
+=== "Basic file opening example"
+
+    ```py
+    --8<-- "docs/examples/guide/basic_open_file.py"
+    ```
+
+=== "Initially"
+
+    ```{.textual path="docs/examples/guide/basic_open_file.py"}
+    ```
+
+=== "Dialog Open"
+
+    ```{.textual path="docs/examples/guide/basic_open_file.py" press="enter"}
+    ```
+
+=== "File Picked"
+
+    ```{.textual path="docs/examples/guide/basic_open_file.py" press="enter,down,down,down,down,down,enter,enter"}
+    ```
 
 [//]: # (using.md ends here)
