@@ -49,7 +49,7 @@ class Filters:
 
     @property
     def selections(self) -> list[tuple[str, int]]:
-        """Get the filters in a `Select`-friendly way."""
+        """Get the filters in a [`Select`][textual.widgets.Select]-friendly way."""
         return [
             (file_filter.name, filter_id)
             for filter_id, file_filter in enumerate(self._filters)
