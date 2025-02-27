@@ -3,13 +3,23 @@ docs_dir: docs/source
 repo_url: https://github.com/davep/textual-fspicker
 
 nav:
-  - Introduction:
-    - index.md
+  - Guide:
+      - index.md
+      - using.md
+  - Library Contents:
+      - library-contents/base_dialog.md
+      - library-contents/file_dialog.md
+      - library-contents/file_open.md
+      - library-contents/file_save.md
+      - library-contents/path_filters.md
+      - library-contents/path_maker.md
+      - library-contents/safe_tests.md
 
 watch:
   - src/textual_fspicker
 
 markdown_extensions:
+  - admonition
   - pymdownx.snippets
   - markdown.extensions.attr_list
   - pymdownx.superfences:

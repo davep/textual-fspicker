@@ -2,8 +2,9 @@
 
 Allows the user of the library to specify their preference for the Path
 class to use when making a fresh Path instance. Designed to allow the use of
-other Path-derived classes, such as UPath, without needing to make them
-dependencies of this library.
+other Path-derived classes, such as
+[UPath](https://github.com/fsspec/universal_pathlib), without needing to
+make them dependencies of this library.
 """
 
 ##############################################################################

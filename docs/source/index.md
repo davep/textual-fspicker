@@ -1,15 +1,13 @@
-# textual-fspicker
-
-## Introduction
+# Introduction
 
 This library brings a simple set of filesystem-oriented dialogs to
 [Textual](https://textual.textualize.io) applications. If you have a need to
 give your users a dialog that lets them pick a file for opening, a file for
 saving, or they need to pick a directory, this might be the library for you.
 
-## Examples
+# Examples
 
-### Opening a file
+## Opening a file
 
 === "Opening a file"
 
@@ -22,7 +20,7 @@ saving, or they need to pick a directory, this might be the library for you.
     --8<-- "docs/examples/open_a_file.py"
     ```
 
-### Saving a file
+## Saving a file
 
 === "Saving a file"
 
@@ -35,7 +33,7 @@ saving, or they need to pick a directory, this might be the library for you.
     --8<-- "docs/examples/save_a_file.py"
     ```
 
-### Selecting a directory
+## Selecting a directory
 
 === "Selecting a directory"
 
@@ -47,6 +45,5 @@ saving, or they need to pick a directory, this might be the library for you.
     ```py
     --8<-- "docs/examples/select_a_directory.py"
     ```
-
 
 [//]: # (index.md ends here)
