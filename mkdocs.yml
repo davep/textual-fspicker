@@ -1,4 +1,5 @@
 site_name: textual-fspicker
+docs_dir: docs/source
 
 nav:
   - Introduction:
