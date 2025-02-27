@@ -118,6 +118,7 @@ requests==2.32.3
     # via mkdocs-material
 rich==13.9.4
     # via textual
+ruff==0.9.8
 six==1.17.0
     # via python-dateutil
 textual==1.0.0
