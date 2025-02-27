@@ -133,4 +133,77 @@ can set the [`must_exist`][textual_fspicker.FileOpen] keyword parameter to
     ```{.textual path="docs/examples/guide/any_open_file.py" press="enter,tab,b,a,d,.,p,y,enter"}
     ```
 
+## Saving a file
+
+The [`FileSave`][textual_fspicker.FileSave] dialog is used to prompt the
+user for file to save. The most basic example looks like this:
+
+=== "Basic file saving example"
+
+    ```py
+    --8<-- "docs/examples/guide/basic_save_file.py"
+    ```
+
+=== "Initially"
+
+    ```{.textual path="docs/examples/guide/basic_save_file.py"}
+    ```
+
+=== "Dialog Open"
+
+    ```{.textual path="docs/examples/guide/basic_save_file.py" press="enter"}
+    ```
+
+=== "File Picked"
+
+    ```{.textual path="docs/examples/guide/basic_save_file.py" press="enter,down,down,down,down,down,enter,enter"}
+    ```
+### Setting the default file
+
+When prompting for a file to save to, you may want to specify a default
+filename which will be shown to the user when the dialog opens; this can be
+done with the [`default_file`][textual_fspicker.FileSave] keyword parameter:
+
+=== "Saving with a default file"
+
+    ```py
+    --8<-- "docs/examples/guide/default_save_file.py"
+    ```
+
+=== "Initially"
+
+    ```{.textual path="docs/examples/guide/default_save_file.py"}
+    ```
+
+=== "Dialog Save"
+
+    ```{.textual path="docs/examples/guide/default_save_file.py" press="enter"}
+    ```
+
+=== "File Picked"
+
+    ```{.textual path="docs/examples/guide/default_save_file.py" press="enter,tab,enter"}
+    ```
+
+### Preventing overwrite of an existing file
+
+When it comes to picking a file to save to, the user can either select a
+pre-existing file, or they can enter the name of a new file. Sometimes you
+may want to use this dialog to prompt them for a file to save to, but you
+want to prevent them from overwriting an existing file. This can be done
+with the [`can_overwrite`][textual_fspicker.FileSave] parameter. If set to
+[`False`][False] the dialog will refuse to close while an existing file is
+selected:
+
+=== "Preventing overwrite of a file"
+
+    ```py
+    --8<-- "docs/examples/guide/no_overwrite_save_file.py"
+    ```
+
+=== "Overwrite disallowed error"
+
+    ```{.textual path="docs/examples/guide/no_overwrite_save_file.py" press="enter,down,down,down,down,down,enter,enter"}
+    ```
+
 [//]: # (using.md ends here)
