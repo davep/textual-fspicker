@@ -57,7 +57,7 @@ class BaseFileDialog(FileSystemPickerScreen):
         filters: Filters | None = None,
         default_file: str | Path | None = None,
     ) -> None:
-        """Initialise the base dialog dialog.
+        """Initialise the base dialog.
 
         Args:
             location: Optional starting location.
