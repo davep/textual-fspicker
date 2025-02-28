@@ -6,8 +6,8 @@ This library provides a simple set of filesystem navigation and picking
 dialogs The aim is to provide "ready to go" dialogs that should also be
 fairly easy to tailor to your own applications.
 
-![Opening a file](.images/file-open.png)
-![Saving a file](.images/file-save.png)
+![Opening a file](https://raw.githubusercontent.com/davep/textual-fspicker/main/.images/file-open.png)
+![Saving a file](https://raw.githubusercontent.com/davep/textual-fspicker/main/.images/file-save.png)
 
 ## Installing
 
