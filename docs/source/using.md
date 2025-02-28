@@ -18,7 +18,7 @@ screen](https://textual.textualize.io/guide/screens/#waiting-for-screens)
 will look something like this:
 
 ```python
-from textual_fspicker import FileOpen
+from textual_fspicker import FileSave
 
 ...
 
@@ -30,7 +30,7 @@ class SomeApp(App):
    @work
    async def save_document(self) -> None:
        """Save the document."""
-       if save_to := await self.push_screen_wait(FileOpen()):
+       if save_to := await self.push_screen_wait(FileSave()):
            my_saving_function(save_to)
            self.notify("Saved")
        else:
