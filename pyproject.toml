@@ -53,6 +53,10 @@ managed = true
 dev-dependencies = [
     "pre-commit>=4.0.1",
     "mypy>=1.14.1",
+    "mkdocstrings[python]>=0.28.2",
+    "mkdocs-material>=9.6.5",
+    "ghp-import>=2.1.0",
+    "ruff>=0.9.8",
 ]
 
 [tool.hatch.metadata]

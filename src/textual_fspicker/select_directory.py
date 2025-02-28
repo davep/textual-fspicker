@@ -23,7 +23,12 @@ from .parts import DirectoryNavigation
 
 ##############################################################################
 class CurrentDirectory(Label):
-    """A widget to show the current directory."""
+    """A widget to show the current directory.
+
+    This widget is used inside a
+    [`SelectDirectory`][textual_fspicker.SelectDirectory] dialog to display
+    the currently-selected directory.
+    """
 
     DEFAULT_CSS = """
     CurrentDirectory {
@@ -38,7 +43,7 @@ class CurrentDirectory(Label):
     current_directory: var[Path | None] = var(None, always_update=True)
     """The current directory."""
 
-    def watch_current_directory(self) -> None:
+    def _watch_current_directory(self) -> None:
         """Watch for the current directory being changed."""
         if (
             len(
@@ -51,7 +56,7 @@ class CurrentDirectory(Label):
             display = f"…{display[1:]}"
         self.update(display)
 
-    def on_resize(self) -> None:
+    def _on_resize(self) -> None:
         self.current_directory = self.current_directory
 
 

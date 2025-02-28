@@ -1,0 +1,86 @@
+site_name: textual-fspicker
+docs_dir: docs/source
+repo_url: https://github.com/davep/textual-fspicker
+exclude_docs: |
+  !.nojekyll
+
+nav:
+  - Guide:
+      - index.md
+      - using.md
+  - Library Contents:
+      - library-contents/base_dialog.md
+      - library-contents/file_dialog.md
+      - library-contents/file_open.md
+      - library-contents/file_save.md
+      - library-contents/path_filters.md
+      - library-contents/path_maker.md
+      - library-contents/safe_tests.md
+      - library-contents/select_directory.md
+
+watch:
+  - src/textual_fspicker
+
+markdown_extensions:
+  - admonition
+  - pymdownx.snippets
+  - markdown.extensions.attr_list
+  - pymdownx.superfences:
+      custom_fences:
+        - name: textual
+          class: textual
+          format: !!python/name:textual._doc.format_svg
+  - pymdownx.tabbed:
+      alternate_style: true
+
+plugins:
+  search:
+  autorefs:
+  mkdocstrings:
+    default_handler: python
+    enable_inventory: true
+    handlers:
+      python:
+        inventories:
+          - https://docs.python.org/3/objects.inv
+          - https://textual.textualize.io/objects.inv
+        options:
+          filters:
+            - "!^_[^-]+$"
+            - "^__.+__$"
+          modernize_annotations: false
+          show_symbol_type_heading: true
+          show_symbol_type_toc: true
+          show_signature_annotations: false
+          separate_signature: true
+          signature_crossrefs: true
+          merge_init_into_class: true
+          parameter_headings: true
+          show_root_heading: false
+          docstring_options:
+            ignore_init_summary: true
+          show_source: false
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.tabs.sticky
+    - navigation.footer
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      accent: purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+### mkdocs.yml ends here

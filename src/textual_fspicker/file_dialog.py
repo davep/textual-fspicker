@@ -26,7 +26,12 @@ from .path_maker import MakePath
 
 ##############################################################################
 class FileFilter(Select[int]):
-    """The file filter."""
+    """The file type filtering widget.
+
+    This widget provides a file filter drop-down selection for all dialogs
+    that inherit from
+    [`BaseFileDialog`][textual_fspicker.file_dialog.BaseFileDialog].
+    """
 
 
 ##############################################################################
@@ -57,7 +62,7 @@ class BaseFileDialog(FileSystemPickerScreen):
         filters: Filters | None = None,
         default_file: str | Path | None = None,
     ) -> None:
-        """Initialise the base dialog dialog.
+        """Initialise the base dialog.
 
         Args:
             location: Optional starting location.

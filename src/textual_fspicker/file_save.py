@@ -65,6 +65,10 @@ class FileSave(BaseFileDialog):
 
         Args:
             candidate: The file to check.
+
+        Returns:
+            [`True`][True] if the file checks out okay, [`False`][False] if
+            not.
         """
         if candidate.exists() and not self._can_overwrite:
             self._set_error(self.ERROR_OVERWRITE_IS_NOT_ALLOWED)

@@ -23,10 +23,18 @@ class Filter(NamedTuple):
     """A path filter."""
 
     name: str
-    """The name of the filter."""
+    """The name of the filter.
+
+    This is the text that will be presented to the user in the filtering
+    dropdown widget inside any dialog
+    """
 
     tester: FilterFunction
-    """The tester for the filter."""
+    """The test function for the filter.
+
+    This is the function that will be called to test of a particular
+    [`Path`][pathlib.Path] passes the filter.
+    """
 
     def __call__(self, path: Path) -> bool:
         return self.tester(path)
@@ -49,7 +57,7 @@ class Filters:
 
     @property
     def selections(self) -> list[tuple[str, int]]:
-        """Get the filters in a `Select`-friendly way."""
+        """Get the filters in a [`Select`][textual.widgets.Select]-friendly way."""
         return [
             (file_filter.name, filter_id)
             for filter_id, file_filter in enumerate(self._filters)
