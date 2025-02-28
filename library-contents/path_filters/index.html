@@ -631,6 +631,30 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#textual_fspicker.path_filters.Filter.__call__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__call__
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" __call__">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#textual_fspicker.path_filters.Filter.__call__(path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -661,6 +685,39 @@
       <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;selections
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#textual_fspicker.path_filters.Filters.__bool__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__bool__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#textual_fspicker.path_filters.Filters.__getitem__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__getitem__
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" __getitem__">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#textual_fspicker.path_filters.Filters.__getitem__(filter_id)" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;filter_id
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -821,6 +878,30 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#textual_fspicker.path_filters.Filter.__call__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__call__
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" __call__">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#textual_fspicker.path_filters.Filter.__call__(path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -851,6 +932,39 @@
       <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;selections
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#textual_fspicker.path_filters.Filters.__bool__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__bool__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#textual_fspicker.path_filters.Filters.__getitem__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__getitem__
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" __getitem__">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#textual_fspicker.path_filters.Filters.__getitem__(filter_id)" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;filter_id
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -981,6 +1095,8 @@
     <div class="doc doc-contents ">
 
         <p>The name of the filter.</p>
+<p>This is the text that will be presented to the user in the filtering
+dropdown widget inside any dialog</p>
     </div>
 
 </div>
@@ -1003,12 +1119,88 @@
 
     <div class="doc doc-contents ">
 
-        <p>The tester for the filter.</p>
+        <p>The test function for the filter.</p>
+<p>This is the function that will be called to test of a particular
+<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"><code>Path</code></a> passes the filter.</p>
     </div>
 
 </div>
 
 
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="textual_fspicker.path_filters.Filter.__call__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__call__</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span><span class="nf"><a class="autorefs autorefs-internal" title=" path (textual_fspicker.path_filters.Filter.__call__(path))" href="#textual_fspicker.path_filters.Filter.__call__(path)">path</a></span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Test the given path to see if it passes the filter.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+<h4 id="textual_fspicker.path_filters.Filter.__call__(path)" class="doc doc-heading doc-heading-parameter">                  <code>path</code>
+</h4>            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" title="pathlib.Path" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path">Path</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"><code>Path</code></a> to test.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/constants.html#True"><code>True</code></a> if the <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path"><code>Path</code></a> passes the filter
+condition, <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/constants.html#False"><code>False</code></a> if not.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
 
 
 
@@ -1101,12 +1293,132 @@
 
     <div class="doc doc-contents ">
 
-        <p>Get the filters in a <a class="autorefs autorefs-external" href="https://textual.textualize.io/widgets/select/#textual.widgets.Select"><code>Select</code></a>-friendly way.</p>
+        <p>The filters in a <a class="autorefs autorefs-external" href="https://textual.textualize.io/widgets/select/#textual.widgets.Select"><code>Select</code></a>-friendly form.</p>
     </div>
 
 </div>
 
 
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="textual_fspicker.path_filters.Filters.__bool__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__bool__</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="fm">__bool__</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Are there any filters?</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/constants.html#True"><code>True</code></a> if there are any filters in the filer collection, <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/constants.html#False"><code>False</code></a> if not.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="textual_fspicker.path_filters.Filters.__getitem__" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__getitem__</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="fm">__getitem__</span><span class="p">(</span><span class="nf"><a class="autorefs autorefs-internal" title=" filter_id (textual_fspicker.path_filters.Filters.__getitem__(filter_id))" href="#textual_fspicker.path_filters.Filters.__getitem__(filter_id)">filter_id</a></span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Get a filter given its numeric ID.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+<h4 id="textual_fspicker.path_filters.Filters.__getitem__(filter_id)" class="doc doc-heading doc-heading-parameter">                  <code>filter_id</code>
+</h4>            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The numeric ID for the filter.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title=" Filter (textual_fspicker.path_filters.Filter)" href="#textual_fspicker.path_filters.Filter">Filter</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The filter with that ID.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>This is intended to be used in conjunction with
+<a class="autorefs autorefs-internal" title=" selections" href="#textual_fspicker.path_filters.Filters.selections"><code>selections</code></a>; where the
+return value for that will include a numeric ID for each filter that
+can be used with a <a class="autorefs autorefs-external" href="https://textual.textualize.io/widgets/select/#textual.widgets.Select">Textual <code>Select</code>
+widget</a>.</p>
+
+    </div>
+
+</div>
 
 
 
