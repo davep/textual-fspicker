@@ -1,7 +1,7 @@
 # textual-fspicker
 
-![Opening a file](https://raw.githubusercontent.com/davep/textual-fspicker/main/.images/file-open.png)
-![Saving a file](https://raw.githubusercontent.com/davep/textual-fspicker/main/.images/file-save.png)
+![Opening a file](.images/file-open.png)
+![Saving a file](.images/file-save.png)
 
 ## Introduction
 
