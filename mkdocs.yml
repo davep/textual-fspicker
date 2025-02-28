@@ -46,8 +46,10 @@ plugins:
           - https://textual.textualize.io/objects.inv
         options:
           filters:
-            - "!^_[^-]+$"
+            - "!^_"
             - "^__.+__$"
+            - "!^on_mount$"
+            - "!^compose$"
           modernize_annotations: false
           show_symbol_type_heading: true
           show_symbol_type_toc: true

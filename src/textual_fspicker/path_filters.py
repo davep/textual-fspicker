@@ -37,6 +37,15 @@ class Filter(NamedTuple):
     """
 
     def __call__(self, path: Path) -> bool:
+        """Test the given path to see if it passes the filter.
+
+        Args:
+            path: The [`Path`][pathlib.Path] to test.
+
+        Returns:
+            [`True`][True] if the [`Path`][pathlib.Path] passes the filter
+                condition, [`False`][False] if not.
+        """
         return self.tester(path)
 
 
@@ -57,16 +66,35 @@ class Filters:
 
     @property
     def selections(self) -> list[tuple[str, int]]:
-        """Get the filters in a [`Select`][textual.widgets.Select]-friendly way."""
+        """The filters in a [`Select`][textual.widgets.Select]-friendly form."""
         return [
             (file_filter.name, filter_id)
             for filter_id, file_filter in enumerate(self._filters)
         ]
 
     def __getitem__(self, filter_id: int) -> Filter:
+        """Get a filter given its numeric ID.
+
+        Args:
+            filter_id: The numeric ID for the filter.
+
+        Returns:
+            The filter with that ID.
+
+        This is intended to be used in conjunction with
+        [`selections`][textual_fspicker.Filters.selections]; where the
+        return value for that will include a numeric ID for each filter that
+        can be used with a [Textual `Select`
+        widget][textual.widgets.Select].
+        """
         return self._filters[filter_id]
 
     def __bool__(self) -> bool:
+        """Are there any filters?
+
+        Returns:
+            [`True`][True] if there are any filters in the filer collection, [`False`][False] if not.
+        """
         return bool(self._filters)
 
 
