@@ -1,8 +1,6 @@
 site_name: textual-fspicker
 docs_dir: docs/source
 repo_url: https://github.com/davep/textual-fspicker
-exclude_docs: |
-  !.nojekyll
 
 nav:
   - Guide:

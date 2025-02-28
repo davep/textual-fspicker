@@ -70,8 +70,8 @@ rtfm:                           # Locally read the library documentation
 	$(mkdocs) serve
 
 .PHONY: publishdocs
-publishdocs: docs		# Set up the docs for publishing
-	$(run) ghp-import --push site
+publishdocs:			# Set up the docs for publishing
+	$(mkdocs) gh-deploy
 
 ##############################################################################
 # Package/publish.
