@@ -37,6 +37,15 @@ class Filter(NamedTuple):
     """
 
     def __call__(self, path: Path) -> bool:
+        """Test the given path to see if it passes the filter.
+
+        Args:
+            path: The [`Path`][pathlib.Path] to test.
+
+        Returns:
+            [`True`][True] if the [`Path`][pathlib.Path] passes the filter
+                condition, [`False`][False] if not.
+        """
         return self.tester(path)
 
 
