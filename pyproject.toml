@@ -1,6 +1,6 @@
 [project]
 name = "textual-fspicker"
-version = "0.4.0"
+version = "0.4.1"
 description = "A simple Textual filesystem picker dialog library."
 authors = [
     { name = "Dave Pearson", email = "davep@davep.org" }
@@ -10,7 +10,7 @@ dependencies = [
 ]
 readme = "README.md"
 requires-python = ">=3.9"
-license = { text = "License :: OSI Approved :: MIT License" }
+license = { text = "MIT License" }
 keywords = [
     "terminal",
     "library",
@@ -21,7 +21,7 @@ keywords = [
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Environment :: Console",
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.9",
@@ -35,9 +35,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/davep/textual-fspicker"
+Homepage = "https://blog.davep.org/textual-fspicker/"
 Repository = "https://github.com/davep/textual-fspicker"
-Documentation = "https://github.com/davep/textual-fspicker/blob/main/README.md"
+Documentation = "https://blog.davep.org/textual-fspicker/"
 Source = "https://github.com/davep/textual-fspicker"
 Issues = "https://github.com/davep/textual-fspicker/issues"
 Discussions = "https://github.com/davep/textual-fspicker/discussions"
