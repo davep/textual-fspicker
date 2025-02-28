@@ -21,7 +21,7 @@ keywords = [
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Environment :: Console",
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.9",
