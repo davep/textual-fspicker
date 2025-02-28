@@ -916,7 +916,7 @@ of the <a class="autorefs autorefs-external" href="https://docs.python.org/3/lib
 wait for a
 screen</a>
 will look something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">textual_fspicker</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileOpen</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">textual_fspicker</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileSave</span>
 
 <span class="o">...</span>
 
@@ -928,7 +928,7 @@ will look something like this:</p>
    <span class="nd">@work</span>
    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">save_document</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">       </span><span class="sd">&quot;&quot;&quot;Save the document.&quot;&quot;&quot;</span>
-       <span class="k">if</span> <span class="n">save_to</span> <span class="o">:=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">push_screen_wait</span><span class="p">(</span><span class="n">FileOpen</span><span class="p">()):</span>
+       <span class="k">if</span> <span class="n">save_to</span> <span class="o">:=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">push_screen_wait</span><span class="p">(</span><span class="n">FileSave</span><span class="p">()):</span>
            <span class="n">my_saving_function</span><span class="p">(</span><span class="n">save_to</span><span class="p">)</span>
            <span class="bp">self</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span><span class="s2">&quot;Saved&quot;</span><span class="p">)</span>
        <span class="k">else</span><span class="p">:</span>
