@@ -39,8 +39,8 @@ class SomeApp(App):
 
 ## Opening a file
 
-The [`FileOpen`][textual_fspicker.FileOpen] dialog is used to prompt the user for file to
-open. The most basic example looks like this:
+The [`FileOpen`][textual_fspicker.FileOpen] dialog is used to prompt the
+user a for file to open. The most basic example looks like this:
 
 === "Basic file opening example"
 
