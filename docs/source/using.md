@@ -14,7 +14,7 @@ of the [`Path`][pathlib.Path] of the filesystem entry that was selected, or
 
 The usual pattern for using one of the dialogs, using [Textual's ability to
 wait for a
-screen](https://textual.textualize.io/guide/screens/#waiting-for-screens)
+screen](https://textual.textualize.io/guide/screens/#waiting-for-screens),
 will look something like this:
 
 ```python
@@ -39,8 +39,8 @@ class SomeApp(App):
 
 ## Opening a file
 
-The [`FileOpen`][textual_fspicker.FileOpen] dialog is used to prompt the user for file to
-open. The most basic example looks like this:
+The [`FileOpen`][textual_fspicker.FileOpen] dialog is used to prompt the
+user a for file to open. The most basic example looks like this:
 
 === "Basic file opening example"
 
