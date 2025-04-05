@@ -20,8 +20,7 @@ $ pip install textual-fspicker
 ## Using the library
 
 Please see [the main documentation for the
-library](https://blog.davep.org/textual-fspicker/) for details on how to use
-it.
+library](https://textual-fspicker.davep.dev/) for details on how to use it.
 
 ## TODO
 

@@ -63,6 +63,8 @@ plugins:
 
 theme:
   name: material
+  icon:
+    logo: fontawesome/solid/folder-tree
   features:
     - navigation.tabs
     - navigation.indexes
@@ -82,5 +84,22 @@ theme:
       toggle:
         icon: material/weather-night
         name: Switch to light mode
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/davep
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/user/davepearson/
+    - icon: fontawesome/brands/mastodon
+      link: https://fosstodon.org/@davep
+    - icon: fontawesome/brands/bluesky
+      link: https://bsky.app/profile/davep.org
+    - icon: fontawesome/brands/threads
+      link: https://www.threads.net/@davepdotorg
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@DavePearson
+    - icon: fontawesome/brands/steam
+      link: https://steamcommunity.com/id/davepdotorg
 
 ### mkdocs.yml ends here
