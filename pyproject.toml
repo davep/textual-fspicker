@@ -35,9 +35,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://blog.davep.org/textual-fspicker/"
+Homepage = "https://textual-fspicker.davep.dev/"
 Repository = "https://github.com/davep/textual-fspicker"
-Documentation = "https://blog.davep.org/textual-fspicker/"
+Documentation = "https://textual-fspicker.davep.dev/"
 Source = "https://github.com/davep/textual-fspicker"
 Issues = "https://github.com/davep/textual-fspicker/issues"
 Discussions = "https://github.com/davep/textual-fspicker/discussions"
