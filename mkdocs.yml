@@ -63,6 +63,8 @@ plugins:
 
 theme:
   name: material
+  icon:
+    logo: fontawesome/solid/folder-tree
   features:
     - navigation.tabs
     - navigation.indexes
