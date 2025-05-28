@@ -8,3 +8,6 @@ dist/
 __pycache__
 site/
 .screenshot_cache/
+/.idea
+uv.lock
+src/demo.py
