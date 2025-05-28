@@ -17,7 +17,7 @@ from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
-from textual.widgets import Button, Label
+from textual.widgets import Button
 
 ##############################################################################
 # Local imports.
@@ -61,15 +61,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
                 background: $panel;
                 background-tint: $panel;
             }
-        }
-
-        #current_path_display {
-            width: 1fr;
-            padding: 0 1;
-            margin-bottom: 1; /* Optional: add some space below the path */
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: $text-muted; /* Optional: make it less prominent */
         }
 
         DirectoryNavigation {
@@ -147,7 +138,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         """
         with Dialog() as dialog:
             dialog.border_title = self._title
-            yield Label(id="current_path_display")
             with Horizontal():
                 if sys.platform == "win32":
                     yield DriveNavigation(self._location)
@@ -158,11 +148,8 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
                 yield Button(self._label(self._cancel_button, "Cancel"), id="cancel")
 
     def on_mount(self) -> None:
-        """Focus directory widget on mount and set initial path."""
-        dir_nav = self.query_one(DirectoryNavigation)
-        current_path_label = self.query_one("#current_path_display", Label)
-        current_path_label.update(str(dir_nav.location))
-        dir_nav.focus()
+        """Focus directory widget on mount."""
+        self.query_one(DirectoryNavigation).focus()
 
     def _set_error(self, message: str = "") -> None:
         """Set or clear the error message.
@@ -175,16 +162,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
     @on(DriveNavigation.DriveSelected)
     def _change_drive(self, event: DriveNavigation.DriveSelected) -> None:
         """Reload DirectoryNavigation in response to drive change."""
-        """Reload DirectoryNavigation in response to drive change."""
-        dir_nav = self.query_one(DirectoryNavigation)
-        dir_nav.location = event.drive_root
-
-    @on(DirectoryNavigation.Changed)
-    def _on_directory_changed(self, event: DirectoryNavigation.Changed) -> None:
-        """Clear any error and update the path display."""
-        self._set_error()
-        current_path_label = self.query_one("#current_path_display", Label)
-        current_path_label.update(str(event.control.location))
+        self.query_one(DirectoryNavigation).location = event.drive_root
 
     @on(DirectoryNavigation.Changed)
     def _clear_error(self) -> None:
