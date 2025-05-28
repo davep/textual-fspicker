@@ -17,7 +17,7 @@ from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
-from textual.widgets import Button, Label # MODIFIED: Added Label
+from textual.widgets import Button, Label
 
 ##############################################################################
 # Local imports.
@@ -63,7 +63,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
             }
         }
 
-        /* MODIFIED: Added Label styling for current path */
         #current_path_display {
             width: 1fr;
             padding: 0 1;
@@ -148,7 +147,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         """
         with Dialog() as dialog:
             dialog.border_title = self._title
-            # MODIFIED: Added Label for current path display
             yield Label(id="current_path_display")
             with Horizontal():
                 if sys.platform == "win32":
@@ -159,11 +157,9 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
                 yield Button(self._label(self._select_button, "Select"), id="select")
                 yield Button(self._label(self._cancel_button, "Cancel"), id="cancel")
 
-    # MODIFIED
     def on_mount(self) -> None:
         """Focus directory widget on mount and set initial path."""
         dir_nav = self.query_one(DirectoryNavigation)
-        # MODIFIED: Set initial path for the label
         current_path_label = self.query_one("#current_path_display", Label)
         current_path_label.update(str(dir_nav.location))
         dir_nav.focus()
@@ -182,9 +178,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         """Reload DirectoryNavigation in response to drive change."""
         dir_nav = self.query_one(DirectoryNavigation)
         dir_nav.location = event.drive_root
-        # MODIFIED: Update path label on drive change (via DirectoryNavigation.Changed)
 
-    # MODIFIED: Renamed from _clear_error and updated
     @on(DirectoryNavigation.Changed)
     def _on_directory_changed(self, event: DirectoryNavigation.Changed) -> None:
         """Clear any error and update the path display."""
