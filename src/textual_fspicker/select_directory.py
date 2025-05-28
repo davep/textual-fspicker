@@ -21,46 +21,6 @@ from .base_dialog import ButtonLabel, FileSystemPickerScreen
 from .parts import DirectoryNavigation
 from .path_maker import MakePath
 
-
-##############################################################################
-# class CurrentDirectory(Label): # MODIFIED: This class will be replaced by an Input
-#     """A widget to show the current directory.
-#
-#     This widget is used inside a
-#     [`SelectDirectory`][textual_fspicker.SelectDirectory] dialog to display
-#     the currently-selected directory.
-#     """
-#
-#     DEFAULT_CSS = """
-#     CurrentDirectory {
-#         width: 1fr;
-#         height: 3; /* Input default height is 3, so this might be fine */
-#         border: tall $background;
-#         padding-left: 1;
-#         padding-right: 1;
-#     }
-#     """
-#
-#     current_directory: var[Path | None] = var(None, always_update=True)
-#     """The current directory."""
-#
-#     def _watch_current_directory(self) -> None:
-#         """Watch for the current directory being changed."""
-#         if (
-#             len(
-#                 display := ""
-#                 if self.current_directory is None
-#                 else str(self.current_directory)[-self.size.width :]
-#             )
-#             >= self.size.width
-#         ):
-#             display = f"…{display[1:]}"
-#         self.update(display)
-#
-#     def _on_resize(self) -> None:
-#         self.current_directory = self.current_directory
-
-
 ##############################################################################
 class SelectDirectory(FileSystemPickerScreen):
     """A directory selection dialog."""
@@ -111,7 +71,6 @@ class SelectDirectory(FileSystemPickerScreen):
 
     def _input_bar(self) -> ComposeResult:
         """Provide any widgets for the input before, before the buttons."""
-        # MODIFIED: Yield an Input widget instead of CurrentDirectory
         yield Input(id="path_input", placeholder="Type path or select below")
 
     @on(DirectoryNavigation.Changed)

@@ -182,7 +182,6 @@ class BaseFileDialog(FileSystemPickerScreen):
         try:
             if chosen.is_dir():
                 if sys.platform == "win32":
-                    # MODIFIED: Check drive of the resolved 'chosen' path
                     if drive_letter := MakePath.of(chosen).drive:
                         # Ensure DriveNavigation is present before querying
                         try:
