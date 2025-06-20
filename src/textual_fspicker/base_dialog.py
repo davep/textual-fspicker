@@ -327,13 +327,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         dir_nav.location = current
         self.notify("Directory refreshed", timeout=2)
     
-    def action_bookmark_current(self) -> None:
-        """Bookmark the current directory."""
-        dir_nav = self.query_one(DirectoryNavigation)
-        current_path = dir_nav.location
-        # This would need to be implemented with proper bookmark storage
-        self.notify(f"Bookmarked: {current_path.name}", timeout=2)
-    
     def action_focus_search(self) -> None:
         """Toggle search mode and focus search input."""
         self.search_active = not self.search_active
