@@ -236,6 +236,12 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
                 # Breadcrumbs will be dynamically populated
                 pass
             
+            # Path input field (hidden by default, shown with Ctrl+L)
+            with Horizontal(id="path-input-container", classes="hidden"):
+                yield Input(placeholder="Enter path...", id="path-input")
+                yield Button("Go", id="go-to-path", variant="primary")
+                yield Button("Cancel", id="cancel-path-input", variant="default")
+            
             # Search container (hidden by default)
             with Horizontal(id="search-container"):
                 yield Input(placeholder="Search files...", id="search-input")
@@ -321,16 +327,26 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         self.notify("Hidden files toggled", timeout=2)
     
     def action_focus_path_input(self) -> None:
-        """Focus the path input field if available."""
+        """Toggle and focus the path input field."""
         try:
-            # Look for Input widget in the InputBar
-            input_widget = self.query_one(Input)
-            input_widget.focus()
-            # Select all text for easy replacement
-            input_widget.action_select_all()
-        except Exception:
-            # If no input field, notify user
-            self.notify("No path input field available", severity="warning", timeout=2)
+            path_container = self.query_one("#path-input-container")
+            path_input = self.query_one("#path-input", Input)
+            
+            # Toggle visibility
+            if path_container.has_class("hidden"):
+                path_container.remove_class("hidden")
+                # Set current path as the initial value
+                dir_nav = self.query_one(DirectoryNavigation)
+                path_input.value = str(dir_nav.location)
+                path_input.focus()
+                # Select all text in the input
+                path_input.selection = (0, len(path_input.value))
+            else:
+                path_container.add_class("hidden")
+                # Return focus to directory navigation
+                self.query_one(DirectoryNavigation).focus()
+        except Exception as e:
+            self.notify(f"Error toggling path input: {e}", severity="error", timeout=2)
     
     def action_refresh(self) -> None:
         """Refresh the current directory listing."""
@@ -468,6 +484,63 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         try:
             search_container = self.query_one("#search-container")
             search_container.set_class(active, "visible")
+        except Exception:
+            pass
+    
+    @on(Button.Pressed, "#go-to-path")
+    @on(Input.Submitted, "#path-input")
+    def _on_path_input_submit(self, event=None) -> None:
+        """Handle path input submission."""
+        try:
+            path_input = self.query_one("#path-input", Input)
+            path_str = path_input.value.strip()
+            
+            if not path_str:
+                return
+            
+            # Expand user home directory if needed
+            if path_str.startswith("~"):
+                path = Path(path_str).expanduser()
+            else:
+                path = Path(path_str)
+            
+            # Make path absolute if it's relative
+            if not path.is_absolute():
+                dir_nav = self.query_one(DirectoryNavigation)
+                path = dir_nav.location / path
+            
+            # Resolve the path
+            path = path.resolve()
+            
+            # Check if path exists
+            if not path.exists():
+                self.notify(f"Path does not exist: {path}", severity="error", timeout=3)
+                return
+            
+            # Navigate to the path
+            dir_nav = self.query_one(DirectoryNavigation)
+            if path.is_dir():
+                dir_nav.location = path
+            else:
+                # If it's a file, navigate to its parent directory
+                dir_nav.location = path.parent
+                # TODO: Ideally, we would also select the file in the list
+            
+            # Hide the path input
+            path_container = self.query_one("#path-input-container")
+            path_container.add_class("hidden")
+            dir_nav.focus()
+            
+        except Exception as e:
+            self.notify(f"Error navigating to path: {e}", severity="error", timeout=3)
+    
+    @on(Button.Pressed, "#cancel-path-input")
+    def _on_cancel_path_input(self) -> None:
+        """Cancel path input and hide the container."""
+        try:
+            path_container = self.query_one("#path-input-container")
+            path_container.add_class("hidden")
+            self.query_one(DirectoryNavigation).focus()
         except Exception:
             pass
 
