@@ -105,18 +105,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
             color: $text-muted;
         }
         
-        #recent-locations {
-            height: 10;
-            border: solid $primary;
-            background: $surface;
-            margin-bottom: 1;
-            display: none;
-        }
-        
-        #recent-locations.visible {
-            display: block;
-        }
-        
         #search-container {
             height: 3;
             padding: 0 1;
@@ -157,8 +145,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         Binding("ctrl+h", "hidden", "Toggle hidden files"),
         Binding("ctrl+l", "focus_path_input", "Edit path directly"),
         Binding("f5", "refresh", "Refresh directory"),
-        Binding("ctrl+d", "bookmark_current", "Bookmark directory"),
-        Binding("ctrl+r", "show_recent", "Show recent locations"),
         Binding("ctrl+f", "focus_search", "Search in directory"),
         Binding("escape", "dismiss(None)", "Cancel")
     ]
@@ -225,11 +211,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         with Dialog() as dialog:
             dialog.border_title = self._title
             
-            # Recent locations panel (hidden by default)
-            with VerticalScroll(id="recent-locations"):
-                yield Label("Recent Locations", classes="section-title")
-                yield ListView(id="recent-list")
-            
             # Path display and breadcrumbs
             yield Label(id="current_path_display")
             with Horizontal(id="path-breadcrumbs"):
@@ -267,10 +248,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         
         # Initialize breadcrumbs
         self._update_breadcrumbs(dir_nav.location)
-        
-        # Load recent locations
-        self._load_recent_locations()
-        
+
         dir_nav.focus()
 
     def _set_error(self, message: str = "") -> None:
@@ -398,33 +376,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         except Exception as e:
             # Silently fail if breadcrumbs can't be updated
             pass
-    
-    def _load_recent_locations(self) -> None:
-        """Load recent locations from storage."""
-        # This is a placeholder - in real implementation, 
-        # this would load from a config file or database
-        try:
-            recent_list = self.query_one("#recent-list", ListView)
-            recent_list.clear()
-            
-            # Add some example recent locations
-            for path in self._get_recent_paths():
-                item = ListItem(Label(str(path)))
-                item.data = path  # Store path in data attribute
-                recent_list.append(item)
-        except Exception:
-            pass
-    
-    def _get_recent_paths(self) -> List[Path]:
-        """Get list of recent paths."""
-        # Placeholder - would load from persistent storage
-        return []
-    
-    def _add_to_recent(self, path: Path, file_type: str) -> None:
-        """Add a path to recent locations."""
-        # Placeholder - would save to persistent storage
-        pass
-    
+
     @on(Button.Pressed, ".breadcrumb-btn")
     def _on_breadcrumb_click(self, event: Button.Pressed) -> None:
         """Handle breadcrumb navigation clicks."""
