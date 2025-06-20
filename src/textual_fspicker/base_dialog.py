@@ -149,9 +149,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         Binding("escape", "dismiss(None)", "Cancel")
     ]
     """The bindings for the dialog."""
-
-    show_recent = reactive(False)
-    """Whether to show recent locations panel."""
     
     search_active = reactive(False)
     """Whether search is active."""
@@ -180,8 +177,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         """The text prompt for the select button, or a function to format it."""
         self._cancel_button = cancel_button
         """The text prompt for the cancel button, or a function to format it."""
-        self._recent_locations: List[Dict[str, Any]] = []
-        """Recent file/directory locations."""
 
     def _input_bar(self) -> ComposeResult:
         """Provide any widgets for the input bar, before the buttons."""
@@ -275,9 +270,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         
         # Update breadcrumbs
         self._update_breadcrumbs(event.control.location)
-        
-        # Add to recent locations
-        self._add_to_recent(event.control.location, "directory")
+
 
     @on(DirectoryNavigation.Changed)
     def _clear_error(self) -> None:
@@ -341,10 +334,6 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         # This would need to be implemented with proper bookmark storage
         self.notify(f"Bookmarked: {current_path.name}", timeout=2)
     
-    def action_show_recent(self) -> None:
-        """Toggle the recent locations panel."""
-        self.show_recent = not self.show_recent
-    
     def action_focus_search(self) -> None:
         """Toggle search mode and focus search input."""
         self.search_active = not self.search_active
@@ -387,23 +376,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
                 dir_nav.location = path
             except Exception:
                 pass
-    
-    @on(ListView.Selected, "#recent-list")
-    def _on_recent_selected(self, event: ListView.Selected) -> None:
-        """Handle selection from recent locations."""
-        if hasattr(event.item, 'data') and event.item.data:
-            try:
-                path = Path(event.item.data)
-                if path.exists():
-                    dir_nav = self.query_one(DirectoryNavigation)
-                    if path.is_dir():
-                        dir_nav.location = path
-                    else:
-                        dir_nav.location = path.parent
-                    self.show_recent = False
-            except Exception:
-                pass
-    
+
     @on(Input.Changed, "#search-input")
     def _on_search_changed(self, event: Input.Changed) -> None:
         """Handle search input changes."""
@@ -422,15 +395,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
             self.search_active = False
         except Exception:
             pass
-    
-    def watch_show_recent(self, show: bool) -> None:
-        """React to show_recent changes."""
-        try:
-            recent_panel = self.query_one("#recent-locations")
-            recent_panel.set_class(show, "visible")
-        except Exception:
-            pass
-    
+
     def watch_search_active(self, active: bool) -> None:
         """React to search_active changes."""
         try:
