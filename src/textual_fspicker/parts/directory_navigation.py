@@ -441,6 +441,10 @@ class DirectoryNavigation(OptionList):
     def _watch_file_filter(self) -> None:
         """Refresh the display when the file filter has been changed."""
         self._repopulate_display()
+    
+    def _watch_search_filter(self) -> None:
+        """Refresh the display when the search filter has been changed."""
+        self._repopulate_display()
 
     def toggle_hidden(self) -> None:
         """Toggle the display of hidden filesystem entries."""
