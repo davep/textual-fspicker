@@ -1,9 +1,5 @@
 """A library that provides widgets for selecting things from the filesystem."""
 
-##############################################################################
-# Python imports.
-from importlib.metadata import version
-
 ######################################################################
 # Main app information.
 __author__ = "Dave Pearson"
