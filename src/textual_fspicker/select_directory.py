@@ -80,12 +80,6 @@ class SelectDirectory(FileSystemPickerScreen):
         Args:
             event: The event with the selection information in.
         """
-        # This combines the original _show_selected from SelectDirectory
-        # and the _on_directory_changed from FileSystemPickerScreen
-        # We need to ensure error clearing and path label (if kept separate) update happen.
-        # For now, the main path label is in FileSystemPickerScreen.
-        # This handler is specific to SelectDirectory's path_input.
-
         super()._on_directory_changed(event) # Call parent handler for main path label and error clearing
         event.stop() # Stop event propagation if necessary, depending on desired interactions
         path_input = self.query_one("#path_input", Input)
@@ -102,7 +96,6 @@ class SelectDirectory(FileSystemPickerScreen):
             target_path = MakePath.of(path_value).expanduser().resolve()
             if target_path.is_dir():
                 dir_nav.location = target_path # This will trigger DirectoryNavigation.Changed
-                # dir_nav.focus() # Optionally refocus directory navigation
             else:
                 self._set_error(f"Not a directory: {target_path.name}")
                 self.query_one("#path_input", Input).focus()
