@@ -64,3 +64,8 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/textual_fspicker"]
+
+[tool.pyright]
+venvPath="."
+venv=".venv"
+exclude=[".venv"]
