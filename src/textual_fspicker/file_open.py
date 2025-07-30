@@ -32,6 +32,7 @@ class FileOpen(BaseFileDialog):
         filters: Filters | None = None,
         must_exist: bool = True,
         default_file: str | Path | None = None,
+        double_click_directories: bool = False,
     ) -> None:
         """Initialise the `FileOpen` dialog.
 
@@ -43,6 +44,7 @@ class FileOpen(BaseFileDialog):
             filters: Optional filters to show in the dialog.
             must_exist: Flag to say if the file must exist.
             default_file: The default filename to place in the input.
+            double_click_directories: Double click to open directories.
 
         Notes:
             `open_button` and `cancel_button` can either be strings that
@@ -56,6 +58,7 @@ class FileOpen(BaseFileDialog):
             cancel_button=cancel_button,
             filters=filters,
             default_file=default_file,
+            double_click_directories=double_click_directories,
         )
         self._must_exist = must_exist
         """Must the file exist?"""

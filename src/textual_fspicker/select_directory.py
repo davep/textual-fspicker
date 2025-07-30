@@ -71,6 +71,7 @@ class SelectDirectory(FileSystemPickerScreen):
         *,
         select_button: ButtonLabel = "",
         cancel_button: ButtonLabel = "",
+        double_click_directories: bool = False,
     ) -> None:
         """Initialise the dialog.
 
@@ -79,6 +80,7 @@ class SelectDirectory(FileSystemPickerScreen):
             title: Optional title.
             select_button: The label for the select button.
             cancel_button: The label for the cancel button.
+            double_click_directories: Double click to open directories.
 
         Notes:
             `select_button` and `cancel_button` can either be strings that
@@ -86,7 +88,11 @@ class SelectDirectory(FileSystemPickerScreen):
             default button label as a parameter and return the label to use.
         """
         super().__init__(
-            location, title, select_button=select_button, cancel_button=cancel_button
+            location,
+            title,
+            select_button=select_button,
+            cancel_button=cancel_button,
+            double_click_directories=double_click_directories,
         )
 
     def on_mount(self) -> None:

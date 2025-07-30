@@ -20,7 +20,7 @@ from rich.text import Text
 
 ##############################################################################
 # Textual imports.
-from textual import work
+from textual import events, work
 from textual.message import Message
 from textual.reactive import var
 from textual.widgets import OptionList
@@ -280,7 +280,11 @@ class DirectoryNavigation(OptionList):
     sort_display: var[bool] = var(True)
     """Should the display be sorted?"""
 
-    def __init__(self, location: Path | str = ".") -> None:
+    def __init__(
+        self,
+        location: Path | str = ".",
+        double_click_directories: bool = False,
+    ) -> None:
         """Initialise the directory navigation widget.
 
         Args:
@@ -290,6 +294,7 @@ class DirectoryNavigation(OptionList):
         self._mounted = False
         self.location = MakePath.of(location).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
+        self.double_click_directories = double_click_directories
 
     @property
     def location(self) -> Path:
@@ -459,6 +464,12 @@ class DirectoryNavigation(OptionList):
             assert isinstance(event.option, DirectoryEntry)
             self.post_message(self.Highlighted(self, event.option.location))
 
+    def on_click(self, event: events.Click) -> None:
+        self.last_event_doubleclick = event.chain >= 2
+
+    def on_key(self, event: events.Key) -> None:
+        self.last_event_doubleclick = True
+
     def _on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
         """Handle an entry in the list being selected.
 
@@ -469,6 +480,8 @@ class DirectoryNavigation(OptionList):
         assert isinstance(event.option, DirectoryEntry)
         # If the use has selected a directory...
         if is_dir(event.option.location):
+            if self.double_click_directories and not self.last_event_doubleclick:
+                return
             # ...we do navigation and don't post anything from here.
             self._location = event.option.location.resolve()
         else:

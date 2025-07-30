@@ -61,6 +61,7 @@ class BaseFileDialog(FileSystemPickerScreen):
         *,
         filters: Filters | None = None,
         default_file: str | Path | None = None,
+        double_click_directories: bool = False,
     ) -> None:
         """Initialise the base dialog.
 
@@ -71,9 +72,14 @@ class BaseFileDialog(FileSystemPickerScreen):
             cancel_button: The label for the cancel button.
             filters: Optional filters to show in the dialog.
             default_file: The default filename to place in the input.
+            double_click_directories: Double click to open directories.
         """
         super().__init__(
-            location, title, select_button=select_button, cancel_button=cancel_button
+            location,
+            title,
+            select_button=select_button,
+            cancel_button=cancel_button,
+            double_click_directories=double_click_directories,
         )
         self._filters = filters
         """The filters for the dialog."""
