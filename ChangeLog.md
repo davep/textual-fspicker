@@ -1,5 +1,12 @@
 # ChangeLog
 
+## v0.4.2
+
+**Released: 2025-08-07**
+
+- Fixed crash with Python 3.9.
+  ([#55](https://github.com/davep/textual-fspicker/issues/55))
+
 ## v0.4.1
 
 **Released: 2025-02-28**

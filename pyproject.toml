@@ -1,6 +1,6 @@
 [project]
 name = "textual-fspicker"
-version = "0.4.1"
+version = "0.4.2"
 description = "A simple Textual filesystem picker dialog library."
 authors = [
     { name = "Dave Pearson", email = "davep@davep.org" }
