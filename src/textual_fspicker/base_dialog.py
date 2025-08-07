@@ -8,7 +8,7 @@ from __future__ import annotations
 # Python imports.
 import sys
 from pathlib import Path
-from typing import Callable, TypeAlias
+from typing import Callable
 
 ##############################################################################
 # Textual imports.
@@ -18,6 +18,10 @@ from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
 from textual.widgets import Button
+
+##############################################################################
+# Typing extension imports.
+from typing_extensions import TypeAlias
 
 ##############################################################################
 # Local imports.
