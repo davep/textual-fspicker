@@ -12,7 +12,7 @@
 **Released: 2025-02-28**
 
 - Added stand-alone documentation.
-  (#31[](https://github.com/davep/textual-fspicker/pull/31))
+  ([#31](https://github.com/davep/textual-fspicker/pull/31))
 
 ## v0.4.0
 
