@@ -61,7 +61,7 @@ class BaseFileDialog(FileSystemPickerScreen):
         *,
         filters: Filters | None = None,
         default_file: str | Path | None = None,
-        double_click_directories: bool = False,
+        double_click_directories: bool = True,
     ) -> None:
         """Initialise the base dialog.
 

@@ -32,7 +32,7 @@ class FileOpen(BaseFileDialog):
         filters: Filters | None = None,
         must_exist: bool = True,
         default_file: str | Path | None = None,
-        double_click_directories: bool = False,
+        double_click_directories: bool = True,
     ) -> None:
         """Initialise the `FileOpen` dialog.
 

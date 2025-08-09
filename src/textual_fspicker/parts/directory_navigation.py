@@ -283,7 +283,7 @@ class DirectoryNavigation(OptionList):
     def __init__(
         self,
         location: Path | str = ".",
-        double_click_directories: bool = False,
+        double_click_directories: bool = True,
     ) -> None:
         """Initialise the directory navigation widget.
 

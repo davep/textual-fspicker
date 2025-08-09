@@ -92,7 +92,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         title: str = "",
         select_button: ButtonLabel = "",
         cancel_button: ButtonLabel = "",
-        double_click_directories: bool = False,
+        double_click_directories: bool = True,
     ) -> None:
         """Initialise the dialog.
 
