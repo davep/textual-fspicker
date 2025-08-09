@@ -295,7 +295,7 @@ class DirectoryNavigation(OptionList):
         self.location = MakePath.of(location).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
         self.double_click_directories = double_click_directories
-        self._last_event_doubleclick = False
+        self._open_directory = False
 
     @property
     def location(self) -> Path:
@@ -466,10 +466,11 @@ class DirectoryNavigation(OptionList):
             self.post_message(self.Highlighted(self, event.option.location))
 
     def on_click(self, event: events.Click) -> None:
-        self._last_event_doubleclick = event.chain >= 2
+        # Don't open directories if double click is required, but there is a single click only.
+        self._open_directory = not (self.double_click_directories and event.chain == 1)
 
     def on_key(self, event: events.Key) -> None:
-        self._last_event_doubleclick = True
+        self._open_directory = True
 
     def _on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
         """Handle an entry in the list being selected.
@@ -479,12 +480,11 @@ class DirectoryNavigation(OptionList):
         """
         event.stop()
         assert isinstance(event.option, DirectoryEntry)
-        # If the use has selected a directory...
+        # If the user has selected a directory...
         if is_dir(event.option.location):
-            if self.double_click_directories and not self._last_event_doubleclick:
-                return
-            # ...we do navigation and don't post anything from here.
-            self._location = event.option.location.resolve()
+            if self._open_directory:
+                # ...we do navigation and don't post anything from here.
+                self._location = event.option.location.resolve()
         else:
             # If it's not a directory it should be a file; that should be a
             # selection event.
