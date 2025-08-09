@@ -295,6 +295,7 @@ class DirectoryNavigation(OptionList):
         self.location = MakePath.of(location).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
         self.double_click_directories = double_click_directories
+        self._last_event_doubleclick = False
 
     @property
     def location(self) -> Path:
@@ -465,10 +466,10 @@ class DirectoryNavigation(OptionList):
             self.post_message(self.Highlighted(self, event.option.location))
 
     def on_click(self, event: events.Click) -> None:
-        self.last_event_doubleclick = event.chain >= 2
+        self._last_event_doubleclick = event.chain >= 2
 
     def on_key(self, event: events.Key) -> None:
-        self.last_event_doubleclick = True
+        self._last_event_doubleclick = True
 
     def _on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
         """Handle an entry in the list being selected.
@@ -480,7 +481,7 @@ class DirectoryNavigation(OptionList):
         assert isinstance(event.option, DirectoryEntry)
         # If the use has selected a directory...
         if is_dir(event.option.location):
-            if self.double_click_directories and not self.last_event_doubleclick:
+            if self.double_click_directories and not self._last_event_doubleclick:
                 return
             # ...we do navigation and don't post anything from here.
             self._location = event.option.location.resolve()
