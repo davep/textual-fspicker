@@ -466,8 +466,8 @@ class DirectoryNavigation(OptionList):
             self.post_message(self.Highlighted(self, event.option.location))
 
     def on_click(self, event: events.Click) -> None:
-        # Don't open directories if double click is required, but there is a single click only.
-        self._open_directory = not (self.double_click_directories and event.chain == 1)
+        # Don't open directories if a double click is required, but there is no double click.
+        self._open_directory = not (self.double_click_directories and event.chain != 2)
 
     def on_key(self, event: events.Key) -> None:
         self._open_directory = True
