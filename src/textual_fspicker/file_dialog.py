@@ -19,7 +19,7 @@ from textual.widgets import Button, Input, Select
 ##############################################################################
 # Local imports.
 from .base_dialog import ButtonLabel, FileSystemPickerScreen
-from .parts import DirectoryNavigation, DriveNavigation
+from .parts import CurrentDirectory, DirectoryNavigation, DriveNavigation
 from .path_filters import Filters
 from .path_maker import MakePath
 
@@ -80,6 +80,10 @@ class BaseFileDialog(FileSystemPickerScreen):
         self._default_file = default_file
         """The default filename to put in the input field."""
 
+    def _header_area(self) -> ComposeResult:
+        """Populate the header area with the current directory path."""
+        yield CurrentDirectory()
+
     def _input_bar(self) -> ComposeResult:
         """Provide any widgets for the input before, before the buttons."""
         yield Input(Path(self._default_file or "").name)
@@ -96,6 +100,14 @@ class BaseFileDialog(FileSystemPickerScreen):
         """Set the initial filter once the DOM is ready."""
         if self._filters:
             self.query_one(DirectoryNavigation).file_filter = self._filters[0]
+
+    @on(DirectoryNavigation.Changed)
+    @on(Mount)
+    def _update_current_directory(self) -> None:
+        """Update the current directory display."""
+        self.query_one(CurrentDirectory).current_directory = self.query_one(
+            DirectoryNavigation
+        ).location
 
     @on(DirectoryNavigation.Selected)
     def _select_file(self, event: DirectoryNavigation.Selected) -> None:
