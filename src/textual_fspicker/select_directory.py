@@ -12,57 +12,24 @@ from pathlib import Path
 # Textual imports.
 from textual import on
 from textual.app import ComposeResult
-from textual.reactive import var
-from textual.widgets import Button, Label
+from textual.widgets import Button
 
 ##############################################################################
 # Local imports.
 from .base_dialog import ButtonLabel, FileSystemPickerScreen
-from .parts import DirectoryNavigation
-
-
-##############################################################################
-class CurrentDirectory(Label):
-    """A widget to show the current directory.
-
-    This widget is used inside a
-    [`SelectDirectory`][textual_fspicker.SelectDirectory] dialog to display
-    the currently-selected directory.
-    """
-
-    DEFAULT_CSS = """
-    CurrentDirectory {
-        width: 1fr;
-        height: 3;
-        border: tall $background;
-        padding-left: 1;
-        padding-right: 1;
-    }
-    """
-
-    current_directory: var[Path | None] = var(None, always_update=True)
-    """The current directory."""
-
-    def _watch_current_directory(self) -> None:
-        """Watch for the current directory being changed."""
-        if (
-            len(
-                display := ""
-                if self.current_directory is None
-                else str(self.current_directory)[-self.size.width :]
-            )
-            >= self.size.width
-        ):
-            display = f"…{display[1:]}"
-        self.update(display)
-
-    def _on_resize(self) -> None:
-        self.current_directory = self.current_directory
+from .parts import CurrentDirectory, DirectoryNavigation
 
 
 ##############################################################################
 class SelectDirectory(FileSystemPickerScreen):
     """A directory selection dialog."""
+
+    DEFAULT_CSS = """
+    SelectDirectory CurrentDirectory {
+        height: 3;
+        border: tall $background;
+    }
+    """
 
     def __init__(
         self,

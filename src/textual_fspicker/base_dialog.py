@@ -115,6 +115,10 @@ class FileSystemPickerScreen(ModalScreen[Union[Path, None]]):
         self._cancel_button = cancel_button
         """The text prompt for the cancel button, or a function to format it."""
 
+    def _header_area(self) -> ComposeResult:
+        """Provide any widgets for the header of the dialog."""
+        yield from ()
+
     def _input_bar(self) -> ComposeResult:
         """Provide any widgets for the input bar, before the buttons."""
         yield from ()
@@ -142,6 +146,7 @@ class FileSystemPickerScreen(ModalScreen[Union[Path, None]]):
         """
         with Dialog() as dialog:
             dialog.border_title = self._title
+            yield from self._header_area()
             with Horizontal():
                 if sys.platform == "win32":
                     yield DriveNavigation(self._location)

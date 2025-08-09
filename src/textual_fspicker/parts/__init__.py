@@ -2,11 +2,12 @@
 
 ##############################################################################
 # Local imports.
+from .current_directory import CurrentDirectory
 from .directory_navigation import DirectoryNavigation
 from .drive_navigation import DriveNavigation
 
 ##############################################################################
 # Export public items.
-__all__ = ["DirectoryNavigation", "DriveNavigation"]
+__all__ = ["CurrentDirectory", "DirectoryNavigation", "DriveNavigation"]
 
 ### __init__.py ends here
