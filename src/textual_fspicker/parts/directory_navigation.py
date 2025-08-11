@@ -294,9 +294,11 @@ class DirectoryNavigation(OptionList):
         self._mounted = False
         self.location = MakePath.of(location).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
+        """The entries in the list of directories."""
         self._double_click_directories = double_click_directories
         """Should the user need to double-click to select a directory with the mouse?"""
         self._open_directory = False
+        """Flag to track if a directory should be opened."""
 
     @property
     def location(self) -> Path:
