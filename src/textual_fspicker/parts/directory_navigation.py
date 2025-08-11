@@ -20,7 +20,7 @@ from rich.text import Text
 
 ##############################################################################
 # Textual imports.
-from textual import work
+from textual import events, work
 from textual.message import Message
 from textual.reactive import var
 from textual.widgets import OptionList
@@ -280,7 +280,11 @@ class DirectoryNavigation(OptionList):
     sort_display: var[bool] = var(True)
     """Should the display be sorted?"""
 
-    def __init__(self, location: Path | str = ".") -> None:
+    def __init__(
+        self,
+        location: Path | str = ".",
+        double_click_directories: bool = True,
+    ) -> None:
         """Initialise the directory navigation widget.
 
         Args:
@@ -290,6 +294,8 @@ class DirectoryNavigation(OptionList):
         self._mounted = False
         self.location = MakePath.of(location).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
+        self._double_click_directories = double_click_directories
+        self._open_directory = False
 
     @property
     def location(self) -> Path:
@@ -459,6 +465,13 @@ class DirectoryNavigation(OptionList):
             assert isinstance(event.option, DirectoryEntry)
             self.post_message(self.Highlighted(self, event.option.location))
 
+    def on_click(self, event: events.Click) -> None:
+        # Don't open directories if a double click is required, but there is no double click.
+        self._open_directory = not (self._double_click_directories and event.chain != 2)
+
+    def on_key(self, event: events.Key) -> None:
+        self._open_directory = True
+
     def _on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
         """Handle an entry in the list being selected.
 
@@ -467,10 +480,11 @@ class DirectoryNavigation(OptionList):
         """
         event.stop()
         assert isinstance(event.option, DirectoryEntry)
-        # If the use has selected a directory...
+        # If the user has selected a directory...
         if is_dir(event.option.location):
-            # ...we do navigation and don't post anything from here.
-            self._location = event.option.location.resolve()
+            if self._open_directory:
+                # ...we do navigation and don't post anything from here.
+                self._location = event.option.location.resolve()
         else:
             # If it's not a directory it should be a file; that should be a
             # selection event.
