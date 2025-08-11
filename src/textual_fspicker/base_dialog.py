@@ -112,7 +112,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
         """The text prompt for the select button, or a function to format it."""
         self._cancel_button = cancel_button
         """The text prompt for the cancel button, or a function to format it."""
-        self.double_click_directories = double_click_directories
+        self._double_click_directories = double_click_directories
 
     def _input_bar(self) -> ComposeResult:
         """Provide any widgets for the input bar, before the buttons."""
@@ -146,7 +146,7 @@ class FileSystemPickerScreen(ModalScreen[Path | None]):
                     yield DriveNavigation(self._location)
                 yield DirectoryNavigation(
                     self._location,
-                    double_click_directories=self.double_click_directories,
+                    double_click_directories=self._double_click_directories,
                 )
             with InputBar():
                 yield from self._input_bar()

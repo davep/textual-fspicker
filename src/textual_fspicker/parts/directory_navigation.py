@@ -294,7 +294,7 @@ class DirectoryNavigation(OptionList):
         self._mounted = False
         self.location = MakePath.of(location).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
-        self.double_click_directories = double_click_directories
+        self._double_click_directories = double_click_directories
         self._open_directory = False
 
     @property
@@ -467,7 +467,7 @@ class DirectoryNavigation(OptionList):
 
     def on_click(self, event: events.Click) -> None:
         # Don't open directories if a double click is required, but there is no double click.
-        self._open_directory = not (self.double_click_directories and event.chain != 2)
+        self._open_directory = not (self._double_click_directories and event.chain != 2)
 
     def on_key(self, event: events.Key) -> None:
         self._open_directory = True
