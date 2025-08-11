@@ -291,7 +291,6 @@ class DirectoryNavigation(OptionList):
             location: The starting location.
         """
         super().__init__()
-        self._mounted = False
         self.location = MakePath.of(location).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
         """The entries in the list of directories."""
@@ -308,14 +307,13 @@ class DirectoryNavigation(OptionList):
     @location.setter
     def location(self, new_location: Path | str) -> None:
         new_location = MakePath.of(new_location).expanduser().absolute()
-        if self._mounted:
+        if self.is_mounted:
             self._location = new_location
         else:
             self._initial_location = new_location
 
     def on_mount(self) -> None:
         """Populate the widget once the DOM is ready."""
-        self._mounted = True
         self._location = self._initial_location
 
     def _settle_highlight(self) -> None:
