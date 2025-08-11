@@ -295,6 +295,7 @@ class DirectoryNavigation(OptionList):
         self.location = MakePath.of(location).expanduser().absolute()
         self._entries: list[DirectoryEntry] = []
         self._double_click_directories = double_click_directories
+        """Should the user need to double-click to select a directory with the mouse?"""
         self._open_directory = False
 
     @property
