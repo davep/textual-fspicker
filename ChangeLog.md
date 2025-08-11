@@ -1,8 +1,8 @@
 # ChangeLog
 
-## Unreleased
+## v0.5.0
 
-**Released: WiP**
+**Released: 2025-08-11**
 
 - Added current directory location display to the `FileOpen` and `FileSave`
   dialogs. ([#60](https://github.com/davep/textual-fspicker/pull/60))
