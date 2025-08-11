@@ -117,6 +117,7 @@ class FileSystemPickerScreen(ModalScreen[Union[Path, None]]):
         self._cancel_button = cancel_button
         """The text prompt for the cancel button, or a function to format it."""
         self._double_click_directories = double_click_directories
+        """Should the user need to double-click to select a directory with the mouse?"""
 
     def _header_area(self) -> ComposeResult:
         """Provide any widgets for the header of the dialog."""

@@ -6,6 +6,9 @@
 
 - Added current directory location display to the `FileOpen` and `FileSave`
   dialogs. ([#60](https://github.com/davep/textual-fspicker/pull/60))
+- A double-click is now needed to open a directory when selecting with the
+  mouse, by default (with the option to turn off).
+  ([thanks to marph91](https://github.com/davep/textual-fspicker/pull/54))
 
 ## v0.4.3
 

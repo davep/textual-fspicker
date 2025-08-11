@@ -63,6 +63,7 @@ class Filters:
             path_filter if isinstance(path_filter, Filter) else Filter(*path_filter)
             for path_filter in filters
         )
+        """The list of filters."""
 
     @property
     def selections(self) -> list[tuple[str, int]]:
