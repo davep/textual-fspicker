@@ -5,7 +5,9 @@
 **Released: WiP**
 
 - Migrated from `rye` to `uv` for development management.
+  ([#71](https://github.com/davep/textual-fspicker/pull/71))
 - Added Python 3.14 as a tested/supported Python version.
+  ([#72](https://github.com/davep/textual-fspicker/pull/72))
 
 ## v0.5.0
 
