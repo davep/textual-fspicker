@@ -18,12 +18,13 @@ __licence__ = "MIT"
 # Local imports.
 from .file_open import FileOpen
 from .file_save import FileSave
+from .icons import Icons
 from .path_filters import Filters
 from .path_maker import MakePath
 from .select_directory import SelectDirectory
 
 ##############################################################################
 # Export the imports.
-__all__ = ["FileOpen", "FileSave", "SelectDirectory", "Filters", "MakePath"]
+__all__ = ["FileOpen", "FileSave", "Icons", "SelectDirectory", "Filters", "MakePath"]
 
 ### __init__.py ends here
