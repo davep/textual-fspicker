@@ -30,6 +30,7 @@ from typing_extensions import Final
 
 ##############################################################################
 # Local imports.
+from ..icons import Icons
 from ..path_filters import Filter
 from ..path_maker import MakePath
 from ..safe_tests import is_dir, is_file, is_symlink
@@ -55,12 +56,6 @@ class DirectoryEntryStyling(NamedTuple):
 ##############################################################################
 class DirectoryEntry(Option):
     """A directory entry for the `DirectoryNavigation` class."""
-
-    FOLDER_ICON: Final[Text] = Text.from_markup(":file_folder:")
-    """The icon to use for a folder."""
-
-    FILE_ICON: Final[Text] = Text.from_markup(":page_facing_up:")
-    """The icon to use for a file."""
 
     LINK_ICON: Final[Text] = Text.from_markup(":link:")
     """The icon to use for links."""
@@ -180,7 +175,7 @@ class DirectoryEntry(Option):
         prompt.add_column(no_wrap=True, width=1)
         prompt.add_row(
             "",
-            self.FOLDER_ICON if is_dir(location) else self.FILE_ICON,
+            Icons.best_for(location),
             self._name(location),
             self._size(location),
             self._mtime(location),

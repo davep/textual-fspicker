@@ -11,6 +11,7 @@ nav:
       - library-contents/file_dialog.md
       - library-contents/file_open.md
       - library-contents/file_save.md
+      - library-contents/icons.md
       - library-contents/path_filters.md
       - library-contents/path_maker.md
       - library-contents/safe_tests.md
@@ -42,6 +43,7 @@ plugins:
         inventories:
           - https://docs.python.org/3/objects.inv
           - https://textual.textualize.io/objects.inv
+          - https://rich.readthedocs.io/en/stable/objects.inv
         options:
           filters:
             - "!^_"
