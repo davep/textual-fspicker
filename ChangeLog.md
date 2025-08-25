@@ -10,6 +10,7 @@
   ([#72](https://github.com/davep/textual-fspicker/pull/72))
 - Added `textual_fspicker.Icons` so that the user of the library can set
   their own icons that are displayed next to directory entries.
+  ([#74](https://github.com/davep/textual-fspicker/pull/74))
 
 ## v0.5.0
 
