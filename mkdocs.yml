@@ -16,6 +16,7 @@ nav:
       - library-contents/path_maker.md
       - library-contents/safe_tests.md
       - library-contents/select_directory.md
+  - Change Log: changelog.md
   - License: license.md
 
 watch:
