@@ -12,6 +12,10 @@ you override the icon-picking behaviour.
 """
 
 ##############################################################################
+# Backward compatibility.
+from __future__ import annotations
+
+##############################################################################
 # Python imports.
 from pathlib import Path
 from typing import Callable, Final
