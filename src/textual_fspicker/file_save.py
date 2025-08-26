@@ -32,6 +32,7 @@ class FileSave(BaseFileDialog):
         filters: Filters | None = None,
         can_overwrite: bool = True,
         default_file: str | Path | None = None,
+        suggest_completions: bool = True,
     ) -> None:
         """Initialise the `FileSave` dialog.
 
@@ -43,6 +44,7 @@ class FileSave(BaseFileDialog):
             filters: Optional filters to show in the dialog.
             can_overwrite: Flag to say if an existing file can be overwritten.
             default_file: The default filename to place in the input.
+            suggest_completions: Should the `Input` suggest completions?
 
         Notes:
             `open_button` and `cancel_button` can either be strings that
@@ -56,6 +58,7 @@ class FileSave(BaseFileDialog):
             cancel_button=cancel_button,
             filters=filters,
             default_file=default_file,
+            suggest_completions=suggest_completions,
         )
         self._can_overwrite = can_overwrite
         """Can an existing file be overwritten?"""

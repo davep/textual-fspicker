@@ -22,6 +22,7 @@ from .base_dialog import ButtonLabel, FileSystemPickerScreen
 from .parts import CurrentDirectory, DirectoryNavigation, DriveNavigation
 from .path_filters import Filters
 from .path_maker import MakePath
+from .suggest_path import SuggestPath
 
 
 ##############################################################################
@@ -62,6 +63,7 @@ class BaseFileDialog(FileSystemPickerScreen):
         filters: Filters | None = None,
         default_file: str | Path | None = None,
         double_click_directories: bool = True,
+        suggest_completions: bool = True,
     ) -> None:
         """Initialise the base dialog.
 
@@ -73,6 +75,7 @@ class BaseFileDialog(FileSystemPickerScreen):
             filters: Optional filters to show in the dialog.
             default_file: The default filename to place in the input.
             double_click_directories: Double click to open directories.
+            suggest_completions: Should the `Input` suggest completions?
         """
         super().__init__(
             location,
@@ -85,6 +88,8 @@ class BaseFileDialog(FileSystemPickerScreen):
         """The filters for the dialog."""
         self._default_file = default_file
         """The default filename to put in the input field."""
+        self._suggest_path = SuggestPath() if suggest_completions else None
+        """The object that suggests paths in the input field."""
 
     def _header_area(self) -> ComposeResult:
         """Populate the header area with the current directory path."""
@@ -92,7 +97,7 @@ class BaseFileDialog(FileSystemPickerScreen):
 
     def _input_bar(self) -> ComposeResult:
         """Provide any widgets for the input before, before the buttons."""
-        yield Input(Path(self._default_file or "").name)
+        yield Input(Path(self._default_file or "").name, suggester=self._suggest_path)
         if self._filters:
             yield FileFilter(
                 self._filters.selections,
@@ -111,9 +116,11 @@ class BaseFileDialog(FileSystemPickerScreen):
     @on(Mount)
     def _update_current_directory(self) -> None:
         """Update the current directory display."""
-        self.query_one(CurrentDirectory).current_directory = self.query_one(
-            DirectoryNavigation
-        ).location
+        self.query_one(CurrentDirectory).current_directory = (
+            location := self.query_one(DirectoryNavigation).location
+        )
+        if self._suggest_path is not None:
+            self._suggest_path.root = location
 
     @on(DirectoryNavigation.Selected)
     def _select_file(self, event: DirectoryNavigation.Selected) -> None:
