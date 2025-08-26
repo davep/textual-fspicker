@@ -11,6 +11,8 @@
 - Added `textual_fspicker.Icons` so that the user of the library can set
   their own icons that are displayed next to directory entries.
   ([#74](https://github.com/davep/textual-fspicker/pull/74))
+- Added support for suggested completions when typing paths into the
+  `FileOpen` and `FileSave` dialogs.
 
 ## v0.5.0
 
