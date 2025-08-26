@@ -1,6 +1,10 @@
 """Provides a suggester for paths."""
 
 ##############################################################################
+# Backward compatibility.
+from __future__ import annotations
+
+##############################################################################
 # Python imports.
 from os import sep
 from pathlib import Path
