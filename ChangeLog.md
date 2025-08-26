@@ -1,8 +1,8 @@
 # ChangeLog
 
-## Unreleased
+## v0.6.0
 
-**Released: WiP**
+**Released: 2025-08-26**
 
 - Migrated from `rye` to `uv` for development management.
   ([#71](https://github.com/davep/textual-fspicker/pull/71))
