@@ -13,6 +13,7 @@
   ([#74](https://github.com/davep/textual-fspicker/pull/74))
 - Added support for suggested completions when typing paths into the
   `FileOpen` and `FileSave` dialogs.
+  ([#76](https://github.com/davep/textual-fspicker/pull/76))
 
 ## v0.5.0
 
