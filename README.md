@@ -1,5 +1,13 @@
 # textual-fspicker
 
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/davep/textual-fspicker/style-and-lint.yaml)](https://github.com/davep/textual-fspicker/actions)
+[![GitHub commits since latest release](https://img.shields.io/github/commits-since/davep/textual-fspicker/latest)](https://github.com/davep/textual-fspicker/commits/main/)
+[![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/davep/textual-fspicker)](https://github.com/davep/textual-fspicker/issues)
+[![GitHub Release Date](https://img.shields.io/github/release-date/davep/textual-fspicker)](https://github.com/davep/textual-fspicker/releases)
+[![PyPI - License](https://img.shields.io/pypi/l/textual-fspicker)](https://github.com/davep/textual-fspicker/blob/main/LICENSE)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/textual-fspicker)](https://github.com/davep/textual-fspicker/blob/main/pyproject.toml)
+[![PyPI - Version](https://img.shields.io/pypi/v/textual-fspicker)](https://pypi.org/project/textual-fspicker/)
+
 ## Introduction
 
 This library provides a simple set of filesystem navigation and picking
