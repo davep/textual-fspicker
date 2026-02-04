@@ -10,7 +10,7 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import ClassVar, Final, NamedTuple, Optional
+from typing import ClassVar, Final, NamedTuple
 
 ##############################################################################
 # Rich imports.
@@ -263,7 +263,7 @@ class DirectoryNavigation(OptionList):
     _location: var[Path] = var[Path](MakePath.of(".").absolute(), init=False)
     """The current location for the directory."""
 
-    file_filter: var[Filter | None] = var[Optional[Filter]](None)
+    file_filter: var[Filter | None] = var[Filter | None](None)
     """The active file filter."""
 
     show_files: var[bool] = var(True)

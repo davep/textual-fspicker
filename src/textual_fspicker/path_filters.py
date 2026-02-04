@@ -6,12 +6,9 @@ from __future__ import annotations
 
 ##############################################################################
 # Python imports.
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable, NamedTuple
-
-##############################################################################
-# Typing extension imports.
-from typing_extensions import TypeAlias
+from typing import NamedTuple, TypeAlias
 
 ##############################################################################
 FilterFunction: TypeAlias = Callable[[Path], bool]

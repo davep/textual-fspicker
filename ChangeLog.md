@@ -1,5 +1,11 @@
 # ChangeLog
 
+## Unreleased
+
+**Released: 2025-08-26**
+
+- Dropped support for Python 3.9.
+
 ## v0.6.0
 
 **Released: 2025-08-26**

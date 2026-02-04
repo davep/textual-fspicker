@@ -17,8 +17,9 @@ from __future__ import annotations
 
 ##############################################################################
 # Python imports.
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable, Final
+from typing import Final
 
 ##############################################################################
 # Rich imports.
