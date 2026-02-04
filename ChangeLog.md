@@ -5,6 +5,7 @@
 **Released: 2025-08-26**
 
 - Dropped support for Python 3.9.
+  ([#39](https://github.com/davep/textual-fspicker/pull/87))
 
 ## v0.6.0
 
