@@ -7,8 +7,9 @@ from __future__ import annotations
 ##############################################################################
 # Python imports.
 import sys
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable, Union
+from typing import TypeAlias
 
 ##############################################################################
 # Textual imports.
@@ -18,10 +19,6 @@ from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
 from textual.widgets import Button
-
-##############################################################################
-# Typing extension imports.
-from typing_extensions import TypeAlias
 
 ##############################################################################
 # Local imports.
@@ -39,12 +36,12 @@ class InputBar(Horizontal):
 
 
 ##############################################################################
-ButtonLabel: TypeAlias = Union[str, Callable[[str], str]]
+ButtonLabel: TypeAlias = str | Callable[[str], str]
 """The type for a button label value."""
 
 
 ##############################################################################
-class FileSystemPickerScreen(ModalScreen[Union[Path, None]]):
+class FileSystemPickerScreen(ModalScreen[Path | None]):
     """Base screen for the dialogs in this library."""
 
     DEFAULT_CSS = """
