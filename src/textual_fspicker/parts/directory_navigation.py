@@ -348,9 +348,12 @@ class DirectoryNavigation(OptionList):
             `True` if the path should be hidden, `False` if not.
         """
         # If there's a custom filter in place, give that a go first...
-        if self.file_filter is not None and is_file(path):
-            if not self.file_filter(path):
-                return True
+        if (
+            self.file_filter is not None
+            and is_file(path)
+            and not self.file_filter(path)
+        ):
+            return True
         # Either there is no custom filter, or whatever we're looking at
         # passed so far; not do final checks.
         return self.is_hidden(path) and not self.show_hidden
