@@ -6,10 +6,11 @@ from __future__ import annotations
 
 ##############################################################################
 # Python imports.
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import ClassVar, Iterable, NamedTuple, Optional
+from typing import ClassVar, Final, NamedTuple, Optional
 
 ##############################################################################
 # Rich imports.
@@ -26,7 +27,6 @@ from textual.reactive import var
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 from textual.worker import get_current_worker
-from typing_extensions import Final
 
 ##############################################################################
 # Local imports.
