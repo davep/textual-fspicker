@@ -6,10 +6,11 @@ from __future__ import annotations
 
 ##############################################################################
 # Python imports.
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import ClassVar, Iterable, NamedTuple, Optional
+from typing import ClassVar, Final, NamedTuple, Optional
 
 ##############################################################################
 # Rich imports.
@@ -26,7 +27,6 @@ from textual.reactive import var
 from textual.widgets import OptionList
 from textual.widgets.option_list import Option
 from textual.worker import get_current_worker
-from typing_extensions import Final
 
 ##############################################################################
 # Local imports.
@@ -348,9 +348,12 @@ class DirectoryNavigation(OptionList):
             `True` if the path should be hidden, `False` if not.
         """
         # If there's a custom filter in place, give that a go first...
-        if self.file_filter is not None and is_file(path):
-            if not self.file_filter(path):
-                return True
+        if (
+            self.file_filter is not None
+            and is_file(path)
+            and not self.file_filter(path)
+        ):
+            return True
         # Either there is no custom filter, or whatever we're looking at
         # passed so far; not do final checks.
         return self.is_hidden(path) and not self.show_hidden
