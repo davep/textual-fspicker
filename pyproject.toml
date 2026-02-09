@@ -42,7 +42,7 @@ Issues = "https://github.com/davep/textual-fspicker/issues"
 Discussions = "https://github.com/davep/textual-fspicker/discussions"
 
 [build-system]
-requires = ["uv_build>=0.8.11,<0.9.0"]
+requires = ["uv_build>=0.8.11"]
 build-backend = "uv_build"
 
 [tool.uv]
