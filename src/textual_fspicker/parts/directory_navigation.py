@@ -413,12 +413,12 @@ class DirectoryNavigation(OptionList):
         styles = self._styles
         try:
             for entry in self._location.iterdir():
+                if worker.is_cancelled:
+                    return
                 if is_dir(entry) or (is_file(entry) and self.show_files):
                     self._entries.append(
                         DirectoryEntry(self._location / entry.name, styles)
                     )
-                if worker.is_cancelled:
-                    return
         except PermissionError:
             self.post_message(self.PermissionError(self, self._location))
 
