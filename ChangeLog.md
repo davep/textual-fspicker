@@ -1,8 +1,8 @@
 # ChangeLog
 
-## Unreleased
+## v1.0.0
 
-**Released: WiP**
+**Released: 2026-02-18**
 
 - Dropped support for Python 3.9.
   ([#39](https://github.com/davep/textual-fspicker/pull/87))

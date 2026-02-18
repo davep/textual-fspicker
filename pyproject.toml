@@ -1,6 +1,6 @@
 [project]
 name = "textual-fspicker"
-version = "0.6.0"
+version = "1.0.0"
 description = "A simple Textual filesystem picker dialog library."
 authors = [
     { name = "Dave Pearson", email = "davep@davep.org" }
@@ -20,7 +20,7 @@ keywords = [
 ]
 classifiers = [
     "Environment :: Console",
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.10",
