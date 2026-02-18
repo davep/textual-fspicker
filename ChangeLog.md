@@ -2,10 +2,13 @@
 
 ## Unreleased
 
-**Released: 2025-08-26**
+**Released: WiP**
 
 - Dropped support for Python 3.9.
   ([#39](https://github.com/davep/textual-fspicker/pull/87))
+- Fixed duplicate entries appearing in certain circumstances.
+  ([#91](https://github.com/davep/textual-fspicker/issues/91), [thanks to
+  TomJGooding](https://github.com/davep/textual-fspicker/pull/92))
 
 ## v0.6.0
 
