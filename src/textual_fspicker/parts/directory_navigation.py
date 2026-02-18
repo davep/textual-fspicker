@@ -189,7 +189,7 @@ class DirectoryNavigation(OptionList):
     """A directory navigation widget.
 
     Provides a single-pane widget that lets the user navigate their way
-    through a filesystenm, changing in and out of directories, and selecting
+    through a filesystem, changing in and out of directories, and selecting
     a file.
     """
 
