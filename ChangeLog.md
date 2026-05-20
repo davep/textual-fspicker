@@ -1,5 +1,12 @@
 # ChangeLog
 
+## v1.0.1
+
+**Released: 2026-05-20**
+
+- Worked around a crash in a particular GNU/Linux environment. ([thanks to
+  zvonler-sfw](https://github.com/davep/textual-fspicker/pull/97))
+
 ## v1.0.0
 
 **Released: 2026-02-18**

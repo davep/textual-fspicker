@@ -374,12 +374,21 @@ class DirectoryNavigation(OptionList):
     @property
     def _styles(self) -> DirectoryEntryStyling:
         """The styles to use for a directory entry."""
-        return DirectoryEntryStyling(
-            self.get_component_rich_style("directory-navigation--hidden"),
-            self.get_component_rich_style("directory-navigation--name", partial=True),
-            self.get_component_rich_style("directory-navigation--size", partial=True),
-            self.get_component_rich_style("directory-navigation--time", partial=True),
-        )
+        try:
+            return DirectoryEntryStyling(
+                self.get_component_rich_style("directory-navigation--hidden"),
+                self.get_component_rich_style(
+                    "directory-navigation--name", partial=True
+                ),
+                self.get_component_rich_style(
+                    "directory-navigation--size", partial=True
+                ),
+                self.get_component_rich_style(
+                    "directory-navigation--time", partial=True
+                ),
+            )
+        except KeyError:
+            return DirectoryEntryStyling(Style(), Style(), Style(), Style())
 
     def _repopulate_display(self) -> None:
         """Repopulate the display of directories."""
