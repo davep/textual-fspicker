@@ -377,9 +377,15 @@ class DirectoryNavigation(OptionList):
         try:
             return DirectoryEntryStyling(
                 self.get_component_rich_style("directory-navigation--hidden"),
-                self.get_component_rich_style("directory-navigation--name", partial=True),
-                self.get_component_rich_style("directory-navigation--size", partial=True),
-                self.get_component_rich_style("directory-navigation--time", partial=True),
+                self.get_component_rich_style(
+                    "directory-navigation--name", partial=True
+                ),
+                self.get_component_rich_style(
+                    "directory-navigation--size", partial=True
+                ),
+                self.get_component_rich_style(
+                    "directory-navigation--time", partial=True
+                ),
             )
         except KeyError:
             return DirectoryEntryStyling(Style(), Style(), Style(), Style())
