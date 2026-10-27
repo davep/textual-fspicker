@@ -233,6 +233,19 @@ prompt the user for a directory. The most basic example looks like this:
     ```{.textual path="docs/examples/guide/basic_select_directory.py" press="enter,down,down,enter,tab,enter"}
     ```
 
+### Typing a directory
+
+As well as navigating with the directory list, a user can type the path of a
+directory into the [`Input`][textual.widgets.Input] widget in the dialog and
+press <kbd>Enter</kbd> to go to it, just like with the file dialogs.
+
+```{.textual path="docs/examples/guide/basic_select_directory.py" press="enter,tab"}
+```
+
+Completion suggestions for directory names are shown as the user types; if
+you'd rather they weren't, set the `suggest_completions` keyword parameter
+to [`False`][False].
+
 ## Filtering
 
 The [`FileOpen`][textual_fspicker.FileOpen] and

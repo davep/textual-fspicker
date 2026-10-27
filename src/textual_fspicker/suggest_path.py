@@ -18,16 +18,40 @@ from textual.suggester import Suggester
 class SuggestPath(Suggester):
     """A textual `Input` suggester that suggests a path."""
 
-    def __init__(self, *, root: str | Path = ".") -> None:
+    def __init__(
+        self, *, root: str | Path = ".", directories_only: bool = False
+    ) -> None:
         """Initialise the suggester
 
         Args:
             root: The root directory to work from.
+            directories_only: Should only directories be suggested?
 
         """
         super().__init__(use_cache=False, case_sensitive=True)
         self.root = Path(root)
         """The root directory to work from when taking suggestions."""
+        self._directories_only = directories_only
+        """Should only directories be suggested?"""
+
+    def _first_match(self, root: Path, pattern: str) -> Path | None:
+        """Find the first path that matches a pattern.
+
+        Args:
+            root: The directory to glob in.
+            pattern: The pattern to glob for.
+
+        Returns:
+            The first matching path, or `None` if there wasn't one.
+        """
+        return next(
+            (
+                match
+                for match in root.glob(pattern)
+                if not self._directories_only or match.is_dir()
+            ),
+            None,
+        )
 
     async def get_suggestion(self, value: str) -> str | None:
         """Get suggestions for the given value.
@@ -48,7 +72,7 @@ class SuggestPath(Suggester):
             return value
 
         try:
-            suggestion = next(self.root.glob(f"{value}*"), None)
+            suggestion = self._first_match(self.root, f"{value}*")
             return str(suggestion).removeprefix(f"{self.root}/") if suggestion else ""
         except NotImplementedError:
             # If we get a NotImplementedError, the most likely reason is
@@ -67,7 +91,7 @@ class SuggestPath(Suggester):
             suggestion = (
                 input_path
                 if value.endswith(sep)
-                else next(input_path.parent.glob(f"{input_path.stem}*"), None)
+                else self._first_match(input_path.parent, f"{input_path.stem}*")
             )
             return str(suggestion or value)
 
